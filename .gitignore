@@ -1,0 +1,9 @@
+*~
+.DS_Store
+GeoTag-testing
+
+Build/
+DerivedData/
+xcuserdata/
+*.xcworkspace/
+*.trace/
