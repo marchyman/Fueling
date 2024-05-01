@@ -10,22 +10,23 @@ import SwiftData
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
+    @State var path = NavigationPath()
     @State private var addVehiclePresented = false
     @Query private var vehicles: [Vehicle]
 
     var body: some View {
-
-        NavigationSplitView {
+        NavigationStack(path: $path) {
             List {
                 ForEach(vehicles) { vehicle in
                     NavigationLink {
-                        Text(vehicle.name)
+                        VehicleView(vehicle: vehicle)
                     } label: {
                         Text(vehicle.name)
                     }
                 }
                 .onDelete(perform: deleteVehicle)
             }
+            .navigationTitle("Select Vehicle")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     EditButton()
@@ -46,17 +47,11 @@ struct ContentView: View {
                                            systemImage: "car.fill")
                 }
             }
-        } detail: {
-            Text("Select an item")
         }
     }
 
     private func addVehicle() {
         addVehiclePresented.toggle()
-//        withAnimation {
-//            let newVehicle = Vehicle(timestamp: Date())
-//            modelContext.insert(newVehicle)
-//        }
     }
 
     private func deleteVehicle(offsets: IndexSet) {
@@ -70,5 +65,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-        .modelContainer(for: Vehicle.self, inMemory: true)
+        .modelContainer(for: Fuel.self)
 }
