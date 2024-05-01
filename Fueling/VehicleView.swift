@@ -56,15 +56,16 @@ struct VehicleView: View {
                 .padding()
 
             Grid(alignment: .trailing, horizontalSpacing: 30) {
-                GridRow{
+                GridRow {
                     Text("Date/Time").font(.headline)
+                    Text("Odometer").font(.headline)
                     Text("Gallons").font(.headline)
                     Text("Cost").font(.headline)
                 }
             }
 
             List {
-                ForEach(vehicle.fuelings) { fueling in
+                ForEach(fuelingsByTimestamp(vehicle.fuelings)) { fueling in
                     FuelingView(fueling: fueling)
                         .frame(maxWidth: .infinity)
                 }
@@ -72,6 +73,14 @@ struct VehicleView: View {
             .listStyle(.plain)
         }
         .navigationTitle("Vehicle Fuel Use")
+    }
+
+    func fuelingsByTimestamp(_ fuelings: [Fuel]?) -> [Fuel] {
+        guard let fuelings else { return [] }
+        let descriptors: [SortDescriptor<Fuel>] = [
+            .init(\.timestamp, order: .reverse)
+        ]
+        return fuelings.sorted(using: descriptors)
     }
 }
 
