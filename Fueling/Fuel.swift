@@ -29,3 +29,15 @@ final class Fuel {
         self.timestamp = timestamp
     }
 }
+
+extension Fuel {
+    var dateTime: String {
+        return timestamp.formatted(
+            Date.FormatStyle()
+                .month(.twoDigits)
+                .day(.twoDigits)
+                .hour(.defaultDigits(amPM: .abbreviated))
+                .minute(.twoDigits)
+        )
+    }
+}

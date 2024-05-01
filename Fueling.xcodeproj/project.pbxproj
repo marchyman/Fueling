@@ -13,10 +13,10 @@
 		4905264A2A7F1C07000B964C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 490526492A7F1C07000B964C /* Assets.xcassets */; };
 		4905264D2A7F1C07000B964C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4905264C2A7F1C07000B964C /* Preview Assets.xcassets */; };
 		490526542A7F3171000B964C /* AddVehicleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490526532A7F3171000B964C /* AddVehicleView.swift */; };
+		49B6F6C42BE2E88D00799D24 /* VehiclePreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B6F6C32BE2E88D00799D24 /* VehiclePreview.swift */; };
+		49B6F6C62BE2F32600799D24 /* FuelingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B6F6C52BE2F32600799D24 /* FuelingView.swift */; };
 		49C2FE8C2A817E3E00F861B0 /* Fuel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C2FE8B2A817E3E00F861B0 /* Fuel.swift */; };
 		49C2FE8E2A817F5500F861B0 /* VehicleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C2FE8D2A817F5500F861B0 /* VehicleView.swift */; };
-		49C2FE912A8199E900F861B0 /* PreviewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C2FE902A8199E900F861B0 /* PreviewContainer.swift */; };
-		49C2FE932A819C0C00F861B0 /* ModelPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C2FE922A819C0C00F861B0 /* ModelPreview.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,10 +27,10 @@
 		490526492A7F1C07000B964C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4905264C2A7F1C07000B964C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		490526532A7F3171000B964C /* AddVehicleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddVehicleView.swift; sourceTree = "<group>"; };
+		49B6F6C32BE2E88D00799D24 /* VehiclePreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehiclePreview.swift; sourceTree = "<group>"; };
+		49B6F6C52BE2F32600799D24 /* FuelingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelingView.swift; sourceTree = "<group>"; };
 		49C2FE8B2A817E3E00F861B0 /* Fuel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fuel.swift; sourceTree = "<group>"; };
 		49C2FE8D2A817F5500F861B0 /* VehicleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleView.swift; sourceTree = "<group>"; };
-		49C2FE902A8199E900F861B0 /* PreviewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewContainer.swift; sourceTree = "<group>"; };
-		49C2FE922A819C0C00F861B0 /* ModelPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelPreview.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,8 +66,8 @@
 				490526432A7F1C05000B964C /* FuelingApp.swift */,
 				490526452A7F1C05000B964C /* ContentView.swift */,
 				49C2FE8D2A817F5500F861B0 /* VehicleView.swift */,
+				49B6F6C52BE2F32600799D24 /* FuelingView.swift */,
 				490526532A7F3171000B964C /* AddVehicleView.swift */,
-				49C2FE8F2A8199D400F861B0 /* Preview support */,
 				49C2FE8A2A817DE200F861B0 /* Models */,
 				490526492A7F1C07000B964C /* Assets.xcassets */,
 				4905264B2A7F1C07000B964C /* Preview Content */,
@@ -87,18 +87,10 @@
 			isa = PBXGroup;
 			children = (
 				490526472A7F1C05000B964C /* Vehicle.swift */,
+				49B6F6C32BE2E88D00799D24 /* VehiclePreview.swift */,
 				49C2FE8B2A817E3E00F861B0 /* Fuel.swift */,
 			);
 			name = Models;
-			sourceTree = "<group>";
-		};
-		49C2FE8F2A8199D400F861B0 /* Preview support */ = {
-			isa = PBXGroup;
-			children = (
-				49C2FE902A8199E900F861B0 /* PreviewContainer.swift */,
-				49C2FE922A819C0C00F861B0 /* ModelPreview.swift */,
-			);
-			path = "Preview support";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -171,13 +163,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49C2FE932A819C0C00F861B0 /* ModelPreview.swift in Sources */,
 				49C2FE8C2A817E3E00F861B0 /* Fuel.swift in Sources */,
+				49B6F6C62BE2F32600799D24 /* FuelingView.swift in Sources */,
 				49C2FE8E2A817F5500F861B0 /* VehicleView.swift in Sources */,
 				490526462A7F1C05000B964C /* ContentView.swift in Sources */,
+				49B6F6C42BE2E88D00799D24 /* VehiclePreview.swift in Sources */,
 				490526482A7F1C05000B964C /* Vehicle.swift in Sources */,
 				490526442A7F1C05000B964C /* FuelingApp.swift in Sources */,
-				49C2FE912A8199E900F861B0 /* PreviewContainer.swift in Sources */,
 				490526542A7F3171000B964C /* AddVehicleView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -245,6 +237,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_STRICT_CONCURRENCY = complete;
 			};
 			name = Debug;
 		};
@@ -300,6 +293,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

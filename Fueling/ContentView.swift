@@ -65,5 +65,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-        .modelContainer(for: Fuel.self)
+        .modelContainer(Vehicle.preview)
 }

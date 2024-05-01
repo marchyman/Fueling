@@ -5,6 +5,7 @@
 //  Created by Marco S Hyman on 8/7/23.
 //
 
+import SwiftData
 import SwiftUI
 
 struct VehicleView: View {
@@ -14,35 +15,71 @@ struct VehicleView: View {
     var body: some View {
         VStack {
             GroupBox {
-                Grid(alignment: .leading) {
-                    GridRow {
-                        Text("Date added:")
-                        Text(vehicle.initialTimestamp.formatted(date: .abbreviated,
-                                                                time: .omitted))
-                    }
+                Grid(alignment: .leading, horizontalSpacing: 30) {
                     GridRow {
                         Text("Odometer start:")
                         Text("\(vehicle.odometer)")
                     }
+                    GridRow {
+                        Text("Fuel used:")
+                    }
+                    GridRow {
+                        Text("Miles driven:")
+                    }
+                    GridRow {
+                        Text("Miles/Gallon:")
+                    }
+                    GridRow {
+                        Text("Total cost:")
+                    }
+                    GridRow {
+                        Text("Cost/Gallon")
+                    }
+                    GridRow {
+                        Text("Cost/Mile")
+                    }
                 }
             } label: {
-                Text(vehicle.name )
+                HStack {
+                    Text("\(vehicle.name)")
+                    Spacer()
+                    Text(vehicle.initialTimestamp.formatted(date: .abbreviated,
+                                                            time: .omitted))
+                }
+                .padding()
             }
+            .clipShape(RoundedRectangle(cornerRadius: 12))
             .padding(.horizontal)
+
             Text("Recent refuelings")
                 .font(.title)
-            List {
-                Text("list goes here")
+                .padding()
+
+            Grid(alignment: .trailing, horizontalSpacing: 30) {
+                GridRow{
+                    Text("Date/Time").font(.headline)
+                    Text("Gallons").font(.headline)
+                    Text("Cost").font(.headline)
+                }
             }
+
+            List {
+                ForEach(vehicle.fuelings) { fueling in
+                    FuelingView(fueling: fueling)
+                        .frame(maxWidth: .infinity)
+                }
+            }
+            .listStyle(.plain)
         }
         .navigationTitle("Vehicle Fuel Use")
     }
 }
 
 #Preview {
-    ModelPreview { vehicle in
-        NavigationStack {
-            VehicleView(vehicle: vehicle)
-        }
+    let container = Vehicle.preview
+    let fetchDescriptor = FetchDescriptor<Vehicle>()
+    let vehicle = try! container.mainContext.fetch(fetchDescriptor)[0]
+    return NavigationStack {
+        VehicleView(vehicle: vehicle)
     }
 }
