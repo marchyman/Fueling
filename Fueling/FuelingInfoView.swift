@@ -31,11 +31,11 @@ struct FuelingInfoView: View {
                     }
                     GridRow {
                         Text("Cost/gallon:")
-                        Text(cpg(cost: cost, gallons: gallons))
+                        Text("\(cpg(cost: cost, gallons: gallons), format: .currency(code: "usd"))")
                     }
                     GridRow {
                         Text("Cost/mile:")
-                        Text(cpm(cost: cost, miles: miles))
+                        Text("\(cpm(cost: cost, miles: miles), format: .currency(code: "usd"))")
                     }
                 }
             } label: {
@@ -59,20 +59,18 @@ struct FuelingInfoView: View {
         return 0
     }
 
-    private func cpg(cost: Int, gallons: Double) -> String {
+    private func cpg(cost: Double, gallons: Double) -> Double {
         if gallons != 0 {
-            let pennies = cost / Int(gallons.rounded(.up))
-            return "$\(pennies / 100).\(pennies % 100)"
+            return cost / gallons
         }
-        return "unknown"
+        return 0
     }
 
-    private func cpm(cost: Int, miles: Int) -> String {
+    private func cpm(cost: Double, miles: Int) -> Double {
         if miles != 0 {
-            let pennies = cost / miles
-            return "$\(pennies / 100).\(pennies % 100)"
+            return cost / Double(miles)
         }
-        return "unknown"
+        return 0
     }
 }
 

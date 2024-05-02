@@ -52,39 +52,33 @@ extension Vehicle {
 
     // return miles/gallon
     func mpg() -> Double {
-        let milesDriven = milesDriven()
         let numberOfGallons = fuelUsed()
         if numberOfGallons != 0 {
-            return Double(milesDriven) / numberOfGallons
+            return Double(milesDriven()) / numberOfGallons
         }
         return 0
     }
 
     // return total fuel cost as a formatted string
-    func fuelCost() -> String {
-        let cost = fuelings.reduce(0) { $0 + $1.cost}
-        return "$\(cost / 100).\(cost % 100)"
+    func fuelCost() -> Double {
+        return fuelings.reduce(0.0) { $0 + $1.cost}
     }
 
     // return cost per gallon of fuel as a formatted string
-    func costPerGallon() -> String {
-        let cost = fuelings.reduce(0) { $0 + $1.cost}
+    func costPerGallon() -> Double {
         let gallons = fuelUsed()
         if gallons != 0 {
-            let cpg = cost / Int(gallons.rounded(.up))
-            return "$\(cpg / 100).\(cpg % 100)"
+            return fuelCost() / gallons
         }
-        return "unknown"
+        return 0
     }
 
     // return cost per mile as a formatted string
-    func costPerMile() -> String {
-        let cost = fuelings.reduce(0) { $0 + $1.cost}
-        let miles = milesDriven()
+    func costPerMile() -> Double {
+        let miles = Double(milesDriven())
         if miles != 0 {
-            let cpm = cost / miles
-            return "$\(cpm / 100).\(cpm % 100)"
+            return fuelCost() / miles
         }
-        return "unknown"
+        return 0
     }
 }

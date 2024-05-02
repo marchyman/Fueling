@@ -1,34 +1,30 @@
 //
-//  AddFuelView.swift
+//  FuelingEditView.swift
 //  Fueling
 //
-//  Created by Marco S Hyman on 5/1/24.
+//  Created by Marco S Hyman on 5/2/24.
 //
 
 import SwiftData
 import SwiftUI
 
-struct AddFuelView: View {
-    @Environment(\.modelContext) private var modelContext
+struct FuelingEditView: View {
     @Environment(\.dismiss) var dismiss
-    var vehicle: Vehicle
-    @State private var odometer: Int?
-    @State private var gallons: Double?
-    @State private var cost: Double?
+    @Bindable var fueling: Fuel
 
     var body: some View {
         VStack {
-            Text("Add Fuel")
+            Text("Edit Fuel")
                 .font(.title)
                 .padding(.bottom)
 
             Form {
-                Text(vehicle.name).font(.headline)
+                Text(fueling.vehicle?.name ?? "unknown").font(.headline)
 
                 LabeledContent("Cost") {
                     TextField("Required",
-                              value: $cost,
-                              format: .number)
+                              value: $fueling.cost,
+                              format: .currency(code: "usd"))
                     .textFieldStyle(.roundedBorder)
                     .keyboardType(.decimalPad)
                     .multilineTextAlignment(.trailing)
@@ -36,7 +32,7 @@ struct AddFuelView: View {
 
                 LabeledContent("Number of gallons") {
                     TextField("Required",
-                              value: $gallons,
+                              value: $fueling.amount,
                               format: .number)
                     .textFieldStyle(.roundedBorder)
                     .keyboardType(.decimalPad)
@@ -45,7 +41,7 @@ struct AddFuelView: View {
 
                 LabeledContent("Current odometer") {
                     TextField("Required",
-                              value: $odometer,
+                              value: $fueling.odometer,
                               format: .number)
                     .textFieldStyle(.roundedBorder)
                     .keyboardType(.decimalPad)
@@ -55,46 +51,22 @@ struct AddFuelView: View {
             .frame(height: 250)
             HStack {
                 Spacer()
-                Button("Cancel", role: .cancel) {
-                    dismiss()
-                }
-
-                Button("Add") {
-                    addFuel()
+                Button("Dismiss") {
                     dismiss()
                 }
                 .padding()
                 .buttonStyle(.borderedProminent)
-                .disabled(!validInput())
             }
         }
-    }
-
-    private func validInput() -> Bool {
-        guard
-            let odometer,
-            let gallons,
-            let cost,
-            odometer != 0,
-            gallons != 0,
-            cost != 0 else { return false }
-        return true
-    }
-
-    private func addFuel() {
-        guard
-            let odometer,
-            let gallons,
-            let cost else { return }
-        vehicle.fuelings.append(Fuel(odometer: odometer,
-                                     amount: gallons, cost: cost))
     }
 }
 
 #Preview {
     let container = Vehicle.preview
-    let fetchDescriptor = FetchDescriptor<Vehicle>()
+    let fetchDescriptor = FetchDescriptor<Vehicle>(
+        predicate: #Predicate { $0.name == "Honda Accord" }
+    )
     let vehicle = try! container.mainContext.fetch(fetchDescriptor)[0]
-    return AddFuelView(vehicle: vehicle)
+    return FuelingEditView(fueling: vehicle.fuelings.first!)
         .modelContainer(for: Vehicle.self, inMemory: true)
 }

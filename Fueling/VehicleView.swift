@@ -13,6 +13,7 @@ struct VehicleView: View {
     var vehicle: Vehicle
     @State private var addFuelPresented = false
     @State private var fuelingInfoPresented = false
+    @State private var editFuelItem: Fuel?
 
     var body: some View {
         VStack {
@@ -36,15 +37,15 @@ struct VehicleView: View {
                     }
                     GridRow {
                         Text("Total cost:")
-                        Text(vehicle.fuelCost())
+                        Text("\(vehicle.fuelCost(), format: .currency(code: "usd"))")
                     }
                     GridRow {
                         Text("Cost/gallon")
-                        Text(vehicle.costPerGallon())
+                        Text("\(vehicle.costPerGallon(), format: .currency(code: "usd"))")
                     }
                     GridRow {
                         Text("Cost/mile")
-                        Text(vehicle.costPerMile())
+                        Text("\(vehicle.costPerMile(), format: .currency(code: "usd"))")
                     }
                 }
             } label: {
@@ -79,8 +80,16 @@ struct VehicleView: View {
                         .onTapGesture {
                             fuelingInfoPresented.toggle()
                         }
+                        .onLongPressGesture {
+                            editFuelItem = fueling
+                        }
                         .sheet(isPresented: $fuelingInfoPresented) {
                             FuelingInfoView(fueling: fueling)
+                                .presentationDetents([.medium])
+                        }
+                        .sheet(item: $editFuelItem,
+                               onDismiss: { } ) { fueling in
+                            FuelingEditView(fueling: fueling)
                                 .presentationDetents([.medium])
                         }
                 }

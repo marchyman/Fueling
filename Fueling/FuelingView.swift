@@ -17,7 +17,7 @@ struct FuelingView: View {
                 Text("\(fueling.dateTime)")
                 Text("\(fueling.odometer, format: .number)")
                 Text("\(fueling.amount, specifier: "%.3f")")
-                Text("$\(fueling.cost / 100).\(fueling.cost % 100)")
+                Text("\(fueling.cost, format: .currency(code: "usd"))")
             }
         }
     }

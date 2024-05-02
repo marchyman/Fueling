@@ -24,7 +24,7 @@ final class Fuel {
     var vehicle: Vehicle?
     var odometer: Int
     var amount: Double
-    var cost: Int
+    var cost: Double
 
     init(odometer: Int,
          amount: Double,
@@ -32,7 +32,7 @@ final class Fuel {
          timestamp: Date = Date.now) {
         self.odometer = odometer
         self.amount = amount
-        self.cost = Int(cost * 100)
+        self.cost = cost
         self.timestamp = timestamp
     }
 }
@@ -49,7 +49,7 @@ extension Fuel {
     }
 
     // given a fuel instance calculate various values
-    func fuelStats() -> (Int, Double, Int){
+    func fuelStats() -> (Int, Double, Double){
         if let vehicle {
             // reverse sorted.  The next index is the prior entry.
             let vehicleFuelings = vehicle.fuelingsByTimestamp()
