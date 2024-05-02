@@ -22,21 +22,27 @@ struct VehicleView: View {
                     }
                     GridRow {
                         Text("Fuel used:")
+                        Text("\(vehicle.fuelUsed(), specifier: "%.3f")")
                     }
                     GridRow {
                         Text("Miles driven:")
+                        Text("\(vehicle.milesDriven(), format: .number)")
                     }
                     GridRow {
                         Text("Miles/Gallon:")
+                        Text("\(vehicle.mpg(), specifier: "%0.1f")")
                     }
                     GridRow {
                         Text("Total cost:")
+                        Text(vehicle.fuelCost())
                     }
                     GridRow {
                         Text("Cost/Gallon")
+                        Text(vehicle.costPerGallon())
                     }
                     GridRow {
                         Text("Cost/Mile")
+                        Text(vehicle.costPerMile())
                     }
                 }
             } label: {
@@ -65,9 +71,12 @@ struct VehicleView: View {
             }
 
             List {
-                ForEach(fuelingsByTimestamp(vehicle.fuelings)) { fueling in
+                ForEach(vehicle.fuelingsByTimestamp()) { fueling in
                     FuelingView(fueling: fueling)
                         .frame(maxWidth: .infinity)
+                        .onTapGesture {
+                            print("tapped")
+                        }
                 }
             }
             .listStyle(.plain)
