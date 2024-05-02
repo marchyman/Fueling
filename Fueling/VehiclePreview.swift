@@ -25,9 +25,9 @@ extension Vehicle {
         }
 
         let vehicle = vehicles[0]
-        vehicle.fuelings.append(Fuel(vehicle, odometer: 12555,
+        vehicle.fuelings.append(Fuel(odometer: 12555,
                                      amount: 4.14, cost: 22.13))
-        vehicle.fuelings.append(Fuel(vehicle, odometer: 12666,
+        vehicle.fuelings.append(Fuel(odometer: 12666,
                                      amount: 2.03, cost: 10.17))
 
         return container

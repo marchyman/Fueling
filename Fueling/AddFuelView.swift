@@ -85,10 +85,8 @@ struct AddFuelView: View {
             let odometer,
             let gallons,
             let cost else { return }
-        let fuel = Fuel(vehicle, odometer: odometer,
-                        amount: gallons, cost: cost)
-        modelContext.insert(fuel)
-        vehicle.fuelings.append(fuel)
+        vehicle.fuelings.append(Fuel(odometer: odometer,
+                                     amount: gallons, cost: cost))
     }
 }
 

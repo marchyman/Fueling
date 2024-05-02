@@ -12,6 +12,7 @@ struct VehicleView: View {
     @Environment(\.modelContext) private var modelContext
     var vehicle: Vehicle
     @State private var addFuelPresented = false
+    @State private var fuelingInfoPresented = false
 
     var body: some View {
         VStack {
@@ -30,7 +31,7 @@ struct VehicleView: View {
                         Text("\(vehicle.milesDriven(), format: .number)")
                     }
                     GridRow {
-                        Text("Miles/Gallon:")
+                        Text("Miles/gallon:")
                         Text("\(vehicle.mpg(), specifier: "%0.1f")")
                     }
                     GridRow {
@@ -38,11 +39,11 @@ struct VehicleView: View {
                         Text(vehicle.fuelCost())
                     }
                     GridRow {
-                        Text("Cost/Gallon")
+                        Text("Cost/gallon")
                         Text(vehicle.costPerGallon())
                     }
                     GridRow {
-                        Text("Cost/Mile")
+                        Text("Cost/mile")
                         Text(vehicle.costPerMile())
                     }
                 }
@@ -76,7 +77,11 @@ struct VehicleView: View {
                     FuelingView(fueling: fueling)
                         .frame(maxWidth: .infinity)
                         .onTapGesture {
-                            print("tapped")
+                            fuelingInfoPresented.toggle()
+                        }
+                        .sheet(isPresented: $fuelingInfoPresented) {
+                            FuelingInfoView(fueling: fueling)
+                                .presentationDetents([.medium])
                         }
                 }
             }

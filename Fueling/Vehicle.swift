@@ -14,6 +14,7 @@ final class Vehicle {
     var name: String
     var initialTimestamp: Date
     var odometer: Int
+    @Relationship(deleteRule: .cascade, inverse: \Fuel.vehicle)
     var fuelings: [Fuel]!
 
     init(name: String, odometer: Int, timestamp: Date = Date.now) {
