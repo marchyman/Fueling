@@ -14,6 +14,8 @@ struct ContentView: View {
     @State private var addVehiclePresented = false
     @Query private var vehicles: [Vehicle]
 
+    let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
+
     var body: some View {
         NavigationStack(path: $path) {
             List {
@@ -48,6 +50,8 @@ struct ContentView: View {
                 }
             }
         }
+        Text("Version \(appVersion != nil ? appVersion! : "Unknown")")
+            .padding()
     }
 
     private func addVehicle() {
