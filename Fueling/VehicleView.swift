@@ -10,12 +10,13 @@ import SwiftUI
 
 struct VehicleView: View {
     @Environment(\.modelContext) private var modelContext
-    var vehicle: Vehicle
+    @Bindable var vehicle: Vehicle
     @State private var addFuelPresented = false
     @State private var fuelingInfoPresented = false
     @State private var editFuelItem: Fuel?
 
     var body: some View {
+        let _ = Self._printChanges()
         VStack {
             GroupBox {
                 Grid(alignment: .leading, horizontalSpacing: 30) {
@@ -25,27 +26,27 @@ struct VehicleView: View {
                     }
                     GridRow {
                         Text("Fuel used:")
-                        Text("\(vehicle.fuelUsed(), specifier: "%.3f")")
+                        Text("\(vehicle.fuelUsed, specifier: "%.3f")")
                     }
                     GridRow {
                         Text("Miles driven:")
-                        Text("\(vehicle.milesDriven(), format: .number)")
+                        Text("\(vehicle.milesDriven, format: .number)")
                     }
                     GridRow {
                         Text("Miles/gallon:")
-                        Text("\(vehicle.mpg(), specifier: "%0.1f")")
+                        Text("\(vehicle.mpg, specifier: "%0.1f")")
                     }
                     GridRow {
                         Text("Total cost:")
-                        Text("\(vehicle.fuelCost(), format: .currency(code: "usd"))")
+                        Text("\(vehicle.fuelCost, format: .currency(code: "usd"))")
                     }
                     GridRow {
                         Text("Cost/gallon")
-                        Text("\(vehicle.costPerGallon(), format: .currency(code: "usd"))")
+                        Text("\(vehicle.costPerGallon, format: .currency(code: "usd"))")
                     }
                     GridRow {
                         Text("Cost/mile")
-                        Text("\(vehicle.costPerMile(), format: .currency(code: "usd"))")
+                        Text("\(vehicle.costPerMile, format: .currency(code: "usd"))")
                     }
                 }
             } label: {
@@ -87,8 +88,7 @@ struct VehicleView: View {
                             FuelingInfoView(fueling: fueling)
                                 .presentationDetents([.medium])
                         }
-                        .sheet(item: $editFuelItem,
-                               onDismiss: { } ) { fueling in
+                        .sheet(item: $editFuelItem) { fueling in
                             FuelingEditView(fueling: fueling)
                                 .presentationDetents([.medium])
                         }

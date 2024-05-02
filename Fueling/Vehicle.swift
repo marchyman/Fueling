@@ -38,12 +38,12 @@ extension Vehicle {
     }
 
     // calculate the total fuel used
-    func fuelUsed() -> Double {
-        return fuelings.reduce(0.0) { $0 + $1.amount }
+    var fuelUsed: Double {
+        fuelings.reduce(0.0) { $0 + $1.amount }
     }
 
     // return the miles driven since added
-    func milesDriven() -> Int {
+    var milesDriven: Int {
         if let lastOdometerReading = fuelingsByTimestamp().first?.odometer {
             return lastOdometerReading - odometer
         }
@@ -51,33 +51,33 @@ extension Vehicle {
     }
 
     // return miles/gallon
-    func mpg() -> Double {
-        let numberOfGallons = fuelUsed()
+    var mpg: Double {
+        let numberOfGallons = fuelUsed
         if numberOfGallons != 0 {
-            return Double(milesDriven()) / numberOfGallons
+            return Double(milesDriven) / numberOfGallons
         }
         return 0
     }
 
     // return total fuel cost as a formatted string
-    func fuelCost() -> Double {
-        return fuelings.reduce(0.0) { $0 + $1.cost}
+    var fuelCost: Double {
+        fuelings.reduce(0.0) { $0 + $1.cost}
     }
 
     // return cost per gallon of fuel as a formatted string
-    func costPerGallon() -> Double {
-        let gallons = fuelUsed()
+    var costPerGallon: Double {
+        let gallons = fuelUsed
         if gallons != 0 {
-            return fuelCost() / gallons
+            return fuelCost / gallons
         }
         return 0
     }
 
     // return cost per mile as a formatted string
-    func costPerMile() -> Double {
-        let miles = Double(milesDriven())
+    var costPerMile: Double {
+        let miles = Double(milesDriven)
         if miles != 0 {
-            return fuelCost() / miles
+            return fuelCost / miles
         }
         return 0
     }
