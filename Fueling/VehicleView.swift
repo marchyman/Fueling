@@ -11,6 +11,7 @@ import SwiftUI
 struct VehicleView: View {
     @Environment(\.modelContext) private var modelContext
     var vehicle: Vehicle
+    @State private var addFuelPresented = false
 
     var body: some View {
         VStack {
@@ -82,14 +83,21 @@ struct VehicleView: View {
             .listStyle(.plain)
         }
         .navigationTitle("Vehicle Fuel Use")
-    }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                EditButton()
+                    .disabled(vehicle.fuelings.isEmpty)
+            }
 
-    func fuelingsByTimestamp(_ fuelings: [Fuel]?) -> [Fuel] {
-        guard let fuelings else { return [] }
-        let descriptors: [SortDescriptor<Fuel>] = [
-            .init(\.timestamp, order: .reverse)
-        ]
-        return fuelings.sorted(using: descriptors)
+            ToolbarItem {
+                Button(action: { addFuelPresented.toggle() }) {
+                    Label("Add fuel", systemImage: "plus")
+                }
+                .sheet(isPresented: $addFuelPresented) {
+                    AddFuelView(vehicle: vehicle)
+                }
+            }
+        }
     }
 }
 
