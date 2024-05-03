@@ -13,7 +13,7 @@ struct ContentView: View {
     @State var path = NavigationPath()
     @State private var addVehiclePresented = false
     @Query private var vehicles: [Vehicle]
-
+    let pairedSession = PhoneSession()
     let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
 
     var body: some View {
@@ -41,6 +41,11 @@ struct ContentView: View {
                     .sheet(isPresented: $addVehiclePresented) {
                         AddVehicleView()
                     }
+                }
+            }
+            .task(id: vehicles) {
+                await MainActor.run {
+                    pairedSession.vehicles = vehicles
                 }
             }
             .overlay {

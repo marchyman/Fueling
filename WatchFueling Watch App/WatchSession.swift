@@ -16,11 +16,17 @@ final class WatchSession: NSObject  {
                             category: "WatchSession")
     let session: WCSession = .default
 
+    var isReachable: Bool {
+        session.isReachable
+    }
+
     override init() {
         super.init()
         if WCSession.isSupported() {
             session.delegate = self
             session.activate()
+        } else {
+            Self.log.notice("Session not supported")
         }
     }
 }
@@ -31,4 +37,10 @@ extension WatchSession: WCSessionDelegate {
                  error: (any Error)?) {
         Self.log.notice("activationDidCompleteWith \(activationState.rawValue)")
     }
+
+    func session(_ session: WCSession,
+                 didReceiveMessage message: [String : Any]) {
+        Self.log.notice("didReceiveMessage: \(message.debugDescription, privacy: .public)")
+    }
+
 }

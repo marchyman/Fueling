@@ -15,12 +15,15 @@ final class PhoneSession: NSObject  {
     static let log = Logger(subsystem: Bundle.main.bundleIdentifier!,
                             category: "PhoneSession")
     let session: WCSession = .default
+    var vehicles: [Vehicle] = []
 
     override init() {
         super.init()
         if WCSession.isSupported() {
             session.delegate = self
             session.activate()
+        } else {
+            Self.log.notice("Session not supported")
         }
     }
 }
@@ -38,5 +41,18 @@ extension PhoneSession: WCSessionDelegate {
     
     func sessionDidDeactivate(_ session: WCSession) {
         Self.log.notice("session deactivated")
+    }
+
+    func session(_ session: WCSession,
+                 didReceiveMessage message: [String : Any]) {
+        Self.log.notice("didReceiveMessage: \(message.debugDescription, privacy: .public)")
+        for (key, value) in message where key == "get" {
+            if let object = value as? String {
+                if object == "vehicles" {
+                    session.sendMessage(["vehicles" : vehicles.map { $0.name }],
+                                        replyHandler: nil)
+                }
+            }
+        }
     }
 }

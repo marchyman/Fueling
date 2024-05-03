@@ -82,3 +82,9 @@ extension Vehicle {
         return 0
     }
 }
+
+extension Vehicle {
+    func allVehicles() {
+
+    }
+}

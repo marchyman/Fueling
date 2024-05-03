@@ -10,7 +10,6 @@ import SwiftData
 
 @main
 struct FuelingApp: App {
-
     var body: some Scene {
         WindowGroup {
             ContentView()
