@@ -14,7 +14,7 @@ struct FuelingInfoView: View {
 
     var body: some View {
         VStack {
-            let (miles, gallons, cost) = fueling.fuelStats()
+            let miles = fueling.miles()
             GroupBox {
                 Grid(alignment: .leading, horizontalSpacing: 50) {
                     GridRow {
@@ -27,15 +27,15 @@ struct FuelingInfoView: View {
                     }
                     GridRow {
                         Text("Miles/gallon:")
-                        Text("\(mpg(miles: miles, gallons: gallons), specifier: "%0.1f")")
+                        Text("\(mpg(miles: miles, gallons: fueling.amount), specifier: "%0.1f")")
                     }
                     GridRow {
                         Text("Cost/gallon:")
-                        Text("\(cpg(cost: cost, gallons: gallons), format: .currency(code: "usd"))")
+                        Text("\(cpg(cost: fueling.cost, gallons: fueling.amount), format: .currency(code: "usd"))")
                     }
                     GridRow {
                         Text("Cost/mile:")
-                        Text("\(cpm(cost: cost, miles: miles), format: .currency(code: "usd"))")
+                        Text("\(cpm(cost: fueling.cost, miles: miles), format: .currency(code: "usd"))")
                     }
                 }
             } label: {

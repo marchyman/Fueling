@@ -48,27 +48,22 @@ extension Fuel {
         )
     }
 
-    // given a fuel instance calculate various values
-    func fuelStats() -> (Int, Double, Double){
+    // given a fuel instance return the number of miles since the previous
+    // entry.
+    func miles() -> Int {
         if let vehicle {
             // reverse sorted.  The next index is the prior entry.
             let vehicleFuelings = vehicle.fuelingsByTimestamp()
             if let index = vehicleFuelings.firstIndex(of: self) {
-                let priorEntry: Fuel
                 if index == vehicleFuelings.count - 1 {
-                    // fake a prior entry from the vehicle
-                    priorEntry = Fuel(odometer: vehicle.odometer, amount: 0, cost: 0)
-                } else {
-                    priorEntry = vehicleFuelings[index + 1]
+                    return odometer - vehicle.odometer
                 }
-                let miles = odometer - priorEntry.odometer
-                let gallons = amount - priorEntry.amount
-                let cost = self.cost - priorEntry.cost
-                return (miles, gallons, cost)
+                let priorEntry = vehicleFuelings[index + 1]
+                return odometer - priorEntry.odometer
             } else {
                 fatalError("Fueling entry not found")
             }
         }
-        return (0, 0, 0)
+        return 0
     }
 }
