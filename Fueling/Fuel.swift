@@ -39,13 +39,9 @@ final class Fuel {
 
 extension Fuel {
     var dateTime: String {
-        return timestamp.formatted(
-            Date.FormatStyle()
-                .month(.twoDigits)
-                .day(.twoDigits)
-                .hour(.defaultDigits(amPM: .abbreviated))
-                .minute(.twoDigits)
-        )
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM/dd HH:mm"
+        return formatter.string(from: timestamp)
     }
 
     // given a fuel instance return the number of miles since the previous

@@ -17,7 +17,7 @@ struct VehicleView: View {
 
     var body: some View {
         let _ = Self._printChanges()
-        VStack {
+        ScrollView {
             GroupBox {
                 Grid(alignment: .leading, horizontalSpacing: 30) {
                     GridRow {
@@ -65,36 +65,45 @@ struct VehicleView: View {
                 .font(.title)
                 .padding()
 
-            Grid(alignment: .trailing, horizontalSpacing: 30) {
+            Grid(alignment: .leadingFirstTextBaseline,
+                 horizontalSpacing: 10,
+                 verticalSpacing: 10) {
                 GridRow {
-                    Text("Date/Time").font(.headline)
-                    Text("Odometer").font(.headline)
-                    Text("Gallons").font(.headline)
-                    Text("Cost").font(.headline)
+                    Text("Date/Time")
+                    Text("Odometer")
+                    Text("Gallons")
+                        .gridColumnAlignment(.center)
+                    Text("Cost")
+                        .gridColumnAlignment(.center)
                 }
-            }
-
-            List {
+                .font(.headline)
+                Divider()
                 ForEach(vehicle.fuelingsByTimestamp()) { fueling in
-                    FuelingView(fueling: fueling)
-                        .frame(maxWidth: .infinity)
-                        .onTapGesture {
-                            fuelingInfoItem = fueling
-                        }
-                        .onLongPressGesture {
-                            fuelingEditItem = fueling
-                        }
-                        .sheet(item: $fuelingInfoItem) { item in
-                            FuelingInfoView(fueling: item)
-                                .presentationDetents([.medium])
-                        }
-                        .sheet(item: $fuelingEditItem) { item in
-                            FuelingEditView(fueling: item)
-                                .presentationDetents([.medium])
-                        }
+                    GridRow {
+                        Text("\(fueling.dateTime)")
+                        Text("\(fueling.odometer, format: .number)")
+                        Text("\(fueling.amount, specifier: "%.3f")")
+                        Text("\(fueling.cost, format: .currency(code: "usd"))")
+                            .gridColumnAlignment(.trailing)
+                    }
+                    .frame(maxWidth: .infinity)
+                    .onTapGesture {
+                        fuelingInfoItem = fueling
+                    }
+                    .onLongPressGesture {
+                        fuelingEditItem = fueling
+                    }
+                    .sheet(item: $fuelingInfoItem) { item in
+                        FuelingInfoView(fueling: item)
+                            .presentationDetents([.medium])
+                    }
+                    .sheet(item: $fuelingEditItem) { item in
+                        FuelingEditView(fueling: item)
+                            .presentationDetents([.medium])
+                    }
                 }
             }
-            .listStyle(.plain)
+            .padding()
         }
         .navigationTitle("Vehicle Fuel Use")
         .toolbar {
