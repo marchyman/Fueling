@@ -12,8 +12,8 @@ struct VehicleView: View {
     @Environment(\.modelContext) private var modelContext
     @Bindable var vehicle: Vehicle
     @State private var addFuelPresented = false
-    @State private var fuelingInfoPresented = false
-    @State private var editFuelItem: Fuel?
+    @State private var fuelingInfoItem: Fuel?
+    @State private var fuelingEditItem: Fuel?
 
     var body: some View {
         let _ = Self._printChanges()
@@ -79,17 +79,17 @@ struct VehicleView: View {
                     FuelingView(fueling: fueling)
                         .frame(maxWidth: .infinity)
                         .onTapGesture {
-                            fuelingInfoPresented.toggle()
+                            fuelingInfoItem = fueling
                         }
                         .onLongPressGesture {
-                            editFuelItem = fueling
+                            fuelingEditItem = fueling
                         }
-                        .sheet(isPresented: $fuelingInfoPresented) {
-                            FuelingInfoView(fueling: fueling)
+                        .sheet(item: $fuelingInfoItem) { item in
+                            FuelingInfoView(fueling: item)
                                 .presentationDetents([.medium])
                         }
-                        .sheet(item: $editFuelItem) { fueling in
-                            FuelingEditView(fueling: fueling)
+                        .sheet(item: $fuelingEditItem) { item in
+                            FuelingEditView(fueling: item)
                                 .presentationDetents([.medium])
                         }
                 }
