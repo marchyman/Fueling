@@ -65,7 +65,7 @@ struct VehicleView: View {
                 .font(.title)
                 .padding()
 
-            Grid(alignment: .leadingFirstTextBaseline,
+            Grid(alignment: .trailingFirstTextBaseline,
                  horizontalSpacing: 10,
                  verticalSpacing: 10) {
                 GridRow {
@@ -84,9 +84,8 @@ struct VehicleView: View {
                         Text("\(fueling.odometer, format: .number)")
                         Text("\(fueling.amount, specifier: "%.3f")")
                         Text("\(fueling.cost, format: .currency(code: "usd"))")
-                            .gridColumnAlignment(.trailing)
+                            .frame(maxWidth: 70, alignment: .trailing)
                     }
-                    .frame(maxWidth: .infinity)
                     .onTapGesture {
                         fuelingInfoItem = fueling
                     }
