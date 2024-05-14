@@ -14,7 +14,6 @@
 		4905264D2A7F1C07000B964C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4905264C2A7F1C07000B964C /* Preview Assets.xcassets */; };
 		490526542A7F3171000B964C /* AddVehicleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490526532A7F3171000B964C /* AddVehicleView.swift */; };
 		49B6F6C42BE2E88D00799D24 /* VehiclePreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B6F6C32BE2E88D00799D24 /* VehiclePreview.swift */; };
-		49B6F6C62BE2F32600799D24 /* FuelingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B6F6C52BE2F32600799D24 /* FuelingView.swift */; };
 		49B6F6C82BE3167A00799D24 /* AddFuelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B6F6C72BE3167A00799D24 /* AddFuelView.swift */; };
 		49B6F6CC2BE3360400799D24 /* FuelingInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B6F6CB2BE3360400799D24 /* FuelingInfoView.swift */; };
 		49C2FE8C2A817E3E00F861B0 /* Fuel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C2FE8B2A817E3E00F861B0 /* Fuel.swift */; };
@@ -62,7 +61,6 @@
 		4905264C2A7F1C07000B964C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		490526532A7F3171000B964C /* AddVehicleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddVehicleView.swift; sourceTree = "<group>"; };
 		49B6F6C32BE2E88D00799D24 /* VehiclePreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehiclePreview.swift; sourceTree = "<group>"; };
-		49B6F6C52BE2F32600799D24 /* FuelingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelingView.swift; sourceTree = "<group>"; };
 		49B6F6C72BE3167A00799D24 /* AddFuelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFuelView.swift; sourceTree = "<group>"; };
 		49B6F6CB2BE3360400799D24 /* FuelingInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelingInfoView.swift; sourceTree = "<group>"; };
 		49C2FE8B2A817E3E00F861B0 /* Fuel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fuel.swift; sourceTree = "<group>"; };
@@ -119,7 +117,6 @@
 				490526432A7F1C05000B964C /* FuelingApp.swift */,
 				490526452A7F1C05000B964C /* ContentView.swift */,
 				49C2FE8D2A817F5500F861B0 /* VehicleView.swift */,
-				49B6F6C52BE2F32600799D24 /* FuelingView.swift */,
 				490526532A7F3171000B964C /* AddVehicleView.swift */,
 				49B6F6C72BE3167A00799D24 /* AddFuelView.swift */,
 				49B6F6CB2BE3360400799D24 /* FuelingInfoView.swift */,
@@ -324,7 +321,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				49C2FE8C2A817E3E00F861B0 /* Fuel.swift in Sources */,
-				49B6F6C62BE2F32600799D24 /* FuelingView.swift in Sources */,
 				49E26E362BE4047300E4A4E4 /* FuelingEditView.swift in Sources */,
 				49C2FE8E2A817F5500F861B0 /* VehicleView.swift in Sources */,
 				490526462A7F1C05000B964C /* ContentView.swift in Sources */,

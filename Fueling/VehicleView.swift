@@ -12,12 +12,12 @@ struct VehicleView: View {
     @Environment(\.modelContext) private var modelContext
     @Bindable var vehicle: Vehicle
     @State private var addFuelPresented = false
-    @State private var fuelingInfoPresented = false
-    @State private var editFuelItem: Fuel?
+    @State private var fuelingInfoItem: Fuel?
+    @State private var fuelingEditItem: Fuel?
 
     var body: some View {
         let _ = Self._printChanges()
-        VStack {
+        ScrollView {
             GroupBox {
                 Grid(alignment: .leading, horizontalSpacing: 30) {
                     GridRow {
@@ -65,36 +65,44 @@ struct VehicleView: View {
                 .font(.title)
                 .padding()
 
-            Grid(alignment: .trailing, horizontalSpacing: 30) {
+            Grid(alignment: .trailingFirstTextBaseline,
+                 horizontalSpacing: 10,
+                 verticalSpacing: 10) {
                 GridRow {
-                    Text("Date/Time").font(.headline)
-                    Text("Odometer").font(.headline)
-                    Text("Gallons").font(.headline)
-                    Text("Cost").font(.headline)
+                    Text("Date/Time")
+                    Text("Odometer")
+                    Text("Gallons")
+                        .gridColumnAlignment(.center)
+                    Text("Cost")
+                        .gridColumnAlignment(.center)
                 }
-            }
-
-            List {
+                .font(.headline)
+                Divider()
                 ForEach(vehicle.fuelingsByTimestamp()) { fueling in
-                    FuelingView(fueling: fueling)
-                        .frame(maxWidth: .infinity)
-                        .onTapGesture {
-                            fuelingInfoPresented.toggle()
-                        }
-                        .onLongPressGesture {
-                            editFuelItem = fueling
-                        }
-                        .sheet(isPresented: $fuelingInfoPresented) {
-                            FuelingInfoView(fueling: fueling)
-                                .presentationDetents([.medium])
-                        }
-                        .sheet(item: $editFuelItem) { fueling in
-                            FuelingEditView(fueling: fueling)
-                                .presentationDetents([.medium])
-                        }
+                    GridRow {
+                        Text("\(fueling.dateTime)")
+                        Text("\(fueling.odometer, format: .number)")
+                        Text("\(fueling.amount, specifier: "%.3f")")
+                        Text("\(fueling.cost, format: .currency(code: "usd"))")
+                            .frame(maxWidth: 70, alignment: .trailing)
+                    }
+                    .onTapGesture {
+                        fuelingInfoItem = fueling
+                    }
+                    .onLongPressGesture {
+                        fuelingEditItem = fueling
+                    }
+                    .sheet(item: $fuelingInfoItem) { item in
+                        FuelingInfoView(fueling: item)
+                            .presentationDetents([.medium])
+                    }
+                    .sheet(item: $fuelingEditItem) { item in
+                        FuelingEditView(fueling: item)
+                            .presentationDetents([.medium])
+                    }
                 }
             }
-            .listStyle(.plain)
+            .padding()
         }
         .navigationTitle("Vehicle Fuel Use")
         .toolbar {
