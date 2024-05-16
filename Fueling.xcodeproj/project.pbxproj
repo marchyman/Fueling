@@ -185,9 +185,9 @@
 				4905263C2A7F1C05000B964C /* Sources */,
 				4905263D2A7F1C05000B964C /* Frameworks */,
 				4905263E2A7F1C05000B964C /* Resources */,
-				49B6F6C92BE3315500799D24 /* ShellScript */,
 				49B6F6CA2BE331E300799D24 /* Swift Lint */,
 				49E26E5F2BE4580B00E4A4E4 /* Embed Watch Content */,
+				49B6F6C92BE3315500799D24 /* ShellScript */,
 			);
 			buildRules = (
 			);
