@@ -44,13 +44,13 @@ extension PhoneSession: WCSessionDelegate {
     }
 
     func session(_ session: WCSession,
-                 didReceiveMessage message: [String : Any]) {
+                 didReceiveMessage message: [String : Any],
+                 replyHandler: @escaping ([String: Any]) -> Void) {
         Self.log.notice("didReceiveMessage: \(message.debugDescription, privacy: .public)")
         for (key, value) in message where key == "get" {
             if let object = value as? String {
                 if object == "vehicles" {
-                    session.sendMessage(["vehicles" : vehicles.map { $0.name }],
-                                        replyHandler: nil)
+                    replyHandler(["vehicles" : vehicles.map { $0.name }])
                 }
             }
         }

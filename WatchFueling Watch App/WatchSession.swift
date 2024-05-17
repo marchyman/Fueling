@@ -39,8 +39,29 @@ extension WatchSession: WCSessionDelegate {
     }
 
     func session(_ session: WCSession,
+                 didReceiveApplicationContext applicationContext: [String : Any] ) {
+        Self.log.notice("didReceivedApplicationContext: \(applicationContext.debugDescription, privacy: .public)")
+    }
+
+    func session(_ session: WCSession,
                  didReceiveMessage message: [String : Any]) {
         Self.log.notice("didReceiveMessage: \(message.debugDescription, privacy: .public)")
     }
 
+    func session(_ session: WCSession,
+                 didReceiveMessage message: [String : Any],
+                 replyHandler: ([String: Any]) -> Void) {
+        Self.log.notice("didReceiveMessage:replyHandler: \(message.debugDescription, privacy: .public)")
+    }
+    
+    func session(_ session: WCSession,
+                 didReceiveMessageData messageData: Data) {
+        Self.log.notice("didReceiveMessageData: \(messageData.debugDescription, privacy: .public)")
+    }
+
+    func session(_ session: WCSession,
+                 didReceiveMessageData messageData: Data,
+                 replyHandler: (Data) -> Void) {
+        Self.log.notice("didReceiveMessageData:replyHandler: \(messageData.debugDescription, privacy: .public)")
+    }
 }

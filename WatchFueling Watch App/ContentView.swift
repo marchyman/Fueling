@@ -14,6 +14,9 @@ struct ContentView: View {
 
     var body: some View {
         NavigationSplitView {
+            if vehicles.isEmpty {
+                Text("No Vehicles Found")
+            }
             List(vehicles, id: \.self, selection: $selection) { vehicle in
                 NavigationLink(value: vehicle) {
                     Text("\(vehicle)")
@@ -23,12 +26,13 @@ struct ContentView: View {
             Text("detail view for \(selection ?? "unk")")
         }
         .padding()
-        .onAppear {
-//            if pairedSession.isReachable {
+        Button("Fetch vehicles") {
+            if pairedSession.isReachable {
                 pairedSession.session.sendMessage(["get" : "vehicles"],
-                                                  replyHandler: gotVehicles)
+                                                  replyHandler: gotVehicles,
+                                                  errorHandler: errorHandler)
                 WatchSession.log.notice("Sent get vehicles request.")
-//            }
+            }
         }
     }
 
@@ -40,6 +44,11 @@ struct ContentView: View {
                 vehicles = allVehicles
             }
         }
+    }
+
+    @MainActor
+    func errorHandler(error: Error) {
+        WatchSession.log.error("Error: \(error.localizedDescription)")
     }
 }
 
