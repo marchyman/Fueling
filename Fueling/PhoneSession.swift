@@ -9,15 +9,15 @@ import Foundation
 import OSLog
 import WatchConnectivity
 
-extension Logger: @unchecked Sendable {}
-
 final class PhoneSession: NSObject  {
+    let state: FuelingState
+
     static let log = Logger(subsystem: Bundle.main.bundleIdentifier!,
                             category: "PhoneSession")
     let session: WCSession = .default
-    var vehicles: [Vehicle] = []
 
-    override init() {
+    init(state: FuelingState) {
+        self.state = state
         super.init()
         if WCSession.isSupported() {
             session.delegate = self
@@ -50,7 +50,7 @@ extension PhoneSession: WCSessionDelegate {
         for (key, value) in message where key == "get" {
             if let object = value as? String {
                 if object == "vehicles" {
-                    replyHandler(["vehicles" : vehicles.map { $0.name }])
+                    replyHandler(["vehicles" : state.vehicles.map { $0.name }])
                 }
             }
         }

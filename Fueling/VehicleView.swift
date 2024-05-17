@@ -9,8 +9,8 @@ import SwiftData
 import SwiftUI
 
 struct VehicleView: View {
-    @Environment(\.modelContext) private var modelContext
-    @Bindable var vehicle: Vehicle
+    var vehicle: Vehicle
+
     @State private var addFuelPresented = false
     @State private var fuelingInfoItem: Fuel?
     @State private var fuelingEditItem: Fuel?
@@ -124,10 +124,9 @@ struct VehicleView: View {
 }
 
 #Preview {
-    let container = Vehicle.preview
-    let fetchDescriptor = FetchDescriptor<Vehicle>()
-    let vehicle = try! container.mainContext.fetch(fetchDescriptor)[0]
+    let state = FuelingState(forPreview: true)
     return NavigationStack {
-        VehicleView(vehicle: vehicle)
+        VehicleView(vehicle: state.vehicles[0])
+            .environment(state)
     }
 }

@@ -8,18 +8,19 @@
 import SwiftUI
 import SwiftData
 
+@MainActor
 struct ContentView: View {
-    @Environment(\.modelContext) private var modelContext
+    let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
+
+    @Environment(FuelingState.self) var state
+
     @State var path = NavigationPath()
     @State private var addVehiclePresented = false
-    @Query private var vehicles: [Vehicle]
-    let pairedSession = PhoneSession()
-    let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
 
     var body: some View {
         NavigationStack(path: $path) {
             List {
-                ForEach(vehicles) { vehicle in
+                ForEach(state.vehicles) { vehicle in
                     NavigationLink {
                         VehicleView(vehicle: vehicle)
                     } label: {
@@ -32,7 +33,7 @@ struct ContentView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     EditButton()
-                        .disabled(vehicles.isEmpty)
+                        .disabled(state.vehicles.isEmpty)
                 }
                 ToolbarItem {
                     Button(action: addVehicle) {
@@ -43,13 +44,8 @@ struct ContentView: View {
                     }
                 }
             }
-            .task(id: vehicles) {
-                await MainActor.run {
-                    pairedSession.vehicles = vehicles
-                }
-            }
             .overlay {
-                if vehicles.isEmpty {
+                if state.vehicles.isEmpty {
                     ContentUnavailableView("Please add a vehicle",
                                            systemImage: "car.fill")
                 }
@@ -58,6 +54,9 @@ struct ContentView: View {
         Text("Version \(appVersion != nil ? appVersion! : "Unknown")")
             .padding()
     }
+}
+
+extension ContentView {
 
     private func addVehicle() {
         addVehiclePresented.toggle()
@@ -66,7 +65,7 @@ struct ContentView: View {
     private func deleteVehicle(offsets: IndexSet) {
         withAnimation {
             for index in offsets {
-                modelContext.delete(vehicles[index])
+                state.delete(vehicle: state.vehicles[index])
             }
         }
     }
@@ -74,5 +73,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-        .modelContainer(Vehicle.preview)
+        .environment(FuelingState(forPreview: true))
 }
