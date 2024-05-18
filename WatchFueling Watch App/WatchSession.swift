@@ -9,11 +9,9 @@ import Foundation
 import OSLog
 import WatchConnectivity
 
-extension Logger: @unchecked Sendable {}
-
 final class WatchSession: NSObject  {
-    static let log = Logger(subsystem: Bundle.main.bundleIdentifier!,
-                            category: "WatchSession")
+    nonisolated static let log = Logger(subsystem: Bundle.main.bundleIdentifier!,
+                                        category: "WatchSession")
     let session: WCSession = .default
 
     var isReachable: Bool {

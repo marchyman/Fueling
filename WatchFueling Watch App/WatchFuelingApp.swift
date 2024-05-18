@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct WatchFueling_Watch_AppApp: App {
+    @State var watchState = WatchState()
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environment(watchState)
         }
     }
 }

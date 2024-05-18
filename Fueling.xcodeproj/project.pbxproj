@@ -27,6 +27,7 @@
 		49E26E5E2BE4580B00E4A4E4 /* WatchFueling Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 49E26E512BE4580B00E4A4E4 /* WatchFueling Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		49E26E652BE4598400E4A4E4 /* PhoneSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E26E642BE4598400E4A4E4 /* PhoneSession.swift */; };
 		49E26E672BE4622900E4A4E4 /* WatchSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E26E662BE4622900E4A4E4 /* WatchSession.swift */; };
+		49F677102BF82E1A00808CA7 /* WatchState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6770F2BF82E1A00808CA7 /* WatchState.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +76,7 @@
 		49E26E5A2BE4580B00E4A4E4 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		49E26E642BE4598400E4A4E4 /* PhoneSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneSession.swift; sourceTree = "<group>"; };
 		49E26E662BE4622900E4A4E4 /* WatchSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchSession.swift; sourceTree = "<group>"; };
+		49F6770F2BF82E1A00808CA7 /* WatchState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchState.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,8 +156,9 @@
 			isa = PBXGroup;
 			children = (
 				49E26E532BE4580B00E4A4E4 /* WatchFuelingApp.swift */,
-				49E26E552BE4580B00E4A4E4 /* ContentView.swift */,
+				49F6770F2BF82E1A00808CA7 /* WatchState.swift */,
 				49E26E662BE4622900E4A4E4 /* WatchSession.swift */,
+				49E26E552BE4580B00E4A4E4 /* ContentView.swift */,
 				49E26E572BE4580B00E4A4E4 /* Assets.xcassets */,
 				49E26E592BE4580B00E4A4E4 /* Preview Content */,
 			);
@@ -380,6 +383,7 @@
 				49E26E562BE4580B00E4A4E4 /* ContentView.swift in Sources */,
 				49E26E542BE4580B00E4A4E4 /* WatchFuelingApp.swift in Sources */,
 				49E26E672BE4622900E4A4E4 /* WatchSession.swift in Sources */,
+				49F677102BF82E1A00808CA7 /* WatchState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
