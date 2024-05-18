@@ -12,11 +12,30 @@ struct ContentView: View {
     @State private var selection: String?
 
     var body: some View {
-        Text("Start here")
-            .padding()
+        NavigationSplitView {
+            List(selection: $selection) {
+                ForEach(state.vehicles, id: \.self) { vehicle in
+                    Text(vehicle)
+                }
+            }
+            .listStyle(.carousel)
             .task {
                 state.getVehicles()
             }
+            .navigationTitle("Fueling")
+            .toolbar {
+                ToolbarItemGroup(placement: .bottomBar) {
+                    Spacer()
+                    Button {
+                        state.getVehicles()
+                    } label: {
+                        Label("Refresh", systemImage: "square.and.arrow.down")
+                    }
+                }
+            }
+        } detail: {
+            Text("\(selection ?? "unk") detail view")
+        }
     }
 }
 
