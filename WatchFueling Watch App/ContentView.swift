@@ -40,6 +40,12 @@ struct ContentView: View {
                 ContentUnavailableView("Select a vehicle", image: "car")
             }
         }
+        .opacity(state.vehicles.isEmpty ? 0.3 : 1.0)
+        .overlay {
+            ProgressView()
+                .opacity(state.vehicles.isEmpty ? 1.0 : 0)
+        }
+        .animation(.easeInOut, value: state.vehicles.isEmpty)
     }
 }
 

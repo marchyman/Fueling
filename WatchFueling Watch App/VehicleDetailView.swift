@@ -52,10 +52,11 @@ struct VehicleDetailView: View {
             }
             .opacity(state.fetching ? 0.3 : 1.0)
             .overlay {
-                ProgressView("Fetching stats")
+                ProgressView()
                     .opacity(state.fetching ? 1.0 : 0)
 
             }
+            .animation(.easeInOut, value: state.fetching)
         }
         .task {
             state.getVehicle(named: vehicle)
