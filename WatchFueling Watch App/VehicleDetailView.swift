@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct VehicleDetailView: View {
+    @Environment(WatchState.self) private var state
     var vehicle: String
 
     var body: some View {
@@ -16,27 +17,28 @@ struct VehicleDetailView: View {
                 Grid(alignment: .leading, horizontalSpacing: 20) {
                     GridRow {
                         Text("Cost")
-                        Text("\(7.23, format: .currency(code: "usd"))")
+                        Text("\(state.cost, format: .currency(code: "usd"))")
                     }
                     GridRow {
                         Text("Gallons")
-                        Text("\(1.23, specifier: "%.3f")")
+                        Text("\(state.gallons, specifier: "%.3f")")
                     }
                     GridRow {
                         Text("Miles")
-                        Text("\(123, format: .number)")
+                        Text("\(state.miles, format: .number)")
                     }
                     Divider()
                     GridRow {
                         Text("MPG")
-                        Text("\(123/1.23, specifier: "%0.1f")")
+                        Text("\(state.mpg, specifier: "%0.1f")")
                     }
                     GridRow {
-                        Text("CPG")
-                        Text("\(7.23/1.23, format: .currency(code: "usd"))")
+                        Text("$PG")
+                        Text("\(state.cpg, format: .currency(code: "usd"))")
                     }
                 }
             }
+            .padding(.horizontal)
             .navigationTitle(vehicle)
             .toolbar {
                 ToolbarItemGroup(placement: .bottomBar) {
@@ -48,10 +50,20 @@ struct VehicleDetailView: View {
                     }
                 }
             }
+            .opacity(state.fetching ? 0.3 : 1.0)
+            .overlay {
+                ProgressView("Fetching stats")
+                    .opacity(state.fetching ? 1.0 : 0)
+
+            }
+        }
+        .task {
+            state.getVehicle(named: vehicle)
         }
     }
 }
 
 #Preview {
     VehicleDetailView(vehicle: "Test vehicle")
+        .environment(WatchState())
 }

@@ -20,6 +20,8 @@
 		49C2FE8C2A817E3E00F861B0 /* Fuel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C2FE8B2A817E3E00F861B0 /* Fuel.swift */; };
 		49C2FE8E2A817F5500F861B0 /* VehicleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C2FE8D2A817F5500F861B0 /* VehicleView.swift */; };
 		49D4C70A2BF93A0F00B48E82 /* VehicleDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D4C7092BF93A0F00B48E82 /* VehicleDetailView.swift */; };
+		49D4C70D2BF9476800B48E82 /* MessageKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D4C70C2BF9476800B48E82 /* MessageKey.swift */; };
+		49D4C70E2BF9482800B48E82 /* MessageKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D4C70C2BF9476800B48E82 /* MessageKey.swift */; };
 		49E26E362BE4047300E4A4E4 /* FuelingEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E26E352BE4047300E4A4E4 /* FuelingEditView.swift */; };
 		49E26E542BE4580B00E4A4E4 /* WatchFuelingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E26E532BE4580B00E4A4E4 /* WatchFuelingApp.swift */; };
 		49E26E562BE4580B00E4A4E4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E26E552BE4580B00E4A4E4 /* ContentView.swift */; };
@@ -70,6 +72,7 @@
 		49C2FE8B2A817E3E00F861B0 /* Fuel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fuel.swift; sourceTree = "<group>"; };
 		49C2FE8D2A817F5500F861B0 /* VehicleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleView.swift; sourceTree = "<group>"; };
 		49D4C7092BF93A0F00B48E82 /* VehicleDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleDetailView.swift; sourceTree = "<group>"; };
+		49D4C70C2BF9476800B48E82 /* MessageKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageKey.swift; sourceTree = "<group>"; };
 		49E26E352BE4047300E4A4E4 /* FuelingEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelingEditView.swift; sourceTree = "<group>"; };
 		49E26E512BE4580B00E4A4E4 /* WatchFueling Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WatchFueling Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		49E26E532BE4580B00E4A4E4 /* WatchFuelingApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchFuelingApp.swift; sourceTree = "<group>"; };
@@ -102,6 +105,7 @@
 		490526372A7F1C05000B964C = {
 			isa = PBXGroup;
 			children = (
+				49D4C70B2BF9474800B48E82 /* Shared */,
 				490526422A7F1C05000B964C /* Fueling */,
 				49E26E522BE4580B00E4A4E4 /* WatchFueling Watch App */,
 				490526412A7F1C05000B964C /* Products */,
@@ -152,6 +156,14 @@
 				49BEDE882BF7110500D71CF4 /* FuelingDB.swift */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		49D4C70B2BF9474800B48E82 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				49D4C70C2BF9476800B48E82 /* MessageKey.swift */,
+			);
+			path = Shared;
 			sourceTree = "<group>";
 		};
 		49E26E522BE4580B00E4A4E4 /* WatchFueling Watch App */ = {
@@ -364,6 +376,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49D4C70E2BF9482800B48E82 /* MessageKey.swift in Sources */,
 				49C2FE8C2A817E3E00F861B0 /* Fuel.swift in Sources */,
 				49E26E362BE4047300E4A4E4 /* FuelingEditView.swift in Sources */,
 				49BEDE8B2BF71AEA00D71CF4 /* FuelingState.swift in Sources */,
@@ -383,6 +396,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49D4C70D2BF9476800B48E82 /* MessageKey.swift in Sources */,
 				49E26E562BE4580B00E4A4E4 /* ContentView.swift in Sources */,
 				49D4C70A2BF93A0F00B48E82 /* VehicleDetailView.swift in Sources */,
 				49E26E542BE4580B00E4A4E4 /* WatchFuelingApp.swift in Sources */,

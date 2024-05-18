@@ -28,6 +28,17 @@ final class PhoneSession: NSObject  {
     }
 }
 
+extension PhoneSession {
+    // build and return a plist of stats for a vehicle by name
+    func getStats(for vehicle: Vehicle) -> [String: Any] {
+        var plist: [String: Any] = [:]
+        plist[MessageKey.cost] = vehicle.fuelCost
+        plist[MessageKey.gallons] = vehicle.fuelUsed
+        plist[MessageKey.miles] = vehicle.milesDriven
+        return plist
+    }
+}
+
 extension PhoneSession: WCSessionDelegate {
     func session(_ session: WCSession,
                  activationDidCompleteWith activationState: WCSessionActivationState,
@@ -44,15 +55,20 @@ extension PhoneSession: WCSessionDelegate {
     }
 
     func session(_ session: WCSession,
-                 didReceiveMessage message: [String : Any],
+                 didReceiveMessage message: [String: Any],
                  replyHandler: @escaping ([String: Any]) -> Void) {
         Self.log.notice("didReceiveMessage: \(message.debugDescription, privacy: .public)")
-        for (key, value) in message where key == "get" {
-            if let object = value as? String {
-                if object == "vehicles" {
-                    replyHandler(["vehicles" : state.vehicles.map { $0.name }])
-                }
+        if message[MessageKey.get] as? String == MessageKey.vehicles {
+            replyHandler([MessageKey.vehicles : state.vehicles.map { $0.name }])
+        } else if let name = message[MessageKey.vehicle] as? String {
+            if let vehicle = state.vehicles.first(where: { $0.name == name }) {
+                replyHandler([name: getStats(for: vehicle)])
+            } else {
+                replyHandler([name: MessageKey.notFound])
             }
+        } else {
+            Self.log.error("Unknown message: \(message, privacy: .public)")
+            replyHandler(["request": MessageKey.notFound])
         }
     }
 }
