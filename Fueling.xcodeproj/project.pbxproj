@@ -19,6 +19,7 @@
 		49BEDE8B2BF71AEA00D71CF4 /* FuelingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BEDE8A2BF71AEA00D71CF4 /* FuelingState.swift */; };
 		49C2FE8C2A817E3E00F861B0 /* Fuel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C2FE8B2A817E3E00F861B0 /* Fuel.swift */; };
 		49C2FE8E2A817F5500F861B0 /* VehicleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C2FE8D2A817F5500F861B0 /* VehicleView.swift */; };
+		49D4C70A2BF93A0F00B48E82 /* VehicleDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D4C7092BF93A0F00B48E82 /* VehicleDetailView.swift */; };
 		49E26E362BE4047300E4A4E4 /* FuelingEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E26E352BE4047300E4A4E4 /* FuelingEditView.swift */; };
 		49E26E542BE4580B00E4A4E4 /* WatchFuelingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E26E532BE4580B00E4A4E4 /* WatchFuelingApp.swift */; };
 		49E26E562BE4580B00E4A4E4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E26E552BE4580B00E4A4E4 /* ContentView.swift */; };
@@ -68,6 +69,7 @@
 		49BEDE8A2BF71AEA00D71CF4 /* FuelingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelingState.swift; sourceTree = "<group>"; };
 		49C2FE8B2A817E3E00F861B0 /* Fuel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fuel.swift; sourceTree = "<group>"; };
 		49C2FE8D2A817F5500F861B0 /* VehicleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleView.swift; sourceTree = "<group>"; };
+		49D4C7092BF93A0F00B48E82 /* VehicleDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleDetailView.swift; sourceTree = "<group>"; };
 		49E26E352BE4047300E4A4E4 /* FuelingEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelingEditView.swift; sourceTree = "<group>"; };
 		49E26E512BE4580B00E4A4E4 /* WatchFueling Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WatchFueling Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		49E26E532BE4580B00E4A4E4 /* WatchFuelingApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchFuelingApp.swift; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 				49F6770F2BF82E1A00808CA7 /* WatchState.swift */,
 				49E26E662BE4622900E4A4E4 /* WatchSession.swift */,
 				49E26E552BE4580B00E4A4E4 /* ContentView.swift */,
+				49D4C7092BF93A0F00B48E82 /* VehicleDetailView.swift */,
 				49E26E572BE4580B00E4A4E4 /* Assets.xcassets */,
 				49E26E592BE4580B00E4A4E4 /* Preview Content */,
 			);
@@ -381,6 +384,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				49E26E562BE4580B00E4A4E4 /* ContentView.swift in Sources */,
+				49D4C70A2BF93A0F00B48E82 /* VehicleDetailView.swift in Sources */,
 				49E26E542BE4580B00E4A4E4 /* WatchFuelingApp.swift in Sources */,
 				49E26E672BE4622900E4A4E4 /* WatchSession.swift in Sources */,
 				49F677102BF82E1A00808CA7 /* WatchState.swift in Sources */,

@@ -34,7 +34,11 @@ struct ContentView: View {
                 }
             }
         } detail: {
-            Text("\(selection ?? "unk") detail view")
+            if let selection {
+                VehicleDetailView(vehicle: selection)
+            } else {
+                ContentUnavailableView("Select a vehicle", image: "car")
+            }
         }
     }
 }
