@@ -42,7 +42,8 @@ extension WatchState {
     // fetch the list of vehicle names
     func getVehicles() {
         if ws.session.isReachable {
-            Self.log.debug("get vehicles")
+            Self.log.debug("\(#function)")
+            fetching = true
             ws.session.sendMessage([MessageKey.get: MessageKey.vehicles],
                                    replyHandler: gotVehicles,
                                    errorHandler: errorHandler)
@@ -50,24 +51,17 @@ extension WatchState {
     }
 
     func gotVehicles(_ response: [String : Any]) {
-        WatchSession.log.notice("Got Vehicles:")
-        for (key, value) in response where key == MessageKey.vehicles {
-            Self.log.debug("vehicles key")
-            if let allVehicles = value as? [String] {
-                Task { @MainActor in
-                    vehicles = allVehicles
-                    Self.log.debug("vehicles: \(self.vehicles.debugDescription)")
-                }
-            } else {
-                Self.log.debug("vehicles not set")
-            }
+        Self.log.debug("\(#function): \(response, privacy: .public)")
+        if let allVehicles = response[MessageKey.vehicles] as? [String] {
+            vehicles = allVehicles
         }
+        fetching = false
     }
 
     // Fetch statistics for a specific vehicle
     func getVehicle(named vehicle: String) {
-        Self.log.debug("vehicle \(vehicle, privacy: .public)")
         if ws.session.isReachable {
+            Self.log.debug("\(#function): \(vehicle, privacy: .public)")
             fetching = true
             name = vehicle
             ws.session.sendMessage([MessageKey.vehicle: vehicle],
@@ -77,8 +71,7 @@ extension WatchState {
     }
 
     func gotVehicle(_ response: [String: Any]) {
-        Self.log.debug("Got Vehicle")
-        Self.log.debug("\(response, privacy: .public)")
+        Self.log.debug("\(#function): \(response, privacy: .public)")
         if let dict = response[name] as? [String: Any] {
             cost = dict[MessageKey.cost] as? Double ?? 0.0
             gallons = dict[MessageKey.gallons] as? Double ?? 0.0
@@ -92,6 +85,6 @@ extension WatchState {
     }
 
     func errorHandler(error: any Error) {
-        Self.log.error("error: \(error.localizedDescription)")
+        Self.log.error("\(#function): \(error.localizedDescription)")
     }
 }

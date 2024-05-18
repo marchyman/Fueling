@@ -13,10 +13,8 @@ struct ContentView: View {
 
     var body: some View {
         NavigationSplitView {
-            List(selection: $selection) {
-                ForEach(state.vehicles, id: \.self) { vehicle in
-                    Text(vehicle)
-                }
+            List(state.vehicles, id: \.self, selection: $selection) { vehicle in
+                Text(vehicle)
             }
             .listStyle(.carousel)
             .task {
@@ -37,7 +35,7 @@ struct ContentView: View {
             if let selection {
                 VehicleDetailView(vehicle: selection)
             } else {
-                ContentUnavailableView("Select a vehicle", image: "car")
+                ContentUnavailableView("Select a vehicle", systemImage: "car")
             }
         }
         .opacity(state.vehicles.isEmpty ? 0.3 : 1.0)
