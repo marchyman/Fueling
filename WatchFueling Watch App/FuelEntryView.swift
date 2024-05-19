@@ -13,7 +13,15 @@ struct FuelEntryView: View {
     @State private var cost: Double = 0
     @State private var gallons: Double = 0
     @State private var miles: Double = 0
-    @State private var presented = false
+    @State private var present: KeypadSelect?
+
+    enum KeypadSelect: Identifiable, CaseIterable {
+        case cost
+        case gallons
+        case miles
+
+        var id: Self { self }
+    }
 
     var body: some View {
         NavigationStack {
@@ -22,15 +30,17 @@ struct FuelEntryView: View {
                 GridRow {
                     Text("Cost")
                     Text("\(cost, format: .currency(code: "usd"))")
-                        .onTapGesture { presented.toggle() }
+                        .onTapGesture { present = .cost }
                 }
                 GridRow {
                     Text("Gallons")
                     Text("\(gallons, specifier: "%.3f")")
+                        .onTapGesture { present = .gallons }
                 }
                 GridRow {
                     Text("Miles")
                     Text("\(miles, format: .number)")
+                        .onTapGesture { present = .miles }
                 }
             }
             .navigationTitle(state.name.isEmpty ? "test" : state.name)
@@ -44,8 +54,15 @@ struct FuelEntryView: View {
                     }
                 }
             }
-            .sheet(isPresented: $presented) {
-                KeypadView(value: $cost)
+            .sheet(item: $present) { select in
+                switch select {
+                case .cost:
+                    KeypadView(value: $cost)
+                case .gallons:
+                    KeypadView(value: $gallons)
+                case .miles:
+                    KeypadView(value: $miles)
+                }
             }
         }
     }
