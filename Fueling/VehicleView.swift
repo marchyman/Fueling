@@ -9,6 +9,7 @@ import SwiftData
 import SwiftUI
 
 struct VehicleView: View {
+    @Environment(FuelingState.self) var state
     var vehicle: Vehicle
 
     @State private var addFuelPresented = false
@@ -21,8 +22,8 @@ struct VehicleView: View {
             GroupBox {
                 Grid(alignment: .leading, horizontalSpacing: 30) {
                     GridRow {
-                        Text("Odometer start:")
-                        Text("\(vehicle.odometer)")
+                        Text("Total cost:")
+                        Text("\(vehicle.fuelCost, format: .currency(code: "usd"))")
                     }
                     GridRow {
                         Text("Fuel used:")
@@ -32,13 +33,11 @@ struct VehicleView: View {
                         Text("Miles driven:")
                         Text("\(vehicle.milesDriven, format: .number)")
                     }
+                    Divider()
+                        .gridCellUnsizedAxes(.horizontal)
                     GridRow {
                         Text("Miles/gallon:")
                         Text("\(vehicle.mpg, specifier: "%0.1f")")
-                    }
-                    GridRow {
-                        Text("Total cost:")
-                        Text("\(vehicle.fuelCost, format: .currency(code: "usd"))")
                     }
                     GridRow {
                         Text("Cost/gallon")
@@ -53,8 +52,7 @@ struct VehicleView: View {
                 HStack {
                     Text("\(vehicle.name)")
                     Spacer()
-                    Text(vehicle.initialTimestamp.formatted(date: .abbreviated,
-                                                            time: .omitted))
+                    Text("\(vehicle.odometer) miles")
                 }
                 .padding()
             }

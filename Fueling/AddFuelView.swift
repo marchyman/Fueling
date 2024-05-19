@@ -91,8 +91,8 @@ extension AddFuelView {
             let odometer,
             let gallons,
             let cost else { return }
-        vehicle.fuelings.append(Fuel(odometer: odometer,
-                                     amount: gallons, cost: cost))
+        state.addFuel(vehicle: vehicle,
+                      fuel: Fuel(odometer: odometer, amount: gallons, cost: cost))
     }
 }
 

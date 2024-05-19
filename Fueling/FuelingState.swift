@@ -65,3 +65,17 @@ extension FuelingState {
 
     }
 }
+
+// add fueling entry to database
+extension FuelingState {
+
+    func addFuel(vehicle: Vehicle, fuel: Fuel) {
+        vehicle.fuelings.append(fuel)
+        do {
+            try fuelingDB.update(vehicle: vehicle)
+        } catch {
+            Self.log.error("#function: \(error.localizedDescription, privacy: .public)")
+        }
+    }
+
+}

@@ -73,9 +73,9 @@ extension PhoneSession: WCSessionDelegate {
             let miles = dict[MessageKey.miles] as? Int
             if let cost, let gallons, let miles,
                let vehicle = state.vehicles.first(where: { $0.name == name }) {
-                vehicle.fuelings.append(Fuel(odometer: miles,
-                                             amount: gallons,
-                                             cost: cost))
+                state.addFuel(vehicle: vehicle, fuel: Fuel(odometer: miles,
+                                                           amount: gallons,
+                                                           cost: cost))
                 replyHandler([name: getStats(for: vehicle)])
             } else {
                 replyHandler([name: MessageKey.notFound])
