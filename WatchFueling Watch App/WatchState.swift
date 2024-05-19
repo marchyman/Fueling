@@ -36,7 +36,7 @@ final class WatchState: @unchecked Sendable  {
     }
 }
 
-// fetch data from companion app
+// fetch/update data from/to companion app
 extension WatchState {
     
     // fetch the list of vehicle names
@@ -82,6 +82,26 @@ extension WatchState {
             miles = 0
         }
         fetching = false
+    }
+
+    func putFueling(vehicle: String,
+                    cost: Double,
+                    gallons: Double,
+                    miles: Double) {
+        if ws.session.isReachable {
+            Self.log.debug("\(#function): \(vehicle, privacy: .public)")
+            var plist: [String: Any] = [:]
+            plist[MessageKey.vehicle] = vehicle
+            plist[MessageKey.cost] = cost
+            plist[MessageKey.gallons] = gallons
+            plist[MessageKey.miles] = Int(miles)
+            fetching = true
+            name = vehicle
+            ws.session.sendMessage([MessageKey.put: plist],
+                                   replyHandler: gotVehicle,
+                                   errorHandler: errorHandler)
+        }
+
     }
 
     func errorHandler(error: any Error) {

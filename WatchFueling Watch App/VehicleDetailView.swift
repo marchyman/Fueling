@@ -55,7 +55,6 @@ struct VehicleDetailView: View {
             .overlay {
                 ProgressView()
                     .opacity(state.fetching ? 1.0 : 0)
-
             }
             .animation(.easeInOut, value: state.fetching)
         }

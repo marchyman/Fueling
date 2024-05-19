@@ -9,7 +9,7 @@ import Foundation
 import OSLog
 import WatchConnectivity
 
-final class PhoneSession: NSObject  {
+final class PhoneSession: NSObject {
     let state: FuelingState
 
     static let log = Logger(subsystem: Bundle.main.bundleIdentifier!,
@@ -66,6 +66,21 @@ extension PhoneSession: WCSessionDelegate {
             } else {
                 replyHandler([name: MessageKey.notFound])
             }
+        } else if let dict = message[MessageKey.put] as? [String: Any],
+                  let name = dict[MessageKey.vehicle] as? String {
+            let cost = dict[MessageKey.cost] as? Double
+            let gallons = dict[MessageKey.gallons] as? Double
+            let miles = dict[MessageKey.miles] as? Int
+            if let cost, let gallons, let miles,
+               let vehicle = state.vehicles.first(where: { $0.name == name }) {
+                vehicle.fuelings.append(Fuel(odometer: miles,
+                                             amount: gallons,
+                                             cost: cost))
+                replyHandler([name: getStats(for: vehicle)])
+            } else {
+                replyHandler([name: MessageKey.notFound])
+            }
+
         } else {
             Self.log.error("Unknown message: \(message, privacy: .public)")
             replyHandler(["request": MessageKey.notFound])

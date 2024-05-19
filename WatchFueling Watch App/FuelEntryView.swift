@@ -9,6 +9,7 @@ import SwiftUI
 
 struct FuelEntryView: View {
     @Environment(WatchState.self) private var state
+    @Environment(\.dismiss) var dismiss
 
     @State private var cost: Double = 0
     @State private var gallons: Double = 0
@@ -48,7 +49,11 @@ struct FuelEntryView: View {
                 ToolbarItemGroup(placement: .bottomBar) {
                     Spacer()
                     Button {
-                        // state.getVehicles()
+                        state.putFueling(vehicle: state.name,
+                                         cost: cost,
+                                         gallons: gallons,
+                                         miles: miles)
+                        dismiss()
                     } label: {
                         Label("Refresh", systemImage: "square.and.arrow.up")
                     }

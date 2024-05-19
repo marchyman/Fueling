@@ -106,11 +106,6 @@ struct VehicleView: View {
         }
         .navigationTitle("Vehicle Fuel Use")
         .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                EditButton()
-                    .disabled(vehicle.fuelings.isEmpty)
-            }
-
             ToolbarItem {
                 Button(action: { addFuelPresented.toggle() }) {
                     Label("Add fuel", systemImage: "plus")

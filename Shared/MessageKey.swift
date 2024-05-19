@@ -15,12 +15,12 @@ import Foundation
 // - watch sends:
 //   ["get": "vehicles"]
 // - phone replies:
-//   ["vehicle": [String]]
+//   ["Vehicle": [String]]
 //   [String] is an array of vehicle names.  The array may be empty.
 //
 // 2: Request statistics for a vehicle by name
 // - watch sends:
-//   ["vehicle": String]
+//   ["Vehicle": String]
 //   String is a vehicle name
 // - phone replies:
 //   [String : Dictionary]
@@ -31,13 +31,25 @@ import Foundation
 //       "Miles" : Int]
 //
 //   if the vehicle name is unknown the reply is:
-//   [String : "not found"]
+//      [String : "not found"]
+//
+// 3. Send fueling update to phone
+// - watch sends:
+//  ["put", Dictionary]
+//  Dictionary contains the following values
+//      ["Vehicle" : String,
+//       "Cost" : Double
+//       "Gallons" : Double,
+//       "Miles" : Int]
+// - phone reply is the same as in 2.
+
 
 
 enum MessageKey {
     static let get = "get"
+    static let put = "put"
     static let vehicles = "vehicles"
-    static let vehicle = "vehicle"
+    static let vehicle = "Vehicle"
     static let cost = "Cost"
     static let gallons = "Gallons"
     static let miles = "Miles"
