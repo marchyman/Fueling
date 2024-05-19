@@ -28,6 +28,7 @@ struct VehicleDetailView: View {
                         Text("\(state.miles, format: .number)")
                     }
                     Divider()
+                        .gridCellUnsizedAxes(.horizontal)
                     GridRow {
                         Text("MPG")
                         Text("\(state.mpg, specifier: "%0.1f")")
@@ -43,8 +44,8 @@ struct VehicleDetailView: View {
             .toolbar {
                 ToolbarItemGroup(placement: .bottomBar) {
                     Spacer()
-                    Button {
-                        //
+                    NavigationLink {
+                        FuelEntryView()
                     } label: {
                         Label("Add", systemImage: "gauge.medium.badge.plus")
                     }

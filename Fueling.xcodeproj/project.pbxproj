@@ -22,6 +22,8 @@
 		49D4C70A2BF93A0F00B48E82 /* VehicleDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D4C7092BF93A0F00B48E82 /* VehicleDetailView.swift */; };
 		49D4C70D2BF9476800B48E82 /* MessageKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D4C70C2BF9476800B48E82 /* MessageKey.swift */; };
 		49D4C70E2BF9482800B48E82 /* MessageKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D4C70C2BF9476800B48E82 /* MessageKey.swift */; };
+		49D4C7102BF9849900B48E82 /* FuelEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D4C70F2BF9849900B48E82 /* FuelEntryView.swift */; };
+		49D4C7122BF999D600B48E82 /* KeypadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D4C7112BF999D600B48E82 /* KeypadView.swift */; };
 		49E26E362BE4047300E4A4E4 /* FuelingEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E26E352BE4047300E4A4E4 /* FuelingEditView.swift */; };
 		49E26E542BE4580B00E4A4E4 /* WatchFuelingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E26E532BE4580B00E4A4E4 /* WatchFuelingApp.swift */; };
 		49E26E562BE4580B00E4A4E4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E26E552BE4580B00E4A4E4 /* ContentView.swift */; };
@@ -73,6 +75,8 @@
 		49C2FE8D2A817F5500F861B0 /* VehicleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleView.swift; sourceTree = "<group>"; };
 		49D4C7092BF93A0F00B48E82 /* VehicleDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleDetailView.swift; sourceTree = "<group>"; };
 		49D4C70C2BF9476800B48E82 /* MessageKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageKey.swift; sourceTree = "<group>"; };
+		49D4C70F2BF9849900B48E82 /* FuelEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelEntryView.swift; sourceTree = "<group>"; };
+		49D4C7112BF999D600B48E82 /* KeypadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeypadView.swift; sourceTree = "<group>"; };
 		49E26E352BE4047300E4A4E4 /* FuelingEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelingEditView.swift; sourceTree = "<group>"; };
 		49E26E512BE4580B00E4A4E4 /* WatchFueling Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WatchFueling Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		49E26E532BE4580B00E4A4E4 /* WatchFuelingApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchFuelingApp.swift; sourceTree = "<group>"; };
@@ -174,6 +178,8 @@
 				49E26E662BE4622900E4A4E4 /* WatchSession.swift */,
 				49E26E552BE4580B00E4A4E4 /* ContentView.swift */,
 				49D4C7092BF93A0F00B48E82 /* VehicleDetailView.swift */,
+				49D4C70F2BF9849900B48E82 /* FuelEntryView.swift */,
+				49D4C7112BF999D600B48E82 /* KeypadView.swift */,
 				49E26E572BE4580B00E4A4E4 /* Assets.xcassets */,
 				49E26E592BE4580B00E4A4E4 /* Preview Content */,
 			);
@@ -400,8 +406,10 @@
 				49E26E562BE4580B00E4A4E4 /* ContentView.swift in Sources */,
 				49D4C70A2BF93A0F00B48E82 /* VehicleDetailView.swift in Sources */,
 				49E26E542BE4580B00E4A4E4 /* WatchFuelingApp.swift in Sources */,
+				49D4C7122BF999D600B48E82 /* KeypadView.swift in Sources */,
 				49E26E672BE4622900E4A4E4 /* WatchSession.swift in Sources */,
 				49F677102BF82E1A00808CA7 /* WatchState.swift in Sources */,
+				49D4C7102BF9849900B48E82 /* FuelEntryView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
