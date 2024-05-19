@@ -9,9 +9,11 @@ import SwiftData
 import SwiftUI
 
 struct AddFuelView: View {
-    @Environment(\.modelContext) private var modelContext
+    @Environment(FuelingState.self) var state
     @Environment(\.dismiss) var dismiss
+
     var vehicle: Vehicle
+
     @State private var odometer: Int?
     @State private var gallons: Double?
     @State private var cost: Double?
@@ -69,6 +71,9 @@ struct AddFuelView: View {
             }
         }
     }
+}
+
+extension AddFuelView {
 
     private func validInput() -> Bool {
         guard
@@ -92,9 +97,7 @@ struct AddFuelView: View {
 }
 
 #Preview {
-    let container = Vehicle.preview
-    let fetchDescriptor = FetchDescriptor<Vehicle>()
-    let vehicle = try! container.mainContext.fetch(fetchDescriptor)[0]
-    return AddFuelView(vehicle: vehicle)
-        .modelContainer(for: Vehicle.self, inMemory: true)
+    let state = FuelingState(forPreview: true)
+    return AddFuelView(vehicle: state.vehicles[0])
+        .environment(state)
 }

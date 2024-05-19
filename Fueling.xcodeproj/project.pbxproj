@@ -13,13 +13,49 @@
 		4905264A2A7F1C07000B964C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 490526492A7F1C07000B964C /* Assets.xcassets */; };
 		4905264D2A7F1C07000B964C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4905264C2A7F1C07000B964C /* Preview Assets.xcassets */; };
 		490526542A7F3171000B964C /* AddVehicleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490526532A7F3171000B964C /* AddVehicleView.swift */; };
-		49B6F6C42BE2E88D00799D24 /* VehiclePreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B6F6C32BE2E88D00799D24 /* VehiclePreview.swift */; };
 		49B6F6C82BE3167A00799D24 /* AddFuelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B6F6C72BE3167A00799D24 /* AddFuelView.swift */; };
 		49B6F6CC2BE3360400799D24 /* FuelingInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B6F6CB2BE3360400799D24 /* FuelingInfoView.swift */; };
+		49BEDE892BF7110500D71CF4 /* FuelingDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BEDE882BF7110500D71CF4 /* FuelingDB.swift */; };
+		49BEDE8B2BF71AEA00D71CF4 /* FuelingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BEDE8A2BF71AEA00D71CF4 /* FuelingState.swift */; };
 		49C2FE8C2A817E3E00F861B0 /* Fuel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C2FE8B2A817E3E00F861B0 /* Fuel.swift */; };
 		49C2FE8E2A817F5500F861B0 /* VehicleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C2FE8D2A817F5500F861B0 /* VehicleView.swift */; };
+		49D4C70A2BF93A0F00B48E82 /* VehicleDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D4C7092BF93A0F00B48E82 /* VehicleDetailView.swift */; };
+		49D4C70D2BF9476800B48E82 /* MessageKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D4C70C2BF9476800B48E82 /* MessageKey.swift */; };
+		49D4C70E2BF9482800B48E82 /* MessageKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D4C70C2BF9476800B48E82 /* MessageKey.swift */; };
 		49E26E362BE4047300E4A4E4 /* FuelingEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E26E352BE4047300E4A4E4 /* FuelingEditView.swift */; };
+		49E26E542BE4580B00E4A4E4 /* WatchFuelingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E26E532BE4580B00E4A4E4 /* WatchFuelingApp.swift */; };
+		49E26E562BE4580B00E4A4E4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E26E552BE4580B00E4A4E4 /* ContentView.swift */; };
+		49E26E582BE4580B00E4A4E4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49E26E572BE4580B00E4A4E4 /* Assets.xcassets */; };
+		49E26E5B2BE4580B00E4A4E4 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49E26E5A2BE4580B00E4A4E4 /* Preview Assets.xcassets */; };
+		49E26E5E2BE4580B00E4A4E4 /* WatchFueling Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 49E26E512BE4580B00E4A4E4 /* WatchFueling Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		49E26E652BE4598400E4A4E4 /* PhoneSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E26E642BE4598400E4A4E4 /* PhoneSession.swift */; };
+		49E26E672BE4622900E4A4E4 /* WatchSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E26E662BE4622900E4A4E4 /* WatchSession.swift */; };
+		49F677102BF82E1A00808CA7 /* WatchState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6770F2BF82E1A00808CA7 /* WatchState.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		49E26E5C2BE4580B00E4A4E4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 490526382A7F1C05000B964C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 49E26E502BE4580B00E4A4E4;
+			remoteInfo = "WatchFueling Watch App";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		49E26E5F2BE4580B00E4A4E4 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				49E26E5E2BE4580B00E4A4E4 /* WatchFueling Watch App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		490526402A7F1C05000B964C /* Fueling.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Fueling.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -29,16 +65,34 @@
 		490526492A7F1C07000B964C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4905264C2A7F1C07000B964C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		490526532A7F3171000B964C /* AddVehicleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddVehicleView.swift; sourceTree = "<group>"; };
-		49B6F6C32BE2E88D00799D24 /* VehiclePreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehiclePreview.swift; sourceTree = "<group>"; };
 		49B6F6C72BE3167A00799D24 /* AddFuelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFuelView.swift; sourceTree = "<group>"; };
 		49B6F6CB2BE3360400799D24 /* FuelingInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelingInfoView.swift; sourceTree = "<group>"; };
+		49BEDE882BF7110500D71CF4 /* FuelingDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelingDB.swift; sourceTree = "<group>"; };
+		49BEDE8A2BF71AEA00D71CF4 /* FuelingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelingState.swift; sourceTree = "<group>"; };
 		49C2FE8B2A817E3E00F861B0 /* Fuel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fuel.swift; sourceTree = "<group>"; };
 		49C2FE8D2A817F5500F861B0 /* VehicleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleView.swift; sourceTree = "<group>"; };
+		49D4C7092BF93A0F00B48E82 /* VehicleDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleDetailView.swift; sourceTree = "<group>"; };
+		49D4C70C2BF9476800B48E82 /* MessageKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageKey.swift; sourceTree = "<group>"; };
 		49E26E352BE4047300E4A4E4 /* FuelingEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelingEditView.swift; sourceTree = "<group>"; };
+		49E26E512BE4580B00E4A4E4 /* WatchFueling Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WatchFueling Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		49E26E532BE4580B00E4A4E4 /* WatchFuelingApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchFuelingApp.swift; sourceTree = "<group>"; };
+		49E26E552BE4580B00E4A4E4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		49E26E572BE4580B00E4A4E4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		49E26E5A2BE4580B00E4A4E4 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		49E26E642BE4598400E4A4E4 /* PhoneSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneSession.swift; sourceTree = "<group>"; };
+		49E26E662BE4622900E4A4E4 /* WatchSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchSession.swift; sourceTree = "<group>"; };
+		49F6770F2BF82E1A00808CA7 /* WatchState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchState.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		4905263D2A7F1C05000B964C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		49E26E4E2BE4580B00E4A4E4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -51,7 +105,9 @@
 		490526372A7F1C05000B964C = {
 			isa = PBXGroup;
 			children = (
+				49D4C70B2BF9474800B48E82 /* Shared */,
 				490526422A7F1C05000B964C /* Fueling */,
+				49E26E522BE4580B00E4A4E4 /* WatchFueling Watch App */,
 				490526412A7F1C05000B964C /* Products */,
 			);
 			sourceTree = "<group>";
@@ -60,6 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				490526402A7F1C05000B964C /* Fueling.app */,
+				49E26E512BE4580B00E4A4E4 /* WatchFueling Watch App.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -68,6 +125,8 @@
 			isa = PBXGroup;
 			children = (
 				490526432A7F1C05000B964C /* FuelingApp.swift */,
+				49BEDE8A2BF71AEA00D71CF4 /* FuelingState.swift */,
+				49E26E642BE4598400E4A4E4 /* PhoneSession.swift */,
 				490526452A7F1C05000B964C /* ContentView.swift */,
 				49C2FE8D2A817F5500F861B0 /* VehicleView.swift */,
 				490526532A7F3171000B964C /* AddVehicleView.swift */,
@@ -93,10 +152,40 @@
 			isa = PBXGroup;
 			children = (
 				490526472A7F1C05000B964C /* Vehicle.swift */,
-				49B6F6C32BE2E88D00799D24 /* VehiclePreview.swift */,
 				49C2FE8B2A817E3E00F861B0 /* Fuel.swift */,
+				49BEDE882BF7110500D71CF4 /* FuelingDB.swift */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		49D4C70B2BF9474800B48E82 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				49D4C70C2BF9476800B48E82 /* MessageKey.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		49E26E522BE4580B00E4A4E4 /* WatchFueling Watch App */ = {
+			isa = PBXGroup;
+			children = (
+				49E26E532BE4580B00E4A4E4 /* WatchFuelingApp.swift */,
+				49F6770F2BF82E1A00808CA7 /* WatchState.swift */,
+				49E26E662BE4622900E4A4E4 /* WatchSession.swift */,
+				49E26E552BE4580B00E4A4E4 /* ContentView.swift */,
+				49D4C7092BF93A0F00B48E82 /* VehicleDetailView.swift */,
+				49E26E572BE4580B00E4A4E4 /* Assets.xcassets */,
+				49E26E592BE4580B00E4A4E4 /* Preview Content */,
+			);
+			path = "WatchFueling Watch App";
+			sourceTree = "<group>";
+		};
+		49E26E592BE4580B00E4A4E4 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				49E26E5A2BE4580B00E4A4E4 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -109,16 +198,37 @@
 				4905263C2A7F1C05000B964C /* Sources */,
 				4905263D2A7F1C05000B964C /* Frameworks */,
 				4905263E2A7F1C05000B964C /* Resources */,
-				49B6F6C92BE3315500799D24 /* ShellScript */,
 				49B6F6CA2BE331E300799D24 /* Swift Lint */,
+				49E26E5F2BE4580B00E4A4E4 /* Embed Watch Content */,
+				49B6F6C92BE3315500799D24 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				49E26E5D2BE4580B00E4A4E4 /* PBXTargetDependency */,
+			);
+			name = Fueling;
+			productName = Fueling;
+			productReference = 490526402A7F1C05000B964C /* Fueling.app */;
+			productType = "com.apple.product-type.application";
+		};
+		49E26E502BE4580B00E4A4E4 /* WatchFueling Watch App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 49E26E622BE4580B00E4A4E4 /* Build configuration list for PBXNativeTarget "WatchFueling Watch App" */;
+			buildPhases = (
+				49E26E4D2BE4580B00E4A4E4 /* Sources */,
+				49E26E4E2BE4580B00E4A4E4 /* Frameworks */,
+				49E26E4F2BE4580B00E4A4E4 /* Resources */,
+				49751C012BF4415500996E96 /* Run Script */,
+				49751C022BF441D700996E96 /* Swift Lint */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = Fueling;
-			productName = Fueling;
-			productReference = 490526402A7F1C05000B964C /* Fueling.app */;
+			name = "WatchFueling Watch App";
+			productName = "WatchFueling Watch App";
+			productReference = 49E26E512BE4580B00E4A4E4 /* WatchFueling Watch App.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -128,11 +238,14 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1500;
+				LastSwiftUpdateCheck = 1540;
 				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					4905263F2A7F1C05000B964C = {
 						CreatedOnToolsVersion = 15.0;
+					};
+					49E26E502BE4580B00E4A4E4 = {
+						CreatedOnToolsVersion = 15.4;
 					};
 				};
 			};
@@ -150,6 +263,7 @@
 			projectRoot = "";
 			targets = (
 				4905263F2A7F1C05000B964C /* Fueling */,
+				49E26E502BE4580B00E4A4E4 /* WatchFueling Watch App */,
 			);
 		};
 /* End PBXProject section */
@@ -164,9 +278,58 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		49E26E4F2BE4580B00E4A4E4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				49E26E5B2BE4580B00E4A4E4 /* Preview Assets.xcassets in Resources */,
+				49E26E582BE4580B00E4A4E4 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		49751C012BF4415500996E96 /* Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# This script automatically sets the version and short version string of\n# an Xcode project from the Git repository containing the project.\n#\n# To use this script in Xcode, add the script's path to a \"Run Script\" build\n# phase for your application target.\n\nset -o errexit\nset -o nounset\n\n# First, check for git in $PATH\nhash git 2>/dev/null || { echo >&2 \"Git required, not in path.  Aborting build number update script.\"; exit 0; }\n\n# Run Script build phases that operate on product files of the target that defines them should use the value of this\n# build setting [TARGET_BUILD_DIR].\nINFO_PLIST=\"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\n\n# Build version (closest-tag-or-branch \"-\" commits-since-tag \"-\" short-hash dirty-flag)\n# Bundle version starts with the total number of commits\nBUILD_VERSION=$(git describe --tags --always --dirty=+)\nBUNDLE_VERSION=$(git rev-list --count HEAD)\n\n# Use the latest tag for short version (expected tag format \"vn[.n[.n]]\")\n# or if there are no tags, we make up version 0.0.<commit count>\nLATEST_TAG=$(git describe --tags --match 'v*' --abbrev=0 2>/dev/null) || LATEST_TAG=\"HEAD\"\nif [ $LATEST_TAG = \"HEAD\" ]; then\n SHORT_VERSION=\"0.0.$BUNDLE_VERSION\"\nelse\n COMMIT_COUNT_SINCE_TAG=$(git rev-list --count ${LATEST_TAG}..HEAD)\n SHORT_VERSION=${LATEST_TAG##v}\n if [ ${COMMIT_COUNT_SINCE_TAG} -ne 0 ]; then\n  SHORT_VERSION=${SHORT_VERSION}.${COMMIT_COUNT_SINCE_TAG}\n fi\nfi\n\n# Append a \".1\" to the bundle version if the working dir is dirty\nif [ -n \"$(git status --porcelain)\" ]; then\nBUNDLE_VERSION=\"${BUNDLE_VERSION}.1\"\nfi\n\n# For debugging:\necho \"BUILD VERSION: $BUILD_VERSION\"\necho \"LATEST_TAG: $LATEST_TAG\"\necho \"SHORT VERSION: $SHORT_VERSION\"\necho \"BUNDLE_VERSION: $BUNDLE_VERSION\"\n\n/usr/libexec/PlistBuddy -c \"Add :CFBundleBuildVersion string $BUILD_VERSION\" \"$INFO_PLIST\" 2>/dev/null || /usr/libexec/PlistBuddy -c \"Set :CFBundleBuildVersion $BUILD_VERSION\" \"$INFO_PLIST\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $SHORT_VERSION\" \"$INFO_PLIST\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $BUNDLE_VERSION\" \"$INFO_PLIST\"\n";
+			showEnvVarsInLog = 0;
+		};
+		49751C022BF441D700996E96 /* Swift Lint */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Swift Lint";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftlint > /dev/null; then\n  echo swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		49B6F6C92BE3315500799D24 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
@@ -204,6 +367,7 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftlint > /dev/null; then\n  echo swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -212,20 +376,44 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49D4C70E2BF9482800B48E82 /* MessageKey.swift in Sources */,
 				49C2FE8C2A817E3E00F861B0 /* Fuel.swift in Sources */,
 				49E26E362BE4047300E4A4E4 /* FuelingEditView.swift in Sources */,
+				49BEDE8B2BF71AEA00D71CF4 /* FuelingState.swift in Sources */,
 				49C2FE8E2A817F5500F861B0 /* VehicleView.swift in Sources */,
 				490526462A7F1C05000B964C /* ContentView.swift in Sources */,
 				49B6F6C82BE3167A00799D24 /* AddFuelView.swift in Sources */,
 				49B6F6CC2BE3360400799D24 /* FuelingInfoView.swift in Sources */,
-				49B6F6C42BE2E88D00799D24 /* VehiclePreview.swift in Sources */,
+				49E26E652BE4598400E4A4E4 /* PhoneSession.swift in Sources */,
 				490526482A7F1C05000B964C /* Vehicle.swift in Sources */,
 				490526442A7F1C05000B964C /* FuelingApp.swift in Sources */,
+				49BEDE892BF7110500D71CF4 /* FuelingDB.swift in Sources */,
 				490526542A7F3171000B964C /* AddVehicleView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		49E26E4D2BE4580B00E4A4E4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				49D4C70D2BF9476800B48E82 /* MessageKey.swift in Sources */,
+				49E26E562BE4580B00E4A4E4 /* ContentView.swift in Sources */,
+				49D4C70A2BF93A0F00B48E82 /* VehicleDetailView.swift in Sources */,
+				49E26E542BE4580B00E4A4E4 /* WatchFuelingApp.swift in Sources */,
+				49E26E672BE4622900E4A4E4 /* WatchSession.swift in Sources */,
+				49F677102BF82E1A00808CA7 /* WatchState.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		49E26E5D2BE4580B00E4A4E4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 49E26E502BE4580B00E4A4E4 /* WatchFueling Watch App */;
+			targetProxy = 49E26E5C2BE4580B00E4A4E4 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		4905264E2A7F1C07000B964C /* Debug */ = {
@@ -352,6 +540,7 @@
 		490526512A7F1C07000B964C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -381,6 +570,7 @@
 		490526522A7F1C07000B964C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -407,6 +597,68 @@
 			};
 			name = Release;
 		};
+		49E26E602BE4580B00E4A4E4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"WatchFueling Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = A3UXBEBE8Z;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = WatchFueling;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = org.snafu.Fueling;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.snafu.Fueling.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.5;
+			};
+			name = Debug;
+		};
+		49E26E612BE4580B00E4A4E4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"WatchFueling Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = A3UXBEBE8Z;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = WatchFueling;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = org.snafu.Fueling;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.snafu.Fueling.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.5;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -424,6 +676,15 @@
 			buildConfigurations = (
 				490526512A7F1C07000B964C /* Debug */,
 				490526522A7F1C07000B964C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		49E26E622BE4580B00E4A4E4 /* Build configuration list for PBXNativeTarget "WatchFueling Watch App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				49E26E602BE4580B00E4A4E4 /* Debug */,
+				49E26E612BE4580B00E4A4E4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

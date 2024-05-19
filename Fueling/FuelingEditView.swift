@@ -62,11 +62,8 @@ struct FuelingEditView: View {
 }
 
 #Preview {
-    let container = Vehicle.preview
-    let fetchDescriptor = FetchDescriptor<Vehicle>(
-        predicate: #Predicate { $0.name == "Honda Accord" }
-    )
-    let vehicle = try! container.mainContext.fetch(fetchDescriptor)[0]
-    return FuelingEditView(fueling: vehicle.fuelings.first!)
-        .modelContainer(for: Vehicle.self, inMemory: true)
+    let state = FuelingState(forPreview: true)
+    let fueling = state.vehicles.first!.fuelings.first!
+    return FuelingEditView(fueling: fueling)
+        .environment(state)
 }

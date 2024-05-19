@@ -75,11 +75,8 @@ struct FuelingInfoView: View {
 }
 
 #Preview {
-    let container = Vehicle.preview
-    let fetchDescriptor = FetchDescriptor<Vehicle>(
-        predicate: #Predicate { $0.name == "Honda Accord" }
-    )
-    let vehicle = try! container.mainContext.fetch(fetchDescriptor)[0]
+    let state = FuelingState(forPreview: true)
+    let vehicle = state.vehicles.first!
     return FuelingInfoView(fueling: vehicle.fuelings.first!)
-        .modelContainer(for: Vehicle.self, inMemory: true)
+        .environment(state)
 }
