@@ -17,3 +17,6 @@ Notes:
   is not shown, e.g. the view is not updating.  Going back then re-selecting
   the vehicle shows current data.
 
+- Rethink data transfer.  Work on having phone send application context
+  whenever data changes because it happens som infrequently.  If the watch
+  doesn't have context when it awakens it can make a request.
