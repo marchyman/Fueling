@@ -40,48 +40,73 @@ final class WatchState: @unchecked Sendable  {
 extension WatchState {
     
     // fetch the list of vehicle names
+    // extra debug on this request as it is the first used to send a request
+    // for data to the companion app on the phone.
     func getVehicles() {
-        if ws.session.isReachable {
-            Self.log.debug("\(#function)")
-            fetching = true
-            ws.session.sendMessage([MessageKey.get: MessageKey.vehicles],
-                                   replyHandler: gotVehicles,
-                                   errorHandler: errorHandler)
+        guard ws.session.activationState == .activated else {
+            Self.log.debug("\(#function) session not activated")
+            return
         }
+        guard ws.session.isCompanionAppInstalled else {
+            Self.log.debug("\(#function) companion app not installed")
+            return
+        }
+        guard ws.session.isReachable else {
+            Self.log.debug("\(#function) session not reachable")
+            return
+        }
+        fetching = true
+        ws.session.sendMessage([MessageKey.get: MessageKey.vehicles],
+                               replyHandler: gotVehicles,
+                               errorHandler: errorHandler)
     }
 
     func gotVehicles(_ response: [String : Any]) {
-        Self.log.debug("\(#function): \(response, privacy: .public)")
+        Self.log.debug("\(#function) \(response, privacy: .public)")
         if let allVehicles = response[MessageKey.vehicles] as? [String] {
-            vehicles = allVehicles
+            Task { @MainActor in
+                vehicles = allVehicles
+                fetching = false
+            }
+        } else {
+            Task { @MainActor in fetching = false }
         }
-        fetching = false
     }
 
     // Fetch statistics for a specific vehicle
     func getVehicle(named vehicle: String) {
-        if ws.session.isReachable {
-            Self.log.debug("\(#function): \(vehicle, privacy: .public)")
-            fetching = true
-            name = vehicle
-            ws.session.sendMessage([MessageKey.vehicle: vehicle],
-                                   replyHandler: gotVehicle,
-                                   errorHandler: errorHandler)
+        guard ws.session.isReachable else {
+            Self.log.debug("\(#function) session not reachable")
+            return
         }
+        Self.log.notice("\(#function) \(vehicle, privacy: .public)")
+        fetching = true
+        name = vehicle
+        ws.session.sendMessage([MessageKey.vehicle: vehicle],
+                               replyHandler: gotVehicle,
+                               errorHandler: errorHandler)
     }
 
     func gotVehicle(_ response: [String: Any]) {
-        Self.log.debug("\(#function): \(response, privacy: .public)")
+        Self.log.notice("\(#function) \(response, privacy: .public)")
         if let dict = response[name] as? [String: Any] {
-            cost = dict[MessageKey.cost] as? Double ?? 0.0
-            gallons = dict[MessageKey.gallons] as? Double ?? 0.0
-            miles = dict[MessageKey.miles] as? Int ?? 0
+            let cost = dict[MessageKey.cost] as? Double ?? 0.0
+            let gallons = dict[MessageKey.gallons] as? Double ?? 0.0
+            let miles = dict[MessageKey.miles] as? Int ?? 0
+            Task { @MainActor in
+                self.cost = cost
+                self.gallons = gallons
+                self.miles = miles
+                fetching = false
+            }
         } else {
-            cost = 0
-            gallons = 0
-            miles = 0
+            Task { @MainActor in
+                cost = 0
+                gallons = 0
+                miles = 0
+                fetching = false
+            }
         }
-        fetching = false
     }
 
     func putFueling(vehicle: String,
@@ -89,7 +114,7 @@ extension WatchState {
                     gallons: Double,
                     miles: Double) {
         if ws.session.isReachable {
-            Self.log.debug("\(#function): \(vehicle, privacy: .public)")
+            Self.log.debug("\(#function) \(vehicle, privacy: .public)")
             var plist: [String: Any] = [:]
             plist[MessageKey.vehicle] = vehicle
             plist[MessageKey.cost] = cost
@@ -105,6 +130,6 @@ extension WatchState {
     }
 
     func errorHandler(error: any Error) {
-        Self.log.error("\(#function): \(error.localizedDescription)")
+        Self.log.error("\(#function) \(error.localizedDescription)")
     }
 }

@@ -13,10 +13,20 @@ struct ContentView: View {
 
     var body: some View {
         NavigationSplitView {
-            List(state.vehicles, id: \.self, selection: $selection) { vehicle in
-                Text(vehicle)
+            Group {
+                if state.vehicles.isEmpty {
+                    ContentUnavailableView {
+                        Label("No Vehicles", systemImage: "wifi.slash")
+                    } description: {
+                        Text("Click the download button to re-try.")
+                    }
+                } else {
+                    List(state.vehicles, id: \.self, selection: $selection) { vehicle in
+                        Text(vehicle)
+                    }
+                    .listStyle(.carousel)
+                }
             }
-            .listStyle(.carousel)
             .task {
                 state.getVehicles()
             }
@@ -38,12 +48,12 @@ struct ContentView: View {
                 ContentUnavailableView("Select a vehicle", systemImage: "car")
             }
         }
-        .opacity(state.vehicles.isEmpty ? 0.3 : 1.0)
+        .opacity(state.fetching ? 0.3 : 1.0)
         .overlay {
             ProgressView()
-                .opacity(state.vehicles.isEmpty ? 1.0 : 0)
+                .opacity(state.fetching ? 1.0 : 0)
         }
-        .animation(.easeInOut, value: state.vehicles.isEmpty)
+        .animation(.easeInOut, value: state.fetching)
     }
 }
 

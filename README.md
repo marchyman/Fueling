@@ -16,3 +16,4 @@ Notes:
   the Vehicle view for the vehicle that got a fueling update the new data
   is not shown, e.g. the view is not updating.  Going back then re-selecting
   the vehicle shows current data.
+
