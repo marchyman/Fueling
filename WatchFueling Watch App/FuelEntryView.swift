@@ -11,6 +11,8 @@ struct FuelEntryView: View {
     @Environment(WatchState.self) private var state
     @Environment(\.dismiss) var dismiss
 
+    var vehicle: Vehicle
+
     @State private var cost: Double = 0
     @State private var gallons: Double = 0
     @State private var miles: Double = 0
@@ -44,12 +46,12 @@ struct FuelEntryView: View {
                         .onTapGesture { present = .miles }
                 }
             }
-            .navigationTitle(state.name.isEmpty ? "test" : state.name)
+            .navigationTitle(vehicle.name)
             .toolbar {
                 ToolbarItemGroup(placement: .bottomBar) {
                     Spacer()
                     Button {
-                        state.putFueling(vehicle: state.name,
+                        state.putFueling(vehicle: vehicle,
                                          cost: cost,
                                          gallons: gallons,
                                          miles: miles)
@@ -74,6 +76,6 @@ struct FuelEntryView: View {
 }
 
 #Preview {
-    FuelEntryView()
+    FuelEntryView(vehicle: Vehicle.previewVehicle)
         .environment(WatchState())
 }

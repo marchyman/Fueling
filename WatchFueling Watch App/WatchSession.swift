@@ -9,7 +9,8 @@ import Foundation
 import OSLog
 import WatchConnectivity
 
-final class WatchSession: NSObject  {
+final class WatchSession: NSObject, @unchecked Sendable  {
+    let state: WatchState
     nonisolated static let log = Logger(subsystem: Bundle.main.bundleIdentifier!,
                                         category: "WatchSession")
     let session: WCSession = .default
@@ -18,7 +19,8 @@ final class WatchSession: NSObject  {
         session.isReachable
     }
 
-    override init() {
+    init(state: WatchState) {
+        self.state = state
         super.init()
         if WCSession.isSupported() {
             session.delegate = self
@@ -39,6 +41,16 @@ extension WatchSession: WCSessionDelegate {
     func session(_ session: WCSession,
                  didReceiveApplicationContext applicationContext: [String : Any] ) {
         Self.log.notice("didReceivedApplicationContext: \(applicationContext.debugDescription, privacy: .public)")
+        for (key, value) in applicationContext {
+            do {
+                let vehicle = try Vehicle(from: key, value: value)
+                Task { @MainActor in
+                    state.update(vehicle: vehicle)
+                }
+            } catch {
+                Self.log.error("\(#function) \(error.localizedDescription, privacy: .public)")
+            }
+        }
     }
 
     func session(_ session: WCSession,

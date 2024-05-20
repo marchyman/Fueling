@@ -13,6 +13,7 @@
 		4905264A2A7F1C07000B964C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 490526492A7F1C07000B964C /* Assets.xcassets */; };
 		4905264D2A7F1C07000B964C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4905264C2A7F1C07000B964C /* Preview Assets.xcassets */; };
 		490526542A7F3171000B964C /* AddVehicleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490526532A7F3171000B964C /* AddVehicleView.swift */; };
+		4982BD132BFBBDC400C42677 /* WatchVehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4982BD122BFBBDC400C42677 /* WatchVehicle.swift */; };
 		49B6F6C82BE3167A00799D24 /* AddFuelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B6F6C72BE3167A00799D24 /* AddFuelView.swift */; };
 		49B6F6CC2BE3360400799D24 /* FuelingInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B6F6CB2BE3360400799D24 /* FuelingInfoView.swift */; };
 		49BEDE892BF7110500D71CF4 /* FuelingDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BEDE882BF7110500D71CF4 /* FuelingDB.swift */; };
@@ -67,6 +68,7 @@
 		490526492A7F1C07000B964C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4905264C2A7F1C07000B964C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		490526532A7F3171000B964C /* AddVehicleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddVehicleView.swift; sourceTree = "<group>"; };
+		4982BD122BFBBDC400C42677 /* WatchVehicle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchVehicle.swift; sourceTree = "<group>"; };
 		49B6F6C72BE3167A00799D24 /* AddFuelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFuelView.swift; sourceTree = "<group>"; };
 		49B6F6CB2BE3360400799D24 /* FuelingInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelingInfoView.swift; sourceTree = "<group>"; };
 		49BEDE882BF7110500D71CF4 /* FuelingDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelingDB.swift; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 			children = (
 				49E26E532BE4580B00E4A4E4 /* WatchFuelingApp.swift */,
 				49F6770F2BF82E1A00808CA7 /* WatchState.swift */,
+				4982BD122BFBBDC400C42677 /* WatchVehicle.swift */,
 				49E26E662BE4622900E4A4E4 /* WatchSession.swift */,
 				49E26E552BE4580B00E4A4E4 /* ContentView.swift */,
 				49D4C7092BF93A0F00B48E82 /* VehicleDetailView.swift */,
@@ -409,6 +412,7 @@
 				49D4C7122BF999D600B48E82 /* KeypadView.swift in Sources */,
 				49E26E672BE4622900E4A4E4 /* WatchSession.swift in Sources */,
 				49F677102BF82E1A00808CA7 /* WatchState.swift in Sources */,
+				4982BD132BFBBDC400C42677 /* WatchVehicle.swift in Sources */,
 				49D4C7102BF9849900B48E82 /* FuelEntryView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
