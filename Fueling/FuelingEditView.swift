@@ -11,6 +11,7 @@ import SwiftUI
 struct FuelingEditView: View {
     @Environment(FuelingState.self) var state
     @Environment(\.dismiss) var dismiss
+
     @Bindable var fueling: Fuel
 
     var body: some View {

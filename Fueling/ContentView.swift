@@ -36,7 +36,7 @@ struct ContentView: View {
                         .disabled(state.vehicles.isEmpty)
                 }
                 ToolbarItem {
-                    Button(action: addVehicle) {
+                    Button { addVehiclePresented.toggle() } label: {
                         Label("Add Item", systemImage: "plus")
                     }
                     .sheet(isPresented: $addVehiclePresented) {
@@ -58,10 +58,6 @@ struct ContentView: View {
 
 extension ContentView {
 
-    private func addVehicle() {
-        addVehiclePresented.toggle()
-    }
-
     private func deleteVehicle(offsets: IndexSet) {
         withAnimation {
             for index in offsets {
@@ -75,3 +71,4 @@ extension ContentView {
     ContentView()
         .environment(FuelingState(forPreview: true))
 }
+//

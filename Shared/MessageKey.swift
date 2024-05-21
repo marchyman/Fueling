@@ -12,8 +12,8 @@ import Foundation
 Messages between watch and phone are in the form of property lists. The
 keys for the various properties are defined here.
 
-Version 2 data flow
-===================
+Watch <=> Companion application data flow
+=========================================
 
 - The phone will send an application context consisting of the names of known
   vehicles and fueling statistics about the vehicle at startup and whenever
@@ -31,7 +31,8 @@ Version 2 data flow
     ["get", "vehicles"]
 
   no message reply is expected. The phone will initiate an application context
-  update.
+  update. It seems, however, that if the context to send is identical to
+  the previous delivered context the phone will not send it again.
 
 - The watch sends fueling updates to the copanion application on the phone
   using this format:
@@ -50,6 +51,8 @@ Version 2 data flow
     ["put": "updated"]
     ["put": "some error message in the form of a string" ]
 
+  The phone will also send an application context message with updated
+  vehicle statistics.
 */
 
 enum MessageKey {

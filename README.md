@@ -1,14 +1,11 @@
 # Fueling
 
-A play app to keep track of gas mileage.  I'm using it to learn Apple
+A play app to keep track of vehicle fuel use.  I'm using it to learn Apple
 phone/watch interaction. All data is owned/persisted by the phone using
-SwiftData in a manner where it is **not** tied to SwiftUI.
+SwiftData.  SwiftData is used in a way that is not dependent upon SwiftUI.
 
-The watch requests data from the phone to show current state. See the comments
-in MessageKey.swift to see the data flow between the two devices.
+Data flow between the watch and the companion app is described in comments
+at the top of the file named MessageKey.swift.
 
 I don't pretend to know what I'm doing.  The purpose of this app is as much
 for me to learn as it is to do something useful.
-
-Notes:
-

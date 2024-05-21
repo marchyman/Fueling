@@ -10,6 +10,7 @@ import SwiftUI
 
 struct VehicleView: View {
     @Environment(FuelingState.self) var state
+
     var vehicle: Vehicle
 
     @State private var addFuelPresented = false
@@ -87,12 +88,12 @@ struct VehicleView: View {
                     .onTapGesture {
                         fuelingInfoItem = fueling
                     }
-                    .onLongPressGesture {
-                        fuelingEditItem = fueling
-                    }
                     .sheet(item: $fuelingInfoItem) { item in
                         FuelingInfoView(fueling: item)
                             .presentationDetents([.medium])
+                    }
+                    .onLongPressGesture {
+                        fuelingEditItem = fueling
                     }
                     .sheet(item: $fuelingEditItem) { item in
                         FuelingEditView(fueling: item)
@@ -105,7 +106,7 @@ struct VehicleView: View {
         .navigationTitle("Vehicle Fuel Use")
         .toolbar {
             ToolbarItem {
-                Button(action: { addFuelPresented.toggle() }) {
+                Button { addFuelPresented.toggle() } label: {
                     Label("Add fuel", systemImage: "plus")
                 }
                 .sheet(isPresented: $addFuelPresented) {

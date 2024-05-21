@@ -9,6 +9,9 @@ import Foundation
 import OSLog
 import SwiftUI
 
+// I don't know if this is correct, but it gets rid of warnings and if not
+// correct I don't much care if debug messages are messed up due to a
+// race condition.
 extension Logger: @unchecked Sendable {}
 
 @MainActor
@@ -32,18 +35,21 @@ final class FuelingState {
 
 extension FuelingState {
     // logging
-    nonisolated static let log = Logger(subsystem: Bundle.main.bundleIdentifier!,
-                                        category: "FuelingState")
+    static let log = Logger(subsystem: Bundle.main.bundleIdentifier!,
+                            category: "FuelingState")
 }
 
 extension FuelingState {
-    // populate the vehicles array from database contents
+
+    // populate the vehicles array from database contents.  Private to
+    // this class as all outside access to vehicles should be through
+    // the class vehicle array.
     private func getVehicles() throws {
         vehicles = try fuelingDB.read(sortBy: SortDescriptor<Vehicle>(\.name))
     }
 
     // build and return a plist of current stats for a vehicle
-    func getStats(for vehicle: Vehicle) -> [String: Any] {
+    private func getStats(for vehicle: Vehicle) -> [String: Any] {
         var plist: [String: Any] = [:]
         plist[MessageKey.cost] = vehicle.fuelCost
         plist[MessageKey.gallons] = vehicle.fuelUsed
@@ -52,7 +58,9 @@ extension FuelingState {
     }
 
     // send the current app state (vehicle name and stats) to the watch
-    // as an application context message
+    // as an application context message.  Lots of checks here as this
+    // is the first communications sent by the phone and I'd like to
+    // see the debug messages if things fail when testing.
     func sendAppContext() {
         guard ps.session.activationState == .activated else {
             Self.log.debug("\(#function) session not activated")
@@ -78,13 +86,17 @@ extension FuelingState {
         }
     }
 
-    // create a fueling entry and add it to the named vehicle
+    // create a fueling entry and add it to the named vehicle. Returns a
+    // status string forwarded to the watch when fueling additions are the
+    // result of watch input.
     @discardableResult
     func addFuel(name: String, cost: Double, gallons: Double, odometer: Int) -> String {
         if let vehicle = vehicles.first(where: { $0.name == name }) {
             let fuel = Fuel(odometer: odometer, amount: gallons, cost: cost)
             vehicle.fuelings.append(fuel)
             do {
+                // Is the update necessary?  I believe appending the Fuel entry
+                // is adequate, but am not sure.  This doesn't hurt.
                 try fuelingDB.update(vehicle: vehicle)
                 sendAppContext()
                 return MessageKey.updated
@@ -98,6 +110,7 @@ extension FuelingState {
 }
 
 // create/update/delete operation on fuelingDB
+// reads are handled by getVehicles, above.
 extension FuelingState {
 
     func create(vehicle: Vehicle) {

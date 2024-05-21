@@ -10,6 +10,7 @@ import SwiftUI
 
 struct FuelingInfoView: View {
     @Environment(\.dismiss) var dismiss
+
     var fueling: Fuel
 
     var body: some View {
@@ -51,6 +52,9 @@ struct FuelingInfoView: View {
             .padding()
         }
     }
+}
+
+extension FuelingInfoView {
 
     private func mpg(miles: Int, gallons: Double) -> Double {
         if gallons != 0 {
