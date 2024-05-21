@@ -12,30 +12,28 @@ struct VehicleDetailView: View {
 
     var body: some View {
         NavigationStack {
-            VStack {
-                Grid(alignment: .leading, horizontalSpacing: 20) {
-                    GridRow {
-                        Text("Cost")
-                        Text("\(vehicle.cost, format: .currency(code: "usd"))")
-                    }
-                    GridRow {
-                        Text("Gallons")
-                        Text("\(vehicle.gallons, specifier: "%.3f")")
-                    }
-                    GridRow {
-                        Text("Miles")
-                        Text("\(vehicle.miles, format: .number)")
-                    }
-                    Divider()
-                        .gridCellUnsizedAxes(.horizontal)
-                    GridRow {
-                        Text("MPG")
-                        Text("\(vehicle.mpg, specifier: "%0.1f")")
-                    }
-                    GridRow {
-                        Text("$PG")
-                        Text("\(vehicle.cpg, format: .currency(code: "usd"))")
-                    }
+            Grid(alignment: .leading, horizontalSpacing: 20) {
+                GridRow {
+                    Text("Cost")
+                    Text("\(vehicle.cost, format: .currency(code: "usd"))")
+                }
+                GridRow {
+                    Text("Gallons")
+                    Text("\(vehicle.gallons, specifier: "%.3f")")
+                }
+                GridRow {
+                    Text("Miles")
+                    Text("\(vehicle.miles, format: .number)")
+                }
+                Divider()
+                    .gridCellUnsizedAxes(.horizontal)
+                GridRow {
+                    Text("MPG")
+                    Text("\(vehicle.mpg, specifier: "%0.1f")")
+                }
+                GridRow {
+                    Text("$PG")
+                    Text("\(vehicle.cpg, format: .currency(code: "usd"))")
                 }
             }
             .padding(.horizontal)

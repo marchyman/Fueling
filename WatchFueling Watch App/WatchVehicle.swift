@@ -40,6 +40,7 @@ extension Vehicle{
     }
 }
 
+// compare on vehicle name for sorting
 extension Vehicle: Comparable {
     static func < (lhs: Vehicle, rhs: Vehicle) -> Bool {
         lhs.name < rhs.name

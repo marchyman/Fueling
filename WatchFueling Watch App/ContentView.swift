@@ -17,7 +17,7 @@ struct ContentView: View {
                     ContentUnavailableView {
                         Label("No Vehicles", systemImage: "iphone.slash")
                     } description: {
-                        Text("Tap on the download button to fetch vehicles from your phone.")
+                        Text("Tap on the download button to fetch the list of vehicles from your phone.")
                     }
                 } else {
                     List(state.vehicles, selection: $selection) { vehicle in
@@ -33,7 +33,7 @@ struct ContentView: View {
                     Button {
                         state.getVehicles()
                     } label: {
-                        Label("Refresh", systemImage: "square.and.arrow.down")
+                        Label("Download", systemImage: "square.and.arrow.down")
                     }
                 }
             }
@@ -51,9 +51,14 @@ struct ContentView: View {
         }
         .animation(.easeInOut, value: state.fetching)
         .task {
-            // request the application context. Try up to 5 times with a
+            // when the list of known vehicles is empty send a message
+            // to the companion app requesting that it send an
+            // application context update.  The context contains known
+            // vehicles along with their current stats. Try to send
+            // the getVehicles message up to 5 times with a
             // pause between tries in case the communications channel is
-            // not yet set up.
+            // not yet set up. However, sending the message is no guarantee
+            // that the companion app will respond.
             if state.vehicles.isEmpty {
                 state.fetching = true
                 for _ in 1...5 {

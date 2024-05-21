@@ -26,22 +26,24 @@ final class WatchSession: NSObject, @unchecked Sendable  {
 
 extension WatchSession {
     // logging
-    nonisolated static let log = Logger(subsystem: Bundle.main.bundleIdentifier!,
-                                        category: "WatchSession")
+    static let log = Logger(subsystem: Bundle.main.bundleIdentifier!,
+                            category: "WatchSession")
 }
 
 extension WatchSession: WCSessionDelegate {
     func session(_ session: WCSession,
                  activationDidCompleteWith activationState: WCSessionActivationState,
                  error: (any Error)?) {
-        Self.log.notice("activationDidCompleteWith \(activationState.rawValue)")
+        Self.log.notice("\(#function) \(activationState.rawValue)")
     }
 
+    // the only data the watch expects to recieve that isn't a response to
+    // message sent is an application context update. Process that here.
     func session(_ session: WCSession,
                  didReceiveApplicationContext applicationContext: [String : Any] ) {
         var vehicles: [Vehicle] = []
 
-        Self.log.notice("didReceivedApplicationContext: \(applicationContext.debugDescription, privacy: .public)")
+        Self.log.notice("\(#function) \(applicationContext.debugDescription, privacy: .public)")
         for (key, value) in applicationContext {
             do {
                 let vehicle = try Vehicle(from: key, value: value)
@@ -56,26 +58,4 @@ extension WatchSession: WCSessionDelegate {
             state.fetching = false
         }
     }
-
-//    func session(_ session: WCSession,
-//                 didReceiveMessage message: [String : Any]) {
-//        Self.log.notice("didReceiveMessage: \(message.debugDescription, privacy: .public)")
-//    }
-//
-//    func session(_ session: WCSession,
-//                 didReceiveMessage message: [String : Any],
-//                 replyHandler: ([String: Any]) -> Void) {
-//        Self.log.notice("didReceiveMessage:replyHandler: \(message.debugDescription, privacy: .public)")
-//    }
-//    
-//    func session(_ session: WCSession,
-//                 didReceiveMessageData messageData: Data) {
-//        Self.log.notice("didReceiveMessageData: \(messageData.debugDescription, privacy: .public)")
-//    }
-//
-//    func session(_ session: WCSession,
-//                 didReceiveMessageData messageData: Data,
-//                 replyHandler: (Data) -> Void) {
-//        Self.log.notice("didReceiveMessageData:replyHandler: \(messageData.debugDescription, privacy: .public)")
-//    }
 }

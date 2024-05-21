@@ -8,6 +8,7 @@ import SwiftUI
 
 struct KeypadView: View {
     @Environment(\.dismiss) var dismiss
+
     @Binding var value: Double
     let title: String
 
@@ -50,9 +51,7 @@ struct KeypadView: View {
             .navigationTitle(title)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button {
-                        dismiss()
-                    } label: {
+                    Button { dismiss() } label: {
                         Image(systemName: "xmark")
                             .font(.footnote)
                     }
@@ -71,6 +70,9 @@ struct KeypadView: View {
             }
         }
     }
+}
+
+extension KeypadView {
 
     private func addChar(_ key: Character) {
         if key == "." && stringValue.contains(".") { return }
@@ -110,6 +112,7 @@ struct KeyCap: View {
             }
     }
 }
+
 #Preview {
     KeypadView(value: .constant(1.23), title: "Odometer")
 }
