@@ -1,8 +1,7 @@
 //
-//  ContentView.swift
-//  WatchFueling Watch App
-//
-//  Created by Marco S Hyman on 5/2/24.
+// Copyright 2024 Marco S Hyman
+// See LICENSE file for info
+// https://www.snafu.org/
 //
 
 import SwiftUI

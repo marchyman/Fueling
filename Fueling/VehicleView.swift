@@ -1,8 +1,7 @@
 //
-//  VehicleView.swift
-//  Fueling
-//
-//  Created by Marco S Hyman on 8/7/23.
+// Copyright 2024 Marco S Hyman
+// See LICENSE file for info
+// https://www.snafu.org/
 //
 
 import SwiftData
