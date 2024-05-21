@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @Environment(WatchState.self) private var state
-    @State private var selection: String?
+    @State private var selection: Vehicle.ID?
 
     var body: some View {
         NavigationSplitView {
@@ -21,14 +21,11 @@ struct ContentView: View {
                         Text("Click the download button to re-try.")
                     }
                 } else {
-                    List(state.vehicles, id: \.self, selection: $selection) { vehicle in
-                        Text(vehicle)
+                    List(state.vehicles, selection: $selection) { vehicle in
+                        Text(vehicle.name)
                     }
                     .listStyle(.carousel)
                 }
-            }
-            .task {
-                state.getVehicles()
             }
             .navigationTitle("Fueling")
             .toolbar {
@@ -42,8 +39,8 @@ struct ContentView: View {
                 }
             }
         } detail: {
-            if let selection {
-                VehicleDetailView(vehicle: selection)
+            if let vehicle = state.vehicles.first(where: { $0.id == selection }) {
+                VehicleDetailView(vehicle: vehicle)
             } else {
                 ContentUnavailableView("Select a vehicle", systemImage: "car")
             }

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct VehicleDetailView: View {
     @Environment(WatchState.self) private var state
-    var vehicle: String
+    var vehicle: Vehicle
 
     var body: some View {
         NavigationStack {
@@ -17,35 +17,35 @@ struct VehicleDetailView: View {
                 Grid(alignment: .leading, horizontalSpacing: 20) {
                     GridRow {
                         Text("Cost")
-                        Text("\(state.cost, format: .currency(code: "usd"))")
+                        Text("\(vehicle.cost, format: .currency(code: "usd"))")
                     }
                     GridRow {
                         Text("Gallons")
-                        Text("\(state.gallons, specifier: "%.3f")")
+                        Text("\(vehicle.gallons, specifier: "%.3f")")
                     }
                     GridRow {
                         Text("Miles")
-                        Text("\(state.miles, format: .number)")
+                        Text("\(vehicle.miles, format: .number)")
                     }
                     Divider()
                         .gridCellUnsizedAxes(.horizontal)
                     GridRow {
                         Text("MPG")
-                        Text("\(state.mpg, specifier: "%0.1f")")
+                        Text("\(vehicle.mpg, specifier: "%0.1f")")
                     }
                     GridRow {
                         Text("$PG")
-                        Text("\(state.cpg, format: .currency(code: "usd"))")
+                        Text("\(vehicle.cpg, format: .currency(code: "usd"))")
                     }
                 }
             }
             .padding(.horizontal)
-            .navigationTitle(vehicle)
+            .navigationTitle(vehicle.name)
             .toolbar {
                 ToolbarItemGroup(placement: .bottomBar) {
                     Spacer()
                     NavigationLink {
-                        FuelEntryView()
+                        FuelEntryView(vehicle: vehicle)
                     } label: {
                         Label("Add", systemImage: "gauge.medium.badge.plus")
                     }
@@ -58,13 +58,10 @@ struct VehicleDetailView: View {
             }
             .animation(.easeInOut, value: state.fetching)
         }
-        .task {
-            state.getVehicle(named: vehicle)
-        }
     }
 }
 
 #Preview {
-    VehicleDetailView(vehicle: "Test vehicle")
+    VehicleDetailView(vehicle: Vehicle.previewVehicle)
         .environment(WatchState())
 }

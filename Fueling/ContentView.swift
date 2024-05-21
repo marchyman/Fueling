@@ -10,12 +10,12 @@ import SwiftData
 
 @MainActor
 struct ContentView: View {
-    let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
-
     @Environment(FuelingState.self) var state
 
     @State var path = NavigationPath()
     @State private var addVehiclePresented = false
+
+    let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
 
     var body: some View {
         NavigationStack(path: $path) {

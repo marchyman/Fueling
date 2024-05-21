@@ -11,15 +11,17 @@ struct FuelEntryView: View {
     @Environment(WatchState.self) private var state
     @Environment(\.dismiss) var dismiss
 
+    var vehicle: Vehicle
+
     @State private var cost: Double = 0
     @State private var gallons: Double = 0
-    @State private var miles: Double = 0
+    @State private var odometer: Double = 0
     @State private var present: KeypadSelect?
 
     enum KeypadSelect: Identifiable, CaseIterable {
         case cost
         case gallons
-        case miles
+        case odometer
 
         var id: Self { self }
     }
@@ -39,20 +41,20 @@ struct FuelEntryView: View {
                         .onTapGesture { present = .gallons }
                 }
                 GridRow {
-                    Text("Miles")
-                    Text("\(miles, format: .number)")
-                        .onTapGesture { present = .miles }
+                    Text("Odometer")
+                    Text("\(odometer, format: .number)")
+                        .onTapGesture { present = .odometer }
                 }
             }
-            .navigationTitle(state.name.isEmpty ? "test" : state.name)
+            .navigationTitle(vehicle.name)
             .toolbar {
                 ToolbarItemGroup(placement: .bottomBar) {
                     Spacer()
                     Button {
-                        state.putFueling(vehicle: state.name,
+                        state.putFueling(vehicle: vehicle,
                                          cost: cost,
                                          gallons: gallons,
-                                         miles: miles)
+                                         odometer: odometer)
                         dismiss()
                     } label: {
                         Label("Refresh", systemImage: "square.and.arrow.up")
@@ -65,8 +67,8 @@ struct FuelEntryView: View {
                     KeypadView(value: $cost)
                 case .gallons:
                     KeypadView(value: $gallons)
-                case .miles:
-                    KeypadView(value: $miles)
+                case .odometer:
+                    KeypadView(value: $odometer)
                 }
             }
         }
@@ -74,6 +76,6 @@ struct FuelEntryView: View {
 }
 
 #Preview {
-    FuelEntryView()
+    FuelEntryView(vehicle: Vehicle.previewVehicle)
         .environment(WatchState())
 }

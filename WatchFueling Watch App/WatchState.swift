@@ -11,37 +11,39 @@ import SwiftUI
 
 extension Logger: @unchecked Sendable {}
 
+@MainActor
 @Observable
-final class WatchState: @unchecked Sendable  {
-    nonisolated static let log = Logger(subsystem: Bundle.main.bundleIdentifier!,
-                                        category: "WatchState")
-    var vehicles: [String] = []
-    var ws = WatchSession()
+final class WatchState {
+    var vehicles: [Vehicle] = []
+    private var ws: WatchSession!
 
     // data fetched when a vehicle is selected
     var fetching = false
-    var name: String = ""
-    var cost: Double = 0
-    var gallons: Double = 0
-    var miles: Int = 0
-    var mpg: Double {
-        gallons == 0 ? 0 : Double(miles) / gallons
-    }
-    var cpg: Double {
-        gallons == 0 ? 0 : cost / gallons
-    }
 
     init() {
-        //
+        ws = WatchSession(state: self)
     }
 }
 
-// fetch/update data from/to companion app
+extension WatchState {
+    // logging
+    nonisolated static let log = Logger(subsystem: Bundle.main.bundleIdentifier!,
+                                        category: "WatchState")
+}
+
 extension WatchState {
     
-    // fetch the list of vehicle names
-    // extra debug on this request as it is the first used to send a request
-    // for data to the companion app on the phone.
+    // update the vehicles array.
+    func update(vehicle: Vehicle) {
+        if let index = vehicles.firstIndex(where: { $0.name == vehicle.name }) {
+            vehicles[index] = vehicle
+        } else {
+            vehicles.append(vehicle)
+        }
+    }
+
+    // Request vehicle data.  This will trigger an application context update
+    // when received by the companion app on the phone.
     func getVehicles() {
         guard ws.session.activationState == .activated else {
             Self.log.debug("\(#function) session not activated")
@@ -55,78 +57,39 @@ extension WatchState {
             Self.log.debug("\(#function) session not reachable")
             return
         }
-        fetching = true
+//        fetching = true
         ws.session.sendMessage([MessageKey.get: MessageKey.vehicles],
-                               replyHandler: gotVehicles,
+                               replyHandler: nil,
                                errorHandler: errorHandler)
+        Self.log.debug("\(#function) Sent get vehicles ")
     }
 
-    func gotVehicles(_ response: [String : Any]) {
-        Self.log.debug("\(#function) \(response, privacy: .public)")
-        if let allVehicles = response[MessageKey.vehicles] as? [String] {
-            Task { @MainActor in
-                vehicles = allVehicles
-                fetching = false
-            }
-        } else {
-            Task { @MainActor in fetching = false }
-        }
-    }
-
-    // Fetch statistics for a specific vehicle
-    func getVehicle(named vehicle: String) {
-        guard ws.session.isReachable else {
-            Self.log.debug("\(#function) session not reachable")
-            return
-        }
-        Self.log.notice("\(#function) \(vehicle, privacy: .public)")
-        fetching = true
-        name = vehicle
-        ws.session.sendMessage([MessageKey.vehicle: vehicle],
-                               replyHandler: gotVehicle,
-                               errorHandler: errorHandler)
-    }
-
-    func gotVehicle(_ response: [String: Any]) {
-        Self.log.notice("\(#function) \(response, privacy: .public)")
-        if let dict = response[name] as? [String: Any] {
-            let cost = dict[MessageKey.cost] as? Double ?? 0.0
-            let gallons = dict[MessageKey.gallons] as? Double ?? 0.0
-            let miles = dict[MessageKey.miles] as? Int ?? 0
-            Task { @MainActor in
-                self.cost = cost
-                self.gallons = gallons
-                self.miles = miles
-                fetching = false
-            }
-        } else {
-            Task { @MainActor in
-                cost = 0
-                gallons = 0
-                miles = 0
-                fetching = false
-            }
-        }
-    }
-
-    func putFueling(vehicle: String,
+    // Send fueling data to the companion app on the phone.
+    func putFueling(vehicle: Vehicle,
                     cost: Double,
                     gallons: Double,
-                    miles: Double) {
+                    odometer: Double) {
         if ws.session.isReachable {
-            Self.log.debug("\(#function) \(vehicle, privacy: .public)")
+            Self.log.debug("\(#function) \(vehicle.name, privacy: .public)")
             var plist: [String: Any] = [:]
-            plist[MessageKey.vehicle] = vehicle
+            plist[MessageKey.vehicle] = vehicle.name
             plist[MessageKey.cost] = cost
             plist[MessageKey.gallons] = gallons
-            plist[MessageKey.miles] = Int(miles)
+            plist[MessageKey.miles] = Int(odometer)
             fetching = true
-            name = vehicle
             ws.session.sendMessage([MessageKey.put: plist],
-                                   replyHandler: gotVehicle,
+                                   replyHandler: putStatus,
                                    errorHandler: errorHandler)
         }
+    }
 
+    func putStatus(_ response: [String: Any]) {
+        Self.log.debug("\(#function) \(response, privacy: .public)")
+        fetching = false
+        let value = response[MessageKey.put] as? String ?? "Bad response"
+        if value != MessageKey.updated {
+            Self.log.error("\(#function) \(value, privacy: .public)")
+        }
     }
 
     func errorHandler(error: any Error) {
