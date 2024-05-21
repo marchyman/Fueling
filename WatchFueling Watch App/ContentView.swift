@@ -51,6 +51,21 @@ struct ContentView: View {
                 .opacity(state.fetching ? 1.0 : 0)
         }
         .animation(.easeInOut, value: state.fetching)
+        .task {
+            // request the application context. Try up to 5 times with a
+            // pause between tries in case the communications channel is
+            // not yet set up.
+            if state.vehicles.isEmpty {
+                state.fetching = true
+                for _ in 1...5 {
+                    if state.getVehicles() {
+                        break
+                    }
+                    try? await Task.sleep(for: .seconds(1))
+                }
+                state.fetching = false
+            }
+        }
     }
 }
 

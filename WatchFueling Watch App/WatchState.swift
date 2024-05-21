@@ -44,24 +44,25 @@ extension WatchState {
 
     // Request vehicle data.  This will trigger an application context update
     // when received by the companion app on the phone.
-    func getVehicles() {
+    @discardableResult
+    func getVehicles() -> Bool {
         guard ws.session.activationState == .activated else {
             Self.log.debug("\(#function) session not activated")
-            return
+            return false
         }
         guard ws.session.isCompanionAppInstalled else {
             Self.log.debug("\(#function) companion app not installed")
-            return
+            return false
         }
         guard ws.session.isReachable else {
             Self.log.debug("\(#function) session not reachable")
-            return
+            return false
         }
-//        fetching = true
         ws.session.sendMessage([MessageKey.get: MessageKey.vehicles],
                                replyHandler: nil,
                                errorHandler: errorHandler)
         Self.log.debug("\(#function) Sent get vehicles ")
+        return true
     }
 
     // Send fueling data to the companion app on the phone.
