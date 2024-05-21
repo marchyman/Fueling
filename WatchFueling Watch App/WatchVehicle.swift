@@ -35,7 +35,14 @@ extension Vehicle{
             self.cost = dict[MessageKey.cost] as? Double ?? 0.0
             self.gallons = dict[MessageKey.gallons] as? Double ?? 0.0
             self.miles = dict[MessageKey.miles] as? Int ?? 0
+        } else {
+            throw VehicleModelError.badPlist
         }
-        throw VehicleModelError.badPlist
+    }
+}
+
+extension Vehicle: Comparable {
+    static func < (lhs: Vehicle, rhs: Vehicle) -> Bool {
+        lhs.name < rhs.name
     }
 }

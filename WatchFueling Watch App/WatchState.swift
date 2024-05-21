@@ -14,10 +14,8 @@ extension Logger: @unchecked Sendable {}
 @MainActor
 @Observable
 final class WatchState {
-    nonisolated static let log = Logger(subsystem: Bundle.main.bundleIdentifier!,
-                                        category: "WatchState")
     var vehicles: [Vehicle] = []
-    var ws: WatchSession!
+    private var ws: WatchSession!
 
     // data fetched when a vehicle is selected
     var fetching = false
@@ -28,8 +26,14 @@ final class WatchState {
 }
 
 extension WatchState {
+    // logging
+    nonisolated static let log = Logger(subsystem: Bundle.main.bundleIdentifier!,
+                                        category: "WatchState")
+}
+
+extension WatchState {
     
-    // update the vehicles arrayx.
+    // update the vehicles array.
     func update(vehicle: Vehicle) {
         if let index = vehicles.firstIndex(where: { $0.name == vehicle.name }) {
             vehicles[index] = vehicle
@@ -53,24 +57,25 @@ extension WatchState {
             Self.log.debug("\(#function) session not reachable")
             return
         }
-        fetching = true
+//        fetching = true
         ws.session.sendMessage([MessageKey.get: MessageKey.vehicles],
                                replyHandler: nil,
                                errorHandler: errorHandler)
+        Self.log.debug("\(#function) Sent get vehicles ")
     }
 
     // Send fueling data to the companion app on the phone.
     func putFueling(vehicle: Vehicle,
                     cost: Double,
                     gallons: Double,
-                    miles: Double) {
+                    odometer: Double) {
         if ws.session.isReachable {
             Self.log.debug("\(#function) \(vehicle.name, privacy: .public)")
             var plist: [String: Any] = [:]
             plist[MessageKey.vehicle] = vehicle.name
             plist[MessageKey.cost] = cost
             plist[MessageKey.gallons] = gallons
-            plist[MessageKey.miles] = Int(miles)
+            plist[MessageKey.miles] = Int(odometer)
             fetching = true
             ws.session.sendMessage([MessageKey.put: plist],
                                    replyHandler: putStatus,

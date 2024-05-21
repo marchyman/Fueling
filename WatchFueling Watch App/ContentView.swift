@@ -27,9 +27,6 @@ struct ContentView: View {
                     .listStyle(.carousel)
                 }
             }
-            .task {
-                state.getVehicles()
-            }
             .navigationTitle("Fueling")
             .toolbar {
                 ToolbarItemGroup(placement: .bottomBar) {

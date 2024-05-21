@@ -14,9 +14,9 @@ struct AddFuelView: View {
 
     var vehicle: Vehicle
 
-    @State private var odometer: Int?
     @State private var gallons: Double?
     @State private var cost: Double?
+    @State private var odometer: Int?
 
     var body: some View {
         VStack {
@@ -62,8 +62,11 @@ struct AddFuelView: View {
                 }
 
                 Button("Add") {
-                    addFuel()
-                    dismiss()
+                    if let cost, let gallons, let odometer {
+                        state.addFuel(name: vehicle.name, cost: cost,
+                                      gallons: gallons, odometer: odometer)
+                        dismiss()
+                    }
                 }
                 .padding()
                 .buttonStyle(.borderedProminent)
@@ -74,7 +77,6 @@ struct AddFuelView: View {
 }
 
 extension AddFuelView {
-
     private func validInput() -> Bool {
         guard
             let odometer,
@@ -84,15 +86,6 @@ extension AddFuelView {
             gallons != 0,
             cost != 0 else { return false }
         return true
-    }
-
-    private func addFuel() {
-        guard
-            let odometer,
-            let gallons,
-            let cost else { return }
-        state.addFuel(vehicle: vehicle,
-                      fuel: Fuel(odometer: odometer, amount: gallons, cost: cost))
     }
 }
 

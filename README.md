@@ -12,11 +12,3 @@ for me to learn as it is to do something useful.
 
 Notes:
 
-- updates from watch seem to be working but...  If the phone app is showing
-  the Vehicle view for the vehicle that got a fueling update the new data
-  is not shown, e.g. the view is not updating.  Going back then re-selecting
-  the vehicle shows current data.
-
-- Rethink data transfer.  Work on having phone send application context
-  whenever data changes because it happens som infrequently.  If the watch
-  doesn't have context when it awakens it can make a request.
