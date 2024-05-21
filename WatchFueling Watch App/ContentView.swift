@@ -16,9 +16,9 @@ struct ContentView: View {
             Group {
                 if state.vehicles.isEmpty {
                     ContentUnavailableView {
-                        Label("No Vehicles", systemImage: "wifi.slash")
+                        Label("No Vehicles", systemImage: "iphone.slash")
                     } description: {
-                        Text("Click the download button to re-try.")
+                        Text("Tap on the download button to fetch vehicles from your phone.")
                     }
                 } else {
                     List(state.vehicles, selection: $selection) { vehicle in
