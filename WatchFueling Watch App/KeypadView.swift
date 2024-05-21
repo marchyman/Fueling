@@ -10,12 +10,15 @@ import SwiftUI
 struct KeypadView: View {
     @Environment(\.dismiss) var dismiss
     @Binding var value: Double
+    let title: String
+
     @State private var stringValue: String = "0"
 
     var body: some View {
         NavigationStack {
             VStack(alignment: .trailing) {
                 Text(stringValue)
+                    .bold()
                 Grid(alignment: .bottom) {
                     GridRow {
                         KeyCap("1", keyHit: addChar)
@@ -36,7 +39,7 @@ struct KeypadView: View {
                         KeyCap(".", keyHit: addChar)
                         KeyCap("0", keyHit: addChar)
                         Image(systemName: "delete.left.fill")
-                            .frame(width: 50, height: 35)
+                            .frame(width: 50, height: 32)
                             .background(.gray)
                             .cornerRadius(7)
                             .onTapGesture {
@@ -45,6 +48,7 @@ struct KeypadView: View {
                     }
                 }
             }
+            .navigationTitle(title)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button {
@@ -99,7 +103,7 @@ struct KeyCap: View {
 
     var body: some View {
         Text(String(keyCap))
-            .frame(width: 50, height: 35)
+            .frame(width: 50, height: 32)
             .background(.gray)
             .cornerRadius(7)
             .onTapGesture {
@@ -108,5 +112,5 @@ struct KeyCap: View {
     }
 }
 #Preview {
-    KeypadView(value: .constant(1.23))
+    KeypadView(value: .constant(1.23), title: "Odometer")
 }

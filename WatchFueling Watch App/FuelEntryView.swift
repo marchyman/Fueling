@@ -64,11 +64,11 @@ struct FuelEntryView: View {
             .sheet(item: $present) { select in
                 switch select {
                 case .cost:
-                    KeypadView(value: $cost)
+                    KeypadView(value: $cost, title: "Cost")
                 case .gallons:
-                    KeypadView(value: $gallons)
+                    KeypadView(value: $gallons, title: "Gallons")
                 case .odometer:
-                    KeypadView(value: $odometer)
+                    KeypadView(value: $odometer, title: "Odometer")
                 }
             }
         }
