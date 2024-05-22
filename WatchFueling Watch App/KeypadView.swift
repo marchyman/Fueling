@@ -15,59 +15,57 @@ struct KeypadView: View {
     @State private var stringValue: String = "0"
 
     var body: some View {
-        NavigationStack {
-            VStack(alignment: .trailing) {
-                Text(stringValue)
-                    .bold()
-                Grid(alignment: .bottom) {
-                    GridRow {
-                        KeyCap("1", keyHit: addChar)
-                        KeyCap("2", keyHit: addChar)
-                        KeyCap("3", keyHit: addChar)
-                    }
-                    GridRow {
-                        KeyCap("4", keyHit: addChar)
-                        KeyCap("5", keyHit: addChar)
-                        KeyCap("6", keyHit: addChar)
-                    }
-                    GridRow {
-                        KeyCap("7", keyHit: addChar)
-                        KeyCap("8", keyHit: addChar)
-                        KeyCap("9", keyHit: addChar)
-                    }
-                    GridRow {
-                        KeyCap(".", keyHit: addChar)
-                        KeyCap("0", keyHit: addChar)
-                        Image(systemName: "delete.left.fill")
-                            .frame(width: 50, height: 32)
-                            .background(.gray)
-                            .cornerRadius(7)
-                            .onTapGesture {
-                                deleteChar()
-                            }
-                    }
+        VStack(alignment: .trailing) {
+            Text(stringValue)
+                .bold()
+            Grid(alignment: .bottom) {
+                GridRow {
+                    KeyCap("1", keyHit: addChar)
+                    KeyCap("2", keyHit: addChar)
+                    KeyCap("3", keyHit: addChar)
+                }
+                GridRow {
+                    KeyCap("4", keyHit: addChar)
+                    KeyCap("5", keyHit: addChar)
+                    KeyCap("6", keyHit: addChar)
+                }
+                GridRow {
+                    KeyCap("7", keyHit: addChar)
+                    KeyCap("8", keyHit: addChar)
+                    KeyCap("9", keyHit: addChar)
+                }
+                GridRow {
+                    KeyCap(".", keyHit: addChar)
+                    KeyCap("0", keyHit: addChar)
+                    Image(systemName: "delete.left.fill")
+                        .frame(width: 50, height: 32)
+                        .background(.gray)
+                        .cornerRadius(7)
+                        .onTapGesture {
+                            deleteChar()
+                        }
                 }
             }
-            .navigationTitle(title)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button { dismiss() } label: {
-                        Image(systemName: "xmark")
-                            .font(.footnote)
-                    }
-                }
-                ToolbarItem(placement: .confirmationAction) {
-                    Button("Done") {
-                        value = Double(stringValue) ?? 0
-                        dismiss()
-                    }
-                    .font(.caption2)
-                    .buttonStyle(.plain)
+        }
+        .navigationTitle(title)
+        .toolbar {
+            ToolbarItem(placement: .cancellationAction) {
+                Button { dismiss() } label: {
+                    Image(systemName: "xmark")
+                        .font(.footnote)
                 }
             }
-            .onAppear {
-                stringValue = String(value)
+            ToolbarItem(placement: .confirmationAction) {
+                Button("Done") {
+                    value = Double(stringValue) ?? 0
+                    dismiss()
+                }
+                .font(.caption2)
+                .buttonStyle(.plain)
             }
+        }
+        .onAppear {
+            stringValue = String(value)
         }
     }
 }
@@ -114,5 +112,7 @@ struct KeyCap: View {
 }
 
 #Preview {
-    KeypadView(value: .constant(1.23), title: "Odometer")
+    NavigationStack {
+        KeypadView(value: .constant(1.23), title: "Odometer")
+    }
 }

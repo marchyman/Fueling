@@ -26,55 +26,55 @@ struct FuelEntryView: View {
     }
 
     var body: some View {
-        NavigationStack {
-            Grid(alignment: .leading, horizontalSpacing: 20,
-                 verticalSpacing: 25) {
-                GridRow {
-                    Text("Cost")
-                    Text("\(cost, format: .currency(code: "usd"))")
-                        .onTapGesture { present = .cost }
-                }
-                GridRow {
-                    Text("Gallons")
-                    Text("\(gallons, specifier: "%.3f")")
-                        .onTapGesture { present = .gallons }
-                }
-                GridRow {
-                    Text("Odometer")
-                    Text("\(odometer, format: .number)")
-                        .onTapGesture { present = .odometer }
+        Grid(alignment: .leading, horizontalSpacing: 20,
+             verticalSpacing: 25) {
+            GridRow {
+                Text("Cost")
+                Text("\(cost, format: .currency(code: "usd"))")
+                    .onTapGesture { present = .cost }
+            }
+            GridRow {
+                Text("Gallons")
+                Text("\(gallons, specifier: "%.3f")")
+                    .onTapGesture { present = .gallons }
+            }
+            GridRow {
+                Text("Odometer")
+                Text("\(odometer, format: .number)")
+                    .onTapGesture { present = .odometer }
+            }
+        }
+        .navigationTitle(vehicle.name)
+        .toolbar {
+            ToolbarItemGroup(placement: .bottomBar) {
+                Spacer()
+                Button {
+                    state.putFueling(vehicle: vehicle,
+                                     cost: cost,
+                                     gallons: gallons,
+                                     odometer: odometer)
+                    dismiss()
+                } label: {
+                    Label("Refresh", systemImage: "square.and.arrow.up")
                 }
             }
-            .navigationTitle(vehicle.name)
-            .toolbar {
-                ToolbarItemGroup(placement: .bottomBar) {
-                    Spacer()
-                    Button {
-                        state.putFueling(vehicle: vehicle,
-                                         cost: cost,
-                                         gallons: gallons,
-                                         odometer: odometer)
-                        dismiss()
-                    } label: {
-                        Label("Refresh", systemImage: "square.and.arrow.up")
-                    }
-                }
-            }
-            .sheet(item: $present) { select in
-                switch select {
-                case .cost:
-                    KeypadView(value: $cost, title: "Cost")
-                case .gallons:
-                    KeypadView(value: $gallons, title: "Gallons")
-                case .odometer:
-                    KeypadView(value: $odometer, title: "Odometer")
-                }
+        }
+        .sheet(item: $present) { select in
+            switch select {
+            case .cost:
+                KeypadView(value: $cost, title: "Cost")
+            case .gallons:
+                KeypadView(value: $gallons, title: "Gallons")
+            case .odometer:
+                KeypadView(value: $odometer, title: "Odometer")
             }
         }
     }
 }
 
 #Preview {
-    FuelEntryView(vehicle: Vehicle.previewVehicle)
-        .environment(WatchState())
+    NavigationStack {
+        FuelEntryView(vehicle: Vehicle.previewVehicle)
+            .environment(WatchState())
+    }
 }
