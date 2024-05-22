@@ -6,7 +6,7 @@
 
 import Foundation
 
-struct Vehicle: Identifiable, Sendable {
+struct Vehicle: Identifiable, Sendable, Hashable {
     let name: String
     let cost: Double
     let gallons: Double

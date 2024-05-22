@@ -8,7 +8,7 @@ import SwiftUI
 
 struct ContentView: View {
     @Environment(WatchState.self) private var state
-    @State private var selection: Vehicle.ID?
+    @State private var selectedVehicle: Vehicle?
 
     var body: some View {
         NavigationSplitView {
@@ -20,8 +20,11 @@ struct ContentView: View {
                         Text("Tap on the download button to fetch the list of vehicles from your phone.")
                     }
                 } else {
-                    List(state.vehicles, selection: $selection) { vehicle in
-                        Text(vehicle.name)
+                    List(state.vehicles, selection: $selectedVehicle) { vehicle in
+                        NavigationLink(value: vehicle) {
+                            Text(vehicle.name)
+                                .tag(vehicle.name)
+                        }
                     }
                     .listStyle(.carousel)
                 }
@@ -38,8 +41,8 @@ struct ContentView: View {
                 }
             }
         } detail: {
-            if let vehicle = state.vehicles.first(where: { $0.id == selection }) {
-                VehicleDetailView(vehicle: vehicle)
+            if let selectedVehicle {
+                VehicleDetailView(vehicle: selectedVehicle)
             } else {
                 ContentUnavailableView("Select a vehicle", systemImage: "car")
             }
