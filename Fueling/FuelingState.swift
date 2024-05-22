@@ -25,7 +25,7 @@ final class FuelingState {
         ps = PhoneSession(state: self)
         do {
             try getVehicles()
-            sendAppContext()
+            sendInitialAppContext()
         } catch {
             Self.log.error("get vehicles: \(error.localizedDescription, privacy: .public)")
         }
@@ -60,18 +60,19 @@ extension FuelingState {
     // as an application context message.  Lots of checks here as this
     // is the first communications sent by the phone and I'd like to
     // see the debug messages if things fail when testing.
-    func sendAppContext() {
+    @discardableResult
+    func sendAppContext() -> Bool {
         guard ps.session.activationState == .activated else {
             Self.log.debug("\(#function) session not activated")
-            return
+            return false
         }
         guard ps.session.isWatchAppInstalled else {
             Self.log.debug("\(#function) companion app not installed")
-            return
+            return false
         }
         guard ps.session.isReachable else {
             Self.log.debug("\(#function) session not reachable")
-            return
+            return false
         }
         var context: [String: Any] = [:]
         for vehicle in vehicles {
@@ -80,8 +81,23 @@ extension FuelingState {
         Self.log.debug("\(#function) \(context, privacy: .public)")
         do {
             try ps.session.updateApplicationContext(context)
+            return true
         } catch {
             Self.log.error("\(#function) \(error.localizedDescription, privacy: .public)")
+        }
+        return false
+    }
+
+    // Wait a second for the phone session to be activated and the watch
+    // to become reachable before sending the initial app context message.
+    // retry every second until the message is sent.
+    func sendInitialAppContext() {
+        Task(priority: .background) {
+            var sent = false
+            repeat {
+                try? await Task.sleep(for: .seconds(1))
+                sent = sendAppContext()
+            } while (!sent)
         }
     }
 
