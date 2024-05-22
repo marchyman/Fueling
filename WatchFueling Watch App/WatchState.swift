@@ -26,8 +26,8 @@ final class WatchState {
 
 extension WatchState {
     // logging
-    nonisolated static let log = Logger(subsystem: Bundle.main.bundleIdentifier!,
-                                        category: "WatchState")
+    static let log = Logger(subsystem: Bundle.main.bundleIdentifier!,
+                            category: "WatchState")
 }
 
 extension WatchState {
