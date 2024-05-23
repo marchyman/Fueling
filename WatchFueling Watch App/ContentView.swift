@@ -9,6 +9,7 @@ import SwiftUI
 struct ContentView: View {
     @Environment(WatchState.self) private var state
     @State private var selectedVehicle: Vehicle?
+    @State private var path = NavigationPath()
 
     var body: some View {
         NavigationSplitView {
@@ -23,7 +24,6 @@ struct ContentView: View {
                     List(state.vehicles, selection: $selectedVehicle) { vehicle in
                         NavigationLink(value: vehicle) {
                             Text(vehicle.name)
-                                .tag(vehicle.name)
                         }
                     }
                     .listStyle(.carousel)
@@ -41,10 +41,12 @@ struct ContentView: View {
                 }
             }
         } detail: {
-            if let selectedVehicle {
-                VehicleDetailView(vehicle: selectedVehicle)
-            } else {
-                ContentUnavailableView("Select a vehicle", systemImage: "car")
+            NavigationStack(path: $path) {
+                if let selectedVehicle {
+                    VehicleDetailView(vehicle: selectedVehicle)
+                } else {
+                    ContentUnavailableView("Select a vehicle", systemImage: "car")
+                }
             }
         }
         .opacity(state.fetching ? 0.3 : 1.0)
