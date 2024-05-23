@@ -90,14 +90,16 @@ extension FuelingState {
 
     // Wait a second for the phone session to be activated and the watch
     // to become reachable before sending the initial app context message.
-    // retry every second until the message is sent.
+    // retry every second until the message is sent. Cap the number of
+    // retries -- the watch app may not be installed.
     func sendInitialAppContext() {
         Task(priority: .background) {
-            var sent = false
-            repeat {
+            for _ in 0...9 {
                 try? await Task.sleep(for: .seconds(1))
-                sent = sendAppContext()
-            } while (!sent)
+                if sendAppContext() {
+                    break
+                }
+            }
         }
     }
 
