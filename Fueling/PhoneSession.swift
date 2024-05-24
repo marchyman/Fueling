@@ -6,7 +6,7 @@
 
 import Foundation
 import OSLog
-import WatchConnectivity
+@preconcurrency import WatchConnectivity
 
 final class PhoneSession: NSObject, @unchecked Sendable {
     unowned let state: FuelingState
@@ -61,7 +61,7 @@ extension PhoneSession: WCSessionDelegate {
     // receive a message that requires a reply
     func session(_ session: WCSession,
                  didReceiveMessage message: [String: Any],
-                 replyHandler: @escaping ([String: Any]) -> Void) {
+                 replyHandler: @escaping @Sendable ([String: Any]) -> Void) {
         Self.log.notice("\(#function) \(message.debugDescription, privacy: .public)")
         if let dict = message[MessageKey.put] as? [String: Any],
                   let name = dict[MessageKey.vehicle] as? String {
