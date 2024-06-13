@@ -8,11 +8,6 @@ import Foundation
 import OSLog
 import SwiftUI
 
-// I don't know if this is correct, but it gets rid of warnings and if not
-// correct I don't much care if debug messages are messed up due to a
-// race condition.
-extension Logger: @unchecked Sendable {}
-
 @MainActor
 @Observable
 final class FuelingState {

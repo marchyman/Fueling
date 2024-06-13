@@ -8,8 +8,6 @@ import Foundation
 import OSLog
 import SwiftUI
 
-extension Logger: @unchecked Sendable {}
-
 @MainActor
 @Observable
 final class WatchState {
