@@ -8,7 +8,7 @@ import Foundation
 import OSLog
 @preconcurrency import WatchConnectivity
 
-final class PhoneSession: NSObject, @unchecked Sendable {
+final class PhoneSession: NSObject {
     unowned let state: FuelingState
     let session: WCSession = .default
 
@@ -50,7 +50,7 @@ extension PhoneSession: WCSessionDelegate {
                  didReceiveMessage message: [String: Any]) {
         Self.log.notice("\(#function) \(message.debugDescription, privacy: .public)")
         if message[MessageKey.get] as? String == MessageKey.vehicles {
-            Task {
+            Task { [state] in
                 await state.sendAppContext()
             }
         } else {
@@ -69,7 +69,7 @@ extension PhoneSession: WCSessionDelegate {
             let gallons = dict[MessageKey.gallons] as? Double
             let odometer = dict[MessageKey.miles] as? Int
             if let cost, let gallons, let odometer {
-                Task {
+                Task { [state] in
                     let response = await state.addFuel(name: name, cost: cost,
                                                        gallons: gallons,
                                                        odometer: odometer)
