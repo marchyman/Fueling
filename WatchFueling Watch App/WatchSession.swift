@@ -8,7 +8,7 @@ import Foundation
 import OSLog
 import WatchConnectivity
 
-final class WatchSession: NSObject, @unchecked Sendable  {
+final class WatchSession: NSObject  {
     unowned let state: WatchState
     let session: WCSession = .default
 
@@ -53,9 +53,11 @@ extension WatchSession: WCSessionDelegate {
             }
         }
         let sortedVehicles = vehicles.sorted()
-        Task { @MainActor in
-            state.vehicles = sortedVehicles
-            state.fetching = false
+        Task { [state] in
+            await MainActor.run {
+                state.vehicles = sortedVehicles
+                state.fetching = false
+            }
         }
     }
 }
