@@ -65,4 +65,5 @@ enum MessageKey {
     static let gallons = "gallons"
     static let miles = "miles"
     static let received = "received"
+    static let timestamp = "timestamp"
 }

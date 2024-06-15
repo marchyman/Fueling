@@ -48,6 +48,7 @@ extension FuelingState {
         plist[MessageKey.cost] = vehicle.fuelCost
         plist[MessageKey.gallons] = vehicle.fuelUsed
         plist[MessageKey.miles] = vehicle.milesDriven
+        plist[MessageKey.timestamp] = Date.now
         return plist
     }
 

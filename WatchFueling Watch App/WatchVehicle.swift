@@ -28,6 +28,7 @@ extension Vehicle{
 
     // build a vehicle model from a property list entry in this format:
     // [<vehicle name>: ["Cost": Double, "Gallons": Double, "Miles": Int]]
+    // any other items in the value dictionary are ignored
     init(from key: String, value: Any) throws  {
         if let dict = value as? [String: Any] {
             self.name = key
