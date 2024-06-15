@@ -81,20 +81,26 @@ extension WatchState {
         }
     }
 
-    nonisolated
+    nonisolated private
     func putStatus(_ response: [String: Any]) {
         Self.log.debug("\(#function) \(response, privacy: .public)")
-        Task { @MainActor in
-            fetching = false
-        }
+        fetchingOff()
         let value = response[MessageKey.put] as? String ?? "Bad response"
         if value != MessageKey.received {
             Self.log.error("\(#function) \(value, privacy: .public)")
         }
     }
 
-    nonisolated
+    nonisolated private
     func errorHandler(error: any Error) {
         Self.log.error("\(#function) \(error.localizedDescription)")
+        fetchingOff()
+    }
+
+    nonisolated private
+    func fetchingOff() {
+        Task { @MainActor in
+            fetching = false
+        }
     }
 }
