@@ -112,10 +112,11 @@ extension FuelingState {
                 try fuelingDB.update(vehicle: vehicle)
                 sendAppContext()
             } catch {
-                Self.log.error("#function: \(error.localizedDescription, privacy: .public)")
+                Self.log.error("\(#function): \(error.localizedDescription, privacy: .public)")
             }
+        } else {
+            Self.log.error("\(#function): Cannot find vehicle named \(name)")
         }
-        Self.log.error("#function: Cannot find vehicle named \(name)")
     }
 }
 
