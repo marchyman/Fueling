@@ -45,13 +45,15 @@ Watch <=> Companion application data flow
      "gallons" : Double,
      "miles" : Int]
 
-  The phone companion app will respond with one of the following:
+  The phone companion app will respond with:
 
-    ["put": "updated"]
-    ["put": "some error message in the form of a string" ]
+    ["put": "received"]
 
+  if the received message was valid and a fueling update was initiated.
   The phone will also send an application context message with updated
-  vehicle statistics.
+  vehicle statistics if the update was successful.
+
+  Some other message will be returned if the message was invalid.
 */
 
 enum MessageKey {
@@ -62,5 +64,5 @@ enum MessageKey {
     static let cost = "cost"
     static let gallons = "gallons"
     static let miles = "miles"
-    static let updated = "updated"
+    static let received = "received"
 }

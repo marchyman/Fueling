@@ -101,8 +101,7 @@ extension FuelingState {
     // create a fueling entry and add it to the named vehicle. Returns a
     // status string forwarded to the watch when fueling additions are the
     // result of watch input.
-    @discardableResult
-    func addFuel(name: String, cost: Double, gallons: Double, odometer: Int) -> String {
+    func addFuel(name: String, cost: Double, gallons: Double, odometer: Int) {
         if let vehicle = vehicles.first(where: { $0.name == name }) {
             let fuel = Fuel(odometer: odometer, amount: gallons, cost: cost)
             vehicle.fuelings.append(fuel)
@@ -111,13 +110,11 @@ extension FuelingState {
                 // is adequate, but am not sure.  This doesn't hurt.
                 try fuelingDB.update(vehicle: vehicle)
                 sendAppContext()
-                return MessageKey.updated
             } catch {
                 Self.log.error("#function: \(error.localizedDescription, privacy: .public)")
-                return error.localizedDescription
             }
         }
-        return "Cannot find vehicle named \(name)"
+        Self.log.error("#function: Cannot find vehicle named \(name)")
     }
 }
 

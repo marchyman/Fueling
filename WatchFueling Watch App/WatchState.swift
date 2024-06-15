@@ -24,8 +24,8 @@ final class WatchState {
 
 extension WatchState {
     // logging
-    static let log = Logger(subsystem: Bundle.main.bundleIdentifier!,
-                            category: "WatchState")
+    nonisolated static let log = Logger(subsystem: Bundle.main.bundleIdentifier!,
+                                        category: "WatchState")
 }
 
 extension WatchState {
@@ -81,15 +81,19 @@ extension WatchState {
         }
     }
 
+    nonisolated
     func putStatus(_ response: [String: Any]) {
         Self.log.debug("\(#function) \(response, privacy: .public)")
-        fetching = false
+        Task { @MainActor in
+            fetching = false
+        }
         let value = response[MessageKey.put] as? String ?? "Bad response"
-        if value != MessageKey.updated {
+        if value != MessageKey.received {
             Self.log.error("\(#function) \(value, privacy: .public)")
         }
     }
 
+    nonisolated
     func errorHandler(error: any Error) {
         Self.log.error("\(#function) \(error.localizedDescription)")
     }
