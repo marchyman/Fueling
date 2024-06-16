@@ -9,7 +9,8 @@ import SwiftUI
 struct VehicleDetailView: View {
     @Environment(WatchState.self) private var state
     @Environment(\.dismiss) var dismiss
-    let vehicle: Vehicle
+
+    @State var vehicle: Vehicle
 
     var body: some View {
         Grid(alignment: .leading, horizontalSpacing: 20) {
@@ -49,7 +50,11 @@ struct VehicleDetailView: View {
             }
         }
         .onChange(of: state.vehiclesChanged) {
-            dismiss()
+            if let updatedVehicle = state.vehicles.first(where: { $0.name == vehicle.name }) {
+                vehicle = updatedVehicle
+            } else {
+                dismiss()
+            }
         }
         .opacity(state.fetching ? 0.3 : 1.0)
         .overlay {
