@@ -8,7 +8,8 @@ import SwiftUI
 
 struct VehicleDetailView: View {
     @Environment(WatchState.self) private var state
-    var vehicle: Vehicle
+    @Environment(\.dismiss) var dismiss
+    let vehicle: Vehicle
 
     var body: some View {
         Grid(alignment: .leading, horizontalSpacing: 20) {
@@ -46,6 +47,9 @@ struct VehicleDetailView: View {
                     Label("Add", systemImage: "gauge.medium.badge.plus")
                 }
             }
+        }
+        .onChange(of: state.vehiclesChanged) {
+            dismiss()
         }
         .opacity(state.fetching ? 0.3 : 1.0)
         .overlay {

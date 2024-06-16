@@ -57,6 +57,7 @@ extension WatchSession: WCSessionDelegate {
             await MainActor.run {
                 state.vehicles = sortedVehicles
                 state.fetching = false
+                state.vehiclesChanged.toggle()
             }
         }
     }

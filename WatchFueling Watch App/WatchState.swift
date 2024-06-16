@@ -12,6 +12,7 @@ import SwiftUI
 @Observable
 final class WatchState {
     var vehicles: [Vehicle] = []
+    var vehiclesChanged = false
     private var ws: WatchSession!
 
     // data fetched when a vehicle is selected
@@ -30,15 +31,6 @@ extension WatchState {
 
 extension WatchState {
     
-    // update the vehicles array.
-    func update(vehicle: Vehicle) {
-        if let index = vehicles.firstIndex(where: { $0.name == vehicle.name }) {
-            vehicles[index] = vehicle
-        } else {
-            vehicles.append(vehicle)
-        }
-    }
-
     // Request vehicle data.  This will trigger an application context update
     // when received by the companion app on the phone.
     @discardableResult
