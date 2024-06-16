@@ -23,17 +23,23 @@ Watch <=> Companion application data flow
   where String is the name of the vehicle and the dictionary contains the
   fueling statistics.  An entry therefore looks like this:
 
-    [<vehicle name>: ["cost": Double, "gallons": Double, "miles": Int]]
+    [<vehicle name>: ["cost": Double,
+                      "gallons": Double,
+                      "miles": Int,
+                      "timestamp": Date]]
+
+  Timestamp is included to force every update to be different as otherwise
+  the phone will not forward duplicate contexts.  The value is unused by
+  the watch.
 
 - The watch can request an application context update by sending this message:
 
     ["get", "vehicles"]
 
   no message reply is expected. The phone will initiate an application context
-  update. It seems, however, that if the context to send is identical to
-  the previous delivered context the phone will not send it again.
+  update.
 
-- The watch sends fueling updates to the copanion application on the phone
+- The watch sends fueling updates to the companion application on the phone
   using this format:
 
     ["put", Dictionary]

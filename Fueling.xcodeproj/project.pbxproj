@@ -115,13 +115,13 @@
 		490526372A7F1C05000B964C = {
 			isa = PBXGroup;
 			children = (
+				49D4C70B2BF9474800B48E82 /* Shared */,
+				490526422A7F1C05000B964C /* Fueling */,
+				49E26E522BE4580B00E4A4E4 /* WatchFueling Watch App */,
 				49B8274C2C1F748C000F361E /* Config.xcconfig */,
 				492595EC2C1A7EE400E0301C /* README.md */,
 				492595ED2C1A7EF000E0301C /* LICENSE */,
 				492595EE2C1A7FBA00E0301C /* .swiftlint.yml */,
-				49D4C70B2BF9474800B48E82 /* Shared */,
-				490526422A7F1C05000B964C /* Fueling */,
-				49E26E522BE4580B00E4A4E4 /* WatchFueling Watch App */,
 				490526412A7F1C05000B964C /* Products */,
 			);
 			sourceTree = "<group>";
