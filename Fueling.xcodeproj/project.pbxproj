@@ -74,6 +74,7 @@
 		4982BD122BFBBDC400C42677 /* WatchVehicle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchVehicle.swift; sourceTree = "<group>"; };
 		49B6F6C72BE3167A00799D24 /* AddFuelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFuelView.swift; sourceTree = "<group>"; };
 		49B6F6CB2BE3360400799D24 /* FuelingInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelingInfoView.swift; sourceTree = "<group>"; };
+		49B8274C2C1F748C000F361E /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		49BEDE882BF7110500D71CF4 /* FuelingDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelingDB.swift; sourceTree = "<group>"; };
 		49BEDE8A2BF71AEA00D71CF4 /* FuelingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelingState.swift; sourceTree = "<group>"; };
 		49C2FE8B2A817E3E00F861B0 /* Fuel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fuel.swift; sourceTree = "<group>"; };
@@ -114,6 +115,7 @@
 		490526372A7F1C05000B964C = {
 			isa = PBXGroup;
 			children = (
+				49B8274C2C1F748C000F361E /* Config.xcconfig */,
 				492595EC2C1A7EE400E0301C /* README.md */,
 				492595ED2C1A7EF000E0301C /* LICENSE */,
 				492595EE2C1A7FBA00E0301C /* .swiftlint.yml */,
@@ -414,6 +416,7 @@
 /* Begin XCBuildConfiguration section */
 		4905264E2A7F1C07000B964C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 49B8274C2C1F748C000F361E /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -449,7 +452,6 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -472,14 +474,12 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_STRICT_CONCURRENCY = complete;
-				SWIFT_VERSION = 6.0;
-				_EXPERIMENTAL_SWIFT_EXPLICIT_MODULES = YES;
 			};
 			name = Debug;
 		};
 		4905264F2A7F1C07000B964C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 49B8274C2C1F748C000F361E /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -515,7 +515,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -530,10 +529,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_STRICT_CONCURRENCY = complete;
-				SWIFT_VERSION = 6.0;
 				VALIDATE_PRODUCT = YES;
-				_EXPERIMENTAL_SWIFT_EXPLICIT_MODULES = YES;
 			};
 			name = Release;
 		};
@@ -619,7 +615,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 10.5;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Debug;
 		};
@@ -649,7 +645,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 10.5;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Release;
 		};
