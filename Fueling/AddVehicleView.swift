@@ -5,7 +5,6 @@
 //
 
 import SwiftUI
-import SwiftData
 
 struct AddVehicleView: View {
     @Environment(FuelingState.self) var state

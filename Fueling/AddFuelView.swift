@@ -4,7 +4,6 @@
 // https://www.snafu.org/
 //
 
-import SwiftData
 import SwiftUI
 
 struct AddFuelView: View {

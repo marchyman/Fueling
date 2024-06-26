@@ -5,7 +5,6 @@
 //
 
 import SwiftUI
-import SwiftData
 
 struct ContentView: View {
     @Environment(FuelingState.self) var state
