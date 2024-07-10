@@ -51,7 +51,10 @@ struct VehicleView: View {
                 HStack {
                     Text("\(vehicle.name)")
                     Spacer()
-                    Text("\(vehicle.odometer) miles")
+                    VStack {
+                        Text("\(vehicle.odometer) start")
+                        Text("\(vehicle.fuelingsByTimestamp().first?.odometer ?? vehicle.odometer) miles")
+                    }
                 }
                 .padding()
             }
