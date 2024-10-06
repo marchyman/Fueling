@@ -52,6 +52,7 @@ struct FuelingEditView: View {
             HStack {
                 Spacer()
                 Button("Dismiss") {
+                    state.update(fuel: fueling)
                     state.sendAppContext()
                     dismiss()
                 }

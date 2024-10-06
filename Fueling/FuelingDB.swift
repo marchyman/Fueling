@@ -72,9 +72,28 @@ extension FuelingDB {
         return try context.fetch(fetchDescriptor)
     }
 
-    func update(vehicle: Vehicle) throws {
+    // update a vehicle by appending a fueling entry
+    func update(name: String, fuel: Fuel) throws {
         let context = ModelContext(container)
-        context.insert(vehicle)
+        let fetchDescriptor = FetchDescriptor<Vehicle>(
+            predicate: #Predicate { $0.name == name }
+        )
+        let vehicle = try context.fetch(fetchDescriptor)[0]
+        vehicle.fuelings.append(fuel)
+        try context.save()
+    }
+
+    // update a fueling entry
+    func update(fuel: Fuel) throws {
+        let context = ModelContext(container)
+        let key = fuel.timestamp
+        let fetchDescriptor = FetchDescriptor<Fuel>(
+            predicate: #Predicate { $0.timestamp == key }
+        )
+        let fueling = try context.fetch(fetchDescriptor)[0]
+        fueling.odometer = fuel.odometer
+        fueling.amount = fuel.amount
+        fueling.cost = fuel.cost
         try context.save()
     }
 
