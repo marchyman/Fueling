@@ -26,8 +26,10 @@ struct FuelEntryView: View {
     }
 
     var body: some View {
-        Grid(alignment: .leading, horizontalSpacing: 20,
-             verticalSpacing: 25) {
+        Grid(
+            alignment: .leading, horizontalSpacing: 20,
+            verticalSpacing: 25
+        ) {
             GridRow {
                 Text("Cost")
                 Text("\(cost, format: .currency(code: "usd"))")
@@ -49,10 +51,11 @@ struct FuelEntryView: View {
             ToolbarItemGroup(placement: .bottomBar) {
                 Spacer()
                 Button {
-                    state.putFueling(vehicle: vehicle,
-                                     cost: cost,
-                                     gallons: gallons,
-                                     odometer: odometer)
+                    state.putFueling(
+                        vehicle: vehicle,
+                        cost: cost,
+                        gallons: gallons,
+                        odometer: odometer)
                     dismiss()
                 } label: {
                     Label("Refresh", systemImage: "square.and.arrow.up")

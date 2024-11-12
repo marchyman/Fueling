@@ -8,7 +8,7 @@ import SwiftUI
 
 @main
 struct WatchFueling_Watch_AppApp: App {
-    
+
     var body: some Scene {
         WindowGroup {
             ContentView()

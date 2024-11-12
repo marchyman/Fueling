@@ -25,12 +25,13 @@ final class WatchState {
 
 extension WatchState {
     // logging
-    nonisolated static let log = Logger(subsystem: Bundle.main.bundleIdentifier!,
-                                        category: "WatchState")
+    nonisolated static let log = Logger(
+        subsystem: Bundle.main.bundleIdentifier!,
+        category: "WatchState")
 }
 
 extension WatchState {
-    
+
     // Request vehicle data.  This will trigger an application context update
     // when received by the companion app on the phone.
     @discardableResult
@@ -47,18 +48,21 @@ extension WatchState {
             Self.log.debug("\(#function) session not reachable")
             return false
         }
-        ws.session.sendMessage([MessageKey.get: MessageKey.vehicles],
-                               replyHandler: nil,
-                               errorHandler: errorHandler)
+        ws.session.sendMessage(
+            [MessageKey.get: MessageKey.vehicles],
+            replyHandler: nil,
+            errorHandler: errorHandler)
         Self.log.debug("\(#function) Sent get vehicles ")
         return true
     }
 
     // Send fueling data to the companion app on the phone.
-    func putFueling(vehicle: Vehicle,
-                    cost: Double,
-                    gallons: Double,
-                    odometer: Double) {
+    func putFueling(
+        vehicle: Vehicle,
+        cost: Double,
+        gallons: Double,
+        odometer: Double
+    ) {
         if ws.session.isReachable {
             Self.log.debug("\(#function) \(vehicle.name, privacy: .public)")
             var plist: [String: Any] = [:]
@@ -67,14 +71,16 @@ extension WatchState {
             plist[MessageKey.gallons] = gallons
             plist[MessageKey.miles] = Int(odometer)
             fetching = true
-            ws.session.sendMessage([MessageKey.put: plist],
-                                   replyHandler: putStatus,
-                                   errorHandler: errorHandler)
+            ws.session.sendMessage(
+                [MessageKey.put: plist],
+                replyHandler: putStatus,
+                errorHandler: errorHandler)
         }
     }
 
     nonisolated private
-    func putStatus(_ response: [String: Any]) {
+        func putStatus(_ response: [String: Any])
+    {
         Self.log.debug("\(#function) \(response, privacy: .public)")
         fetchingOff()
         let value = response[MessageKey.put] as? String ?? "Bad response"
@@ -84,13 +90,15 @@ extension WatchState {
     }
 
     nonisolated private
-    func errorHandler(error: any Error) {
+        func errorHandler(error: any Error)
+    {
         Self.log.error("\(#function) \(error.localizedDescription)")
         fetchingOff()
     }
 
     nonisolated private
-    func fetchingOff() {
+        func fetchingOff()
+    {
         Task { @MainActor in
             fetching = false
         }

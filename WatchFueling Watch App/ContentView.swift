@@ -18,7 +18,9 @@ struct ContentView: View {
                     ContentUnavailableView {
                         Label("No Vehicles", systemImage: "iphone.slash")
                     } description: {
-                        Text("Tap on the download button to fetch the list of vehicles from your phone.")
+                        Text(
+                            "Tap on the download button to fetch the list of vehicles from your phone."
+                        )
                     }
                 } else {
                     List(state.vehicles, selection: $selectedVehicle) { vehicle in
@@ -66,7 +68,7 @@ struct ContentView: View {
             // that the companion app will respond.
             if state.vehicles.isEmpty {
                 state.fetching = true
-                for _ in 1...5 {
+                for _ in 1 ... 5 {
                     if state.getVehicles() {
                         break
                     }

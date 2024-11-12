@@ -50,7 +50,9 @@ struct KeypadView: View {
         .navigationTitle(title)
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
-                Button { dismiss() } label: {
+                Button {
+                    dismiss()
+                } label: {
                     Image(systemName: "xmark")
                         .font(.footnote)
                 }
@@ -95,7 +97,7 @@ struct KeyCap: View {
     let keyCap: Character
     let keyHit: (Character) -> Void
 
-    init(_ keyCap: Character, keyHit: @escaping (Character) -> Void ) {
+    init(_ keyCap: Character, keyHit: @escaping (Character) -> Void) {
         self.keyCap = keyCap
         self.keyHit = keyHit
     }

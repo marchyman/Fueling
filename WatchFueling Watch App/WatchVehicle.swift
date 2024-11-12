@@ -17,11 +17,12 @@ struct Vehicle: Identifiable, Sendable, Hashable {
     var cpg: Double { gallons == 0 ? 0 : cost / gallons }
 }
 
-extension Vehicle{
-    static let previewVehicle = Vehicle(name: "Test Vehicle",
-                                        cost: 123.76,
-                                        gallons: 22.583,
-                                        miles: 1185)
+extension Vehicle {
+    static let previewVehicle = Vehicle(
+        name: "Test Vehicle",
+        cost: 123.76,
+        gallons: 22.583,
+        miles: 1185)
     enum VehicleModelError: Error {
         case badPlist
     }
@@ -29,7 +30,7 @@ extension Vehicle{
     // build a vehicle model from a property list entry in this format:
     // [<vehicle name>: ["Cost": Double, "Gallons": Double, "Miles": Int]]
     // any other items in the value dictionary are ignored
-    init(from key: String, value: Any) throws  {
+    init(from key: String, value: Any) throws {
         if let dict = value as? [String: Any] {
             self.name = key
             self.cost = dict[MessageKey.cost] as? Double ?? 0.0
