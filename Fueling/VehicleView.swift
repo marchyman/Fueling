@@ -53,7 +53,9 @@ struct VehicleView: View {
                     Spacer()
                     VStack {
                         Text("\(vehicle.odometer) start")
-                        Text("\(vehicle.fuelingsByTimestamp().first?.odometer ?? vehicle.odometer) miles")
+                        Text(
+                            "\(vehicle.fuelingsByTimestamp().first?.odometer ?? vehicle.odometer) miles"
+                        )
                     }
                 }
                 .padding()
@@ -65,9 +67,11 @@ struct VehicleView: View {
                 .font(.title)
                 .padding()
 
-            Grid(alignment: .trailingFirstTextBaseline,
-                 horizontalSpacing: 10,
-                 verticalSpacing: 10) {
+            Grid(
+                alignment: .trailingFirstTextBaseline,
+                horizontalSpacing: 10,
+                verticalSpacing: 10
+            ) {
                 GridRow {
                     Text("Date/Time")
                     Text("Odometer")
@@ -107,7 +111,9 @@ struct VehicleView: View {
         .navigationTitle("Vehicle Fuel Use")
         .toolbar {
             ToolbarItem {
-                Button { addFuelPresented.toggle() } label: {
+                Button {
+                    addFuelPresented.toggle()
+                } label: {
                     Label("Add fuel", systemImage: "plus")
                 }
                 .sheet(isPresented: $addFuelPresented) {

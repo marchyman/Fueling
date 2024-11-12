@@ -11,10 +11,12 @@ final class FuelingDB {
     let container: ModelContainer
 
     init(inMemory: Bool = false) throws {
-        let configuration = ModelConfiguration(for: Vehicle.self,
-                                               isStoredInMemoryOnly: inMemory)
-        container = try ModelContainer(for: Vehicle.self,
-                                       configurations: configuration)
+        let configuration = ModelConfiguration(
+            for: Vehicle.self,
+            isStoredInMemoryOnly: inMemory)
+        container = try ModelContainer(
+            for: Vehicle.self,
+            configurations: configuration)
         if inMemory {
             addTestVehicles()
             addTestFuelings()
@@ -39,10 +41,14 @@ extension FuelingDB {
             predicate: #Predicate { $0.name == "Honda Accord" }
         )
         let vehicle = try! context.fetch(fetchDescriptor)[0]
-        vehicle.fuelings.append(Fuel(odometer: 12555,
-                                     amount: 4.14, cost: 22.13))
-        vehicle.fuelings.append(Fuel(odometer: 12666,
-                                     amount: 2.03, cost: 10.17))
+        vehicle.fuelings.append(
+            Fuel(
+                odometer: 12555,
+                amount: 4.14, cost: 22.13))
+        vehicle.fuelings.append(
+            Fuel(
+                odometer: 12666,
+                amount: 2.03, cost: 10.17))
         try! context.save()
     }
 }
@@ -100,9 +106,11 @@ extension FuelingDB {
     func delete(vehicle: Vehicle) throws {
         let context = ModelContext(container)
         let idToDelete = vehicle.persistentModelID
-        try context.delete(model: Vehicle.self, where: #Predicate { vehicle in
-            vehicle.persistentModelID == idToDelete
-        })
+        try context.delete(
+            model: Vehicle.self,
+            where: #Predicate { vehicle in
+                vehicle.persistentModelID == idToDelete
+            })
         try context.save()
     }
 }

@@ -26,15 +26,21 @@ struct FuelingInfoView: View {
                     }
                     GridRow {
                         Text("Miles/gallon:")
-                        Text("\(mpg(miles: miles, gallons: fueling.amount), specifier: "%0.1f")")
+                        Text(
+                            "\(mpg(miles: miles, gallons: fueling.amount), specifier: "%0.1f")"
+                        )
                     }
                     GridRow {
                         Text("Cost/gallon:")
-                        Text("\(cpg(cost: fueling.cost, gallons: fueling.amount), format: .currency(code: "usd"))")
+                        Text(
+                            "\(cpg(cost: fueling.cost, gallons: fueling.amount), format: .currency(code: "usd"))"
+                        )
                     }
                     GridRow {
                         Text("Cost/mile:")
-                        Text("\(cpm(cost: fueling.cost, miles: miles), format: .currency(code: "usd"))")
+                        Text(
+                            "\(cpm(cost: fueling.cost, miles: miles), format: .currency(code: "usd"))"
+                        )
                     }
                 }
             } label: {

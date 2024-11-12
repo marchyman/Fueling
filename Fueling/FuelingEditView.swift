@@ -22,27 +22,33 @@ struct FuelingEditView: View {
                 Text(fueling.vehicle?.name ?? "unknown").font(.headline)
 
                 LabeledContent("Cost") {
-                    TextField("Required",
-                              value: $fueling.cost,
-                              format: .currency(code: "usd"))
+                    TextField(
+                        "Required",
+                        value: $fueling.cost,
+                        format: .currency(code: "usd")
+                    )
                     .textFieldStyle(.roundedBorder)
                     .keyboardType(.decimalPad)
                     .multilineTextAlignment(.trailing)
                 }
 
                 LabeledContent("Number of gallons") {
-                    TextField("Required",
-                              value: $fueling.amount,
-                              format: .number)
+                    TextField(
+                        "Required",
+                        value: $fueling.amount,
+                        format: .number
+                    )
                     .textFieldStyle(.roundedBorder)
                     .keyboardType(.decimalPad)
                     .multilineTextAlignment(.trailing)
                 }
 
                 LabeledContent("Current odometer") {
-                    TextField("Required",
-                              value: $fueling.odometer,
-                              format: .number)
+                    TextField(
+                        "Required",
+                        value: $fueling.odometer,
+                        format: .number
+                    )
                     .textFieldStyle(.roundedBorder)
                     .keyboardType(.decimalPad)
                     .multilineTextAlignment(.trailing)

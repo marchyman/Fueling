@@ -26,28 +26,33 @@ final class PhoneSession: NSObject {
 
 extension PhoneSession {
     // logging
-    static let log = Logger(subsystem: Bundle.main.bundleIdentifier!,
-                            category: "PhoneSession")
+    static let log = Logger(
+        subsystem: Bundle.main.bundleIdentifier!,
+        category: "PhoneSession")
 }
 
 extension PhoneSession: WCSessionDelegate {
-    func session(_ session: WCSession,
-                 activationDidCompleteWith activationState: WCSessionActivationState,
-                 error: (any Error)?) {
+    func session(
+        _ session: WCSession,
+        activationDidCompleteWith activationState: WCSessionActivationState,
+        error: (any Error)?
+    ) {
         Self.log.notice("activationDidCompleteWith \(activationState.rawValue)")
     }
 
     func sessionDidBecomeInactive(_ session: WCSession) {
         Self.log.notice("session inactive")
     }
-    
+
     func sessionDidDeactivate(_ session: WCSession) {
         Self.log.notice("session deactivated")
     }
 
     // receive a message that does not require a reply
-    func session(_ session: WCSession,
-                 didReceiveMessage message: [String: Any]) {
+    func session(
+        _ session: WCSession,
+        didReceiveMessage message: [String: Any]
+    ) {
         Self.log.notice("\(#function) \(message.debugDescription, privacy: .public)")
         if message[MessageKey.get] as? String == MessageKey.vehicles {
             Task { [state] in
@@ -59,20 +64,24 @@ extension PhoneSession: WCSessionDelegate {
     }
 
     // receive a message that requires a reply
-    func session(_ session: WCSession,
-                 didReceiveMessage message: [String: Any],
-                 replyHandler: @escaping ([String: Any]) -> Void) {
+    func session(
+        _ session: WCSession,
+        didReceiveMessage message: [String: Any],
+        replyHandler: @escaping ([String: Any]) -> Void
+    ) {
         Self.log.notice("\(#function) \(message.debugDescription, privacy: .public)")
         if let dict = message[MessageKey.put] as? [String: Any],
-                  let name = dict[MessageKey.vehicle] as? String {
+            let name = dict[MessageKey.vehicle] as? String
+        {
             let cost = dict[MessageKey.cost] as? Double
             let gallons = dict[MessageKey.gallons] as? Double
             let odometer = dict[MessageKey.miles] as? Int
             if let cost, let gallons, let odometer {
                 Task { [state] in
                     await MainActor.run {
-                        state.addFuel(name: name, cost: cost,
-                                      gallons: gallons, odometer: odometer)
+                        state.addFuel(
+                            name: name, cost: cost,
+                            gallons: gallons, odometer: odometer)
                     }
                 }
                 replyHandler([MessageKey.put: MessageKey.received])

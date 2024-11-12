@@ -25,10 +25,12 @@ final class Fuel {
     var amount: Double
     var cost: Double
 
-    init(odometer: Int,
-         amount: Double,
-         cost: Double,
-         timestamp: Date = Date.now) {
+    init(
+        odometer: Int,
+        amount: Double,
+        cost: Double,
+        timestamp: Date = Date.now
+    ) {
         self.odometer = odometer
         self.amount = amount
         self.cost = cost

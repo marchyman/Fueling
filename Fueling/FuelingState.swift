@@ -22,15 +22,17 @@ final class FuelingState {
             try getVehicles()
             sendInitialAppContext()
         } catch {
-            Self.log.error("get vehicles: \(error.localizedDescription, privacy: .public)")
+            Self.log.error(
+                "get vehicles: \(error.localizedDescription, privacy: .public)")
         }
     }
 }
 
 extension FuelingState {
     // logging
-    static let log = Logger(subsystem: Bundle.main.bundleIdentifier!,
-                            category: "FuelingState")
+    static let log = Logger(
+        subsystem: Bundle.main.bundleIdentifier!,
+        category: "FuelingState")
 }
 
 extension FuelingState {
@@ -90,7 +92,7 @@ extension FuelingState {
     // retries -- the watch app may not be installed.
     func sendInitialAppContext() {
         Task(priority: .background) {
-            for _ in 0...9 {
+            for _ in 0 ... 9 {
                 try? await Task.sleep(for: .seconds(1))
                 if sendAppContext() {
                     break
@@ -109,7 +111,8 @@ extension FuelingState {
                 try getVehicles()
                 sendAppContext()
             } catch {
-                Self.log.error("\(#function): \(error.localizedDescription, privacy: .public)")
+                Self.log.error(
+                    "\(#function): \(error.localizedDescription, privacy: .public)")
             }
         } else {
             Self.log.error("\(#function): Cannot find vehicle named \(name)")

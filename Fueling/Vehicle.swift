@@ -25,7 +25,7 @@ final class Vehicle {
 }
 
 extension Vehicle {
-    
+
     // return array of fuelings sorted such that the most recent
     // fueling is the first entry in the array.
 
@@ -60,7 +60,7 @@ extension Vehicle {
 
     // return total fuel cost as a formatted string
     var fuelCost: Double {
-        fuelings.reduce(0.0) { $0 + $1.cost}
+        fuelings.reduce(0.0) { $0 + $1.cost }
     }
 
     // return cost per gallon of fuel as a formatted string

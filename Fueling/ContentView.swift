@@ -33,7 +33,9 @@ struct ContentView: View {
                         .disabled(state.vehicles.isEmpty)
                 }
                 ToolbarItem {
-                    Button { addVehiclePresented.toggle() } label: {
+                    Button {
+                        addVehiclePresented.toggle()
+                    } label: {
                         Label("Add Item", systemImage: "plus")
                     }
                     .sheet(isPresented: $addVehiclePresented) {
@@ -43,8 +45,9 @@ struct ContentView: View {
             }
             .overlay {
                 if state.vehicles.isEmpty {
-                    ContentUnavailableView("Please add a vehicle",
-                                           systemImage: "car.fill")
+                    ContentUnavailableView(
+                        "Please add a vehicle",
+                        systemImage: "car.fill")
                 }
             }
         }

@@ -28,9 +28,11 @@ struct AddVehicleView: View {
                         .disableAutocorrection(true)
                 }
                 LabeledContent("Current odometer:") {
-                    TextField("Required",
-                              value: $odometer,
-                              format: .number)
+                    TextField(
+                        "Required",
+                        value: $odometer,
+                        format: .number
+                    )
                     .textFieldStyle(.roundedBorder)
                     .keyboardType(.decimalPad)
                     .multilineTextAlignment(.trailing)

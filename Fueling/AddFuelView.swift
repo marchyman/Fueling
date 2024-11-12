@@ -26,27 +26,33 @@ struct AddFuelView: View {
                 Text(vehicle.name).font(.headline)
 
                 LabeledContent("Cost") {
-                    TextField("Required",
-                              value: $cost,
-                              format: .number)
+                    TextField(
+                        "Required",
+                        value: $cost,
+                        format: .number
+                    )
                     .textFieldStyle(.roundedBorder)
                     .keyboardType(.decimalPad)
                     .multilineTextAlignment(.trailing)
                 }
 
                 LabeledContent("Number of gallons") {
-                    TextField("Required",
-                              value: $gallons,
-                              format: .number)
+                    TextField(
+                        "Required",
+                        value: $gallons,
+                        format: .number
+                    )
                     .textFieldStyle(.roundedBorder)
                     .keyboardType(.decimalPad)
                     .multilineTextAlignment(.trailing)
                 }
 
                 LabeledContent("Current odometer") {
-                    TextField("Required",
-                              value: $odometer,
-                              format: .number)
+                    TextField(
+                        "Required",
+                        value: $odometer,
+                        format: .number
+                    )
                     .textFieldStyle(.roundedBorder)
                     .keyboardType(.decimalPad)
                     .multilineTextAlignment(.trailing)
@@ -61,8 +67,9 @@ struct AddFuelView: View {
 
                 Button("Add") {
                     if let cost, let gallons, let odometer {
-                        state.addFuel(name: vehicle.name, cost: cost,
-                                      gallons: gallons, odometer: odometer)
+                        state.addFuel(
+                            name: vehicle.name, cost: cost,
+                            gallons: gallons, odometer: odometer)
                         dismiss()
                     }
                 }
@@ -82,7 +89,8 @@ extension AddFuelView {
             let cost,
             odometer != 0,
             gallons != 0,
-            cost != 0 else { return false }
+            cost != 0
+        else { return false }
         return true
     }
 }
