@@ -33,16 +33,19 @@ struct FuelEntryView: View {
             GridRow {
                 Text("Cost")
                 Text("\(cost, format: .currency(code: "usd"))")
+                    .monospacedDigit()
                     .onTapGesture { present = .cost }
             }
             GridRow {
                 Text("Gallons")
                 Text("\(gallons, specifier: "%.3f")")
+                    .monospacedDigit()
                     .onTapGesture { present = .gallons }
             }
             GridRow {
                 Text("Odometer")
                 Text("\(odometer, format: .number)")
+                    .monospacedDigit()
                     .onTapGesture { present = .odometer }
             }
         }

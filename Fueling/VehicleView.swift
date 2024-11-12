@@ -23,28 +23,34 @@ struct VehicleView: View {
                     GridRow {
                         Text("Total cost:")
                         Text("\(vehicle.fuelCost, format: .currency(code: "usd"))")
+                            .monospacedDigit()
                     }
                     GridRow {
                         Text("Fuel used:")
                         Text("\(vehicle.fuelUsed, specifier: "%.3f")")
+                            .monospacedDigit()
                     }
                     GridRow {
                         Text("Miles driven:")
                         Text("\(vehicle.milesDriven, format: .number)")
+                            .monospacedDigit()
                     }
                     Divider()
                         .gridCellUnsizedAxes(.horizontal)
                     GridRow {
                         Text("Miles/gallon:")
                         Text("\(vehicle.mpg, specifier: "%0.1f")")
+                            .monospacedDigit()
                     }
                     GridRow {
                         Text("Cost/gallon")
                         Text("\(vehicle.costPerGallon, format: .currency(code: "usd"))")
+                            .monospacedDigit()
                     }
                     GridRow {
                         Text("Cost/mile")
                         Text("\(vehicle.costPerMile, format: .currency(code: "usd"))")
+                            .monospacedDigit()
                     }
                 }
             } label: {
@@ -53,9 +59,11 @@ struct VehicleView: View {
                     Spacer()
                     VStack {
                         Text("\(vehicle.odometer) start")
+                            .monospacedDigit()
                         Text(
                             "\(vehicle.fuelingsByTimestamp().first?.odometer ?? vehicle.odometer) miles"
                         )
+                        .monospacedDigit()
                     }
                 }
                 .padding()
@@ -84,11 +92,14 @@ struct VehicleView: View {
                 Divider()
                 ForEach(vehicle.fuelingsByTimestamp()) { fueling in
                     GridRow {
-                        Text("\(fueling.dateTime)")
-                        Text("\(fueling.odometer, format: .number)")
-                        Text("\(fueling.amount, specifier: "%.3f")")
-                        Text("\(fueling.cost, format: .currency(code: "usd"))")
-                            .frame(maxWidth: 70, alignment: .trailing)
+                        Group {
+                            Text("\(fueling.dateTime)")
+                            Text("\(fueling.odometer, format: .number)")
+                            Text("\(fueling.amount, specifier: "%.3f")")
+                            Text("\(fueling.cost, format: .currency(code: "usd"))")
+                                .frame(maxWidth: 70, alignment: .trailing)
+                        }
+                        .monospacedDigit()
                     }
                     .onTapGesture {
                         fuelingInfoItem = fueling

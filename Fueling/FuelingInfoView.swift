@@ -19,28 +19,33 @@ struct FuelingInfoView: View {
                     GridRow {
                         Text("Fuel used:")
                         Text("\(fueling.amount, specifier: "%.3f")")
+                            .monospacedDigit()
                     }
                     GridRow {
                         Text("Miles driven:")
                         Text("\(miles, format: .number)")
+                            .monospacedDigit()
                     }
                     GridRow {
                         Text("Miles/gallon:")
                         Text(
                             "\(mpg(miles: miles, gallons: fueling.amount), specifier: "%0.1f")"
                         )
+                        .monospacedDigit()
                     }
                     GridRow {
                         Text("Cost/gallon:")
                         Text(
                             "\(cpg(cost: fueling.cost, gallons: fueling.amount), format: .currency(code: "usd"))"
                         )
+                        .monospacedDigit()
                     }
                     GridRow {
                         Text("Cost/mile:")
                         Text(
                             "\(cpm(cost: fueling.cost, miles: miles), format: .currency(code: "usd"))"
                         )
+                        .monospacedDigit()
                     }
                 }
             } label: {

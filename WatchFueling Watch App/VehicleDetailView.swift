@@ -17,24 +17,29 @@ struct VehicleDetailView: View {
             GridRow {
                 Text("Cost")
                 Text("\(vehicle.cost, format: .currency(code: "usd"))")
+                    .monospacedDigit()
             }
             GridRow {
                 Text("Gallons")
                 Text("\(vehicle.gallons, specifier: "%.3f")")
+                    .monospacedDigit()
             }
             GridRow {
                 Text("Miles")
                 Text("\(vehicle.miles, format: .number)")
+                    .monospacedDigit()
             }
             Divider()
                 .gridCellUnsizedAxes(.horizontal)
             GridRow {
                 Text("MPG")
                 Text("\(vehicle.mpg, specifier: "%0.1f")")
+                    .monospacedDigit()
             }
             GridRow {
                 Text("$PG")
                 Text("\(vehicle.cpg, format: .currency(code: "usd"))")
+                    .monospacedDigit()
             }
         }
         .padding(.horizontal)
