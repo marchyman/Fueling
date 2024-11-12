@@ -4,7 +4,6 @@
 // https://www.snafu.org/
 //
 
-import SwiftData
 import SwiftUI
 
 struct FuelingEditView: View {
@@ -53,6 +52,7 @@ struct FuelingEditView: View {
             HStack {
                 Spacer()
                 Button("Dismiss") {
+                    state.update(fuel: fueling)
                     state.sendAppContext()
                     dismiss()
                 }

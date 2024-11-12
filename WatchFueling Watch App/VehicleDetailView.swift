@@ -8,7 +8,9 @@ import SwiftUI
 
 struct VehicleDetailView: View {
     @Environment(WatchState.self) private var state
-    var vehicle: Vehicle
+    @Environment(\.dismiss) var dismiss
+
+    @State var vehicle: Vehicle
 
     var body: some View {
         Grid(alignment: .leading, horizontalSpacing: 20) {
@@ -45,6 +47,13 @@ struct VehicleDetailView: View {
                 } label: {
                     Label("Add", systemImage: "gauge.medium.badge.plus")
                 }
+            }
+        }
+        .onChange(of: state.vehiclesChanged) {
+            if let updatedVehicle = state.vehicles.first(where: { $0.name == vehicle.name }) {
+                vehicle = updatedVehicle
+            } else {
+                dismiss()
             }
         }
         .opacity(state.fetching ? 0.3 : 1.0)

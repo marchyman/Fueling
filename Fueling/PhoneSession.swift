@@ -6,9 +6,9 @@
 
 import Foundation
 import OSLog
-@preconcurrency import WatchConnectivity
+import WatchConnectivity
 
-final class PhoneSession: NSObject, @unchecked Sendable {
+final class PhoneSession: NSObject {
     unowned let state: FuelingState
     let session: WCSession = .default
 
@@ -50,7 +50,7 @@ extension PhoneSession: WCSessionDelegate {
                  didReceiveMessage message: [String: Any]) {
         Self.log.notice("\(#function) \(message.debugDescription, privacy: .public)")
         if message[MessageKey.get] as? String == MessageKey.vehicles {
-            Task {
+            Task { [state] in
                 await state.sendAppContext()
             }
         } else {
@@ -61,7 +61,7 @@ extension PhoneSession: WCSessionDelegate {
     // receive a message that requires a reply
     func session(_ session: WCSession,
                  didReceiveMessage message: [String: Any],
-                 replyHandler: @escaping @Sendable ([String: Any]) -> Void) {
+                 replyHandler: @escaping ([String: Any]) -> Void) {
         Self.log.notice("\(#function) \(message.debugDescription, privacy: .public)")
         if let dict = message[MessageKey.put] as? [String: Any],
                   let name = dict[MessageKey.vehicle] as? String {
@@ -69,12 +69,13 @@ extension PhoneSession: WCSessionDelegate {
             let gallons = dict[MessageKey.gallons] as? Double
             let odometer = dict[MessageKey.miles] as? Int
             if let cost, let gallons, let odometer {
-                Task {
-                    let response = await state.addFuel(name: name, cost: cost,
-                                                       gallons: gallons,
-                                                       odometer: odometer)
-                    replyHandler([MessageKey.put: response])
+                Task { [state] in
+                    await MainActor.run {
+                        state.addFuel(name: name, cost: cost,
+                                      gallons: gallons, odometer: odometer)
+                    }
                 }
+                replyHandler([MessageKey.put: MessageKey.received])
             } else {
                 replyHandler([MessageKey.put: ""])
             }

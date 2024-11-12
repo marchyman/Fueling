@@ -8,15 +8,10 @@ import Foundation
 import OSLog
 import SwiftUI
 
-// I don't know if this is correct, but it gets rid of warnings and if not
-// correct I don't much care if debug messages are messed up due to a
-// race condition.
-extension Logger: @unchecked Sendable {}
-
 @MainActor
 @Observable
 final class FuelingState {
-    var vehicles: [Vehicle] = []
+    private(set) var vehicles: [Vehicle] = []
     private let fuelingDB: FuelingDB
     private var ps: PhoneSession!
 
@@ -53,6 +48,7 @@ extension FuelingState {
         plist[MessageKey.cost] = vehicle.fuelCost
         plist[MessageKey.gallons] = vehicle.fuelUsed
         plist[MessageKey.miles] = vehicle.milesDriven
+        plist[MessageKey.timestamp] = Date.now
         return plist
     }
 
@@ -103,26 +99,21 @@ extension FuelingState {
         }
     }
 
-    // create a fueling entry and add it to the named vehicle. Returns a
-    // status string forwarded to the watch when fueling additions are the
-    // result of watch input.
-    @discardableResult
-    func addFuel(name: String, cost: Double, gallons: Double, odometer: Int) -> String {
+    // create a fueling entry and add it to the named vehicle.
+    func addFuel(name: String, cost: Double, gallons: Double, odometer: Int) {
         if let vehicle = vehicles.first(where: { $0.name == name }) {
             let fuel = Fuel(odometer: odometer, amount: gallons, cost: cost)
-            vehicle.fuelings.append(fuel)
+            // update the database with the new fuel entry
             do {
-                // Is the update necessary?  I believe appending the Fuel entry
-                // is adequate, but am not sure.  This doesn't hurt.
-                try fuelingDB.update(vehicle: vehicle)
+                try fuelingDB.update(name: vehicle.name, fuel: fuel)
+                try getVehicles()
                 sendAppContext()
-                return MessageKey.updated
             } catch {
-                Self.log.error("#function: \(error.localizedDescription, privacy: .public)")
-                return error.localizedDescription
+                Self.log.error("\(#function): \(error.localizedDescription, privacy: .public)")
             }
+        } else {
+            Self.log.error("\(#function): Cannot find vehicle named \(name)")
         }
-        return "Cannot find vehicle named \(name)"
     }
 }
 
@@ -140,9 +131,10 @@ extension FuelingState {
 
     }
 
-    func update(vehicle: Vehicle) {
+    func update(fuel: Fuel) {
         do {
-            try fuelingDB.update(vehicle: vehicle)
+            try fuelingDB.update(fuel: fuel)
+            try getVehicles()
         } catch {
             Self.log.error("#function: \(error.localizedDescription, privacy: .public)")
         }

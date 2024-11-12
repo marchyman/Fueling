@@ -5,9 +5,7 @@
 //
 
 import SwiftUI
-import SwiftData
 
-@MainActor
 struct AddVehicleView: View {
     @Environment(FuelingState.self) var state
     @Environment(\.dismiss) var dismiss

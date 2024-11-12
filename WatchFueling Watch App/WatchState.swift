@@ -8,12 +8,11 @@ import Foundation
 import OSLog
 import SwiftUI
 
-extension Logger: @unchecked Sendable {}
-
 @MainActor
 @Observable
 final class WatchState {
     var vehicles: [Vehicle] = []
+    var vehiclesChanged = false
     private var ws: WatchSession!
 
     // data fetched when a vehicle is selected
@@ -26,21 +25,12 @@ final class WatchState {
 
 extension WatchState {
     // logging
-    static let log = Logger(subsystem: Bundle.main.bundleIdentifier!,
-                            category: "WatchState")
+    nonisolated static let log = Logger(subsystem: Bundle.main.bundleIdentifier!,
+                                        category: "WatchState")
 }
 
 extension WatchState {
     
-    // update the vehicles array.
-    func update(vehicle: Vehicle) {
-        if let index = vehicles.firstIndex(where: { $0.name == vehicle.name }) {
-            vehicles[index] = vehicle
-        } else {
-            vehicles.append(vehicle)
-        }
-    }
-
     // Request vehicle data.  This will trigger an application context update
     // when received by the companion app on the phone.
     @discardableResult
@@ -83,16 +73,26 @@ extension WatchState {
         }
     }
 
+    nonisolated private
     func putStatus(_ response: [String: Any]) {
         Self.log.debug("\(#function) \(response, privacy: .public)")
-        fetching = false
+        fetchingOff()
         let value = response[MessageKey.put] as? String ?? "Bad response"
-        if value != MessageKey.updated {
+        if value != MessageKey.received {
             Self.log.error("\(#function) \(value, privacy: .public)")
         }
     }
 
+    nonisolated private
     func errorHandler(error: any Error) {
         Self.log.error("\(#function) \(error.localizedDescription)")
+        fetchingOff()
+    }
+
+    nonisolated private
+    func fetchingOff() {
+        Task { @MainActor in
+            fetching = false
+        }
     }
 }

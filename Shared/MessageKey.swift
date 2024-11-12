@@ -23,17 +23,23 @@ Watch <=> Companion application data flow
   where String is the name of the vehicle and the dictionary contains the
   fueling statistics.  An entry therefore looks like this:
 
-    [<vehicle name>: ["cost": Double, "gallons": Double, "miles": Int]]
+    [<vehicle name>: ["cost": Double,
+                      "gallons": Double,
+                      "miles": Int,
+                      "timestamp": Date]]
+
+  Timestamp is included to force every update to be different as otherwise
+  the phone will not forward duplicate contexts.  The value is unused by
+  the watch.
 
 - The watch can request an application context update by sending this message:
 
     ["get", "vehicles"]
 
   no message reply is expected. The phone will initiate an application context
-  update. It seems, however, that if the context to send is identical to
-  the previous delivered context the phone will not send it again.
+  update.
 
-- The watch sends fueling updates to the copanion application on the phone
+- The watch sends fueling updates to the companion application on the phone
   using this format:
 
     ["put", Dictionary]
@@ -45,13 +51,15 @@ Watch <=> Companion application data flow
      "gallons" : Double,
      "miles" : Int]
 
-  The phone companion app will respond with one of the following:
+  The phone companion app will respond with:
 
-    ["put": "updated"]
-    ["put": "some error message in the form of a string" ]
+    ["put": "received"]
 
+  if the received message was valid and a fueling update was initiated.
   The phone will also send an application context message with updated
-  vehicle statistics.
+  vehicle statistics if the update was successful.
+
+  Some other message will be returned if the message was invalid.
 */
 
 enum MessageKey {
@@ -62,5 +70,6 @@ enum MessageKey {
     static let cost = "cost"
     static let gallons = "gallons"
     static let miles = "miles"
-    static let updated = "updated"
+    static let received = "received"
+    static let timestamp = "timestamp"
 }
