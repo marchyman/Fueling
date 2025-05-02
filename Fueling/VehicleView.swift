@@ -16,7 +16,6 @@ struct VehicleView: View {
     @State private var fuelingEditItem: Fuel?
 
     var body: some View {
-        let _ = Self._printChanges()
         ScrollView {
             GroupBox {
                 Grid(alignment: .leading, horizontalSpacing: 30) {
