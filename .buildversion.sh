@@ -11,9 +11,9 @@ set -o nounset
 # First, check for git in $PATH
 hash git 2>/dev/null || { echo >&2 "Git required, not in path.  Aborting build number update script."; exit 0; }
 
-# Run Script build phases that operate on product files of the target that defines them should use the value of this
-# build setting [TARGET_BUILD_DIR].
-INFO_PLIST="${INFOPLIST_FILE}"
+# Run Script build phases that operate on product files of the target that
+# defines them should use the value of this build setting [TARGET_BUILD_DIR].
+INFO_PLIST="${TARGET_BUILD_DIR}/${INFOPLIST_PATH}"
 
 # Build version (closest-tag-or-branch "-" commits-since-tag "-" short-hash dirty-flag)
 # Bundle version starts with the total number of commits
