@@ -7,7 +7,7 @@
 import SwiftUI
 
 @main
-struct WatchFueling_Watch_AppApp: App {
+struct WatchFuelingApp: App {
 
     var body: some Scene {
         WindowGroup {

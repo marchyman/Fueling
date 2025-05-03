@@ -1,9 +1,12 @@
 *~
 .DS_Store
-GeoTag-testing
+
+buildServer.json
 
 Build/
 DerivedData/
+Index.noindex/
 xcuserdata/
+*.xcodeproj/
 *.xcworkspace/
 *.trace/

@@ -9,3 +9,17 @@ at the top of the file named MessageKey.swift.
 
 I don't pretend to know what I'm doing.  The purpose of this app is as much
 for me to learn as it is to do something useful.
+
+## Requirements
+
+- I am now using `xcodegen` to build the xcodeproj used to create this app.
+  If needed install using brew.
+
+- I use `buildserver` to allow use of the Swift LSP inside neovim.
+  `buildserver` gets the root wrong since I use Build and DerivedData folders
+  inside of the project folder. I've a script that runs buildserver than
+  modifies the output as needed.
+
+- I have a makefile to run `xcodegen`, do a build using `xcodebuild`,
+  then run `buildserver`.  It prepares the project for edits/updates.
+  Running `make clean` will remove all folders/files that `make` generates.

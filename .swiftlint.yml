@@ -1,5 +1,6 @@
 disabled_rules:
   - opening_brace
+  - force_try
 
 included:
 
@@ -23,4 +24,5 @@ identifier_name:
     - id
     - ok
     - ix
-
+    - ws
+    - ps
