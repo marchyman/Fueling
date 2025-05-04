@@ -15,10 +15,10 @@ for me to learn as it is to do something useful.
 - I am now using `xcodegen` to build the xcodeproj used to create this app.
   If needed install using brew.
 
-- I use `buildserver` to allow use of the Swift LSP inside neovim.
-  `buildserver` gets the root wrong since I use Build and DerivedData folders
-  inside of the project folder. I've a script that runs buildserver than
-  modifies the output as needed.
+- I use `xcode-build-server` to allow use of the Swift LSP inside neovim.
+  `xcode-build-server` gets the root wrong since I use Build and DerivedData
+  folders inside of the project folder. I've a script named `buildserver`
+  that runs xcode-build-server then modifies the output as needed.
 
 - I have a makefile to run `xcodegen`, do a build using `xcodebuild`,
   then run `buildserver`.  It prepares the project for edits/updates.
