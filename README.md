@@ -17,8 +17,8 @@ for me to learn as it is to do something useful.
 
 - I use `xcode-build-server` to allow use of the Swift LSP inside neovim.
   `xcode-build-server` gets the root wrong since I use Build and DerivedData
-  folders inside of the project folder. I've a script named `buildserver`
-  that runs xcode-build-server then modifies the output as needed.
+  folders inside of the project folder. This is fixed in the makefile when
+  `buildServer.json` is created.
 
 - I have a makefile to run `xcodegen`, do a build using `xcodebuild`,
   then run `buildserver`.  It prepares the project for edits/updates.
