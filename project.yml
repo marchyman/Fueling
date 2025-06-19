@@ -2,7 +2,7 @@ name: Fueling
 
 options:
   groupOrdering:
-    - order: [Fueling, Fueling Watch App, Packages, Products]
+    - order: [FuelingStore, Fueling, Fueling Watch App, Packages, Products]
 
 settings:
   base:
@@ -37,6 +37,7 @@ targets:
     sources:
       - Shared
       - Fueling
+      - FuelingStore
     dependencies:
       - target: "Fueling Watch App"
       - package: UDF
