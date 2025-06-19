@@ -1,16 +1,12 @@
 //
 // Copyright 2024 Marco S Hyman
-// See LICENSE file for info
 // https://www.snafu.org/
 //
 
-import Foundation
 import OSLog
 import SwiftUI
 
-@MainActor
-@Observable
-final class FuelingState {
+struct FuelingState: Equatable, Sendable {
     private(set) var vehicles: [Vehicle] = []
     private let fuelingDB: FuelingDB
     private var ps: PhoneSession!
@@ -20,19 +16,12 @@ final class FuelingState {
         ps = PhoneSession(state: self)
         do {
             try getVehicles()
-            sendInitialAppContext()
+            // sendInitialAppContext()
         } catch {
-            Self.log.error(
-                "get vehicles: \(error.localizedDescription, privacy: .public)")
+            Logger(subsystem: "org.snafu", category: "FuelingState")
+                .error("get vehicles: \(error.localizedDescription, privacy: .public)")
         }
     }
-}
-
-extension FuelingState {
-    // logging
-    static let log = Logger(
-        subsystem: Bundle.main.bundleIdentifier!,
-        category: "FuelingState")
 }
 
 extension FuelingState {
@@ -60,28 +49,30 @@ extension FuelingState {
     // see the debug messages if things fail when testing.
     @discardableResult
     func sendAppContext() -> Bool {
+        let logger = Logger(subsystem: "org.snafu", category: "FuelingState")
+
         guard ps.session.activationState == .activated else {
-            Self.log.debug("\(#function) session not activated")
+            loggger.debug("\(#function) session not activated")
             return false
         }
         guard ps.session.isWatchAppInstalled else {
-            Self.log.debug("\(#function) companion app not installed")
+            logger.debug("\(#function) companion app not installed")
             return false
         }
         guard ps.session.isReachable else {
-            Self.log.debug("\(#function) session not reachable")
+            logger.debug("\(#function) session not reachable")
             return false
         }
         var context: [String: Any] = [:]
         for vehicle in vehicles {
             context[vehicle.name] = getStats(for: vehicle)
         }
-        Self.log.debug("\(#function) \(context, privacy: .public)")
+        logger.debug("\(#function) \(context, privacy: .public)")
         do {
             try ps.session.updateApplicationContext(context)
             return true
         } catch {
-            Self.log.error("\(#function) \(error.localizedDescription, privacy: .public)")
+            logger.error("\(#function) \(error.localizedDescription, privacy: .public)")
         }
         return false
     }
@@ -111,11 +102,12 @@ extension FuelingState {
                 try getVehicles()
                 sendAppContext()
             } catch {
-                Self.log.error(
+                Logger(subsystem: "org.snafu", category: "FuelingState").error(
                     "\(#function): \(error.localizedDescription, privacy: .public)")
             }
         } else {
-            Self.log.error("\(#function): Cannot find vehicle named \(name)")
+            Logger(subsystem: "org.snafu", category: "FuelingState")
+                .error("\(#function): Cannot find vehicle named \(name)")
         }
     }
 }
@@ -129,7 +121,8 @@ extension FuelingState {
             try fuelingDB.create(vehicle: vehicle)
             try getVehicles()
         } catch {
-            Self.log.error("#function: \(error.localizedDescription, privacy: .public)")
+            Logger(subsystem: "org.snafu", category: "FuelingState")
+                .error("#function: \(error.localizedDescription, privacy: .public)")
         }
 
     }
@@ -139,7 +132,8 @@ extension FuelingState {
             try fuelingDB.update(fuel: fuel)
             try getVehicles()
         } catch {
-            Self.log.error("#function: \(error.localizedDescription, privacy: .public)")
+            Logger(subsystem: "org.snafu", category: "FuelingState")
+                .error("#function: \(error.localizedDescription, privacy: .public)")
         }
     }
 
@@ -148,8 +142,8 @@ extension FuelingState {
             try fuelingDB.delete(vehicle: vehicle)
             try getVehicles()
         } catch {
-            Self.log.error("#function: \(error.localizedDescription, privacy: .public)")
+            Logger(subsystem: "org.snafu", category: "FuelingState")
+                .error("#function: \(error.localizedDescription, privacy: .public)")
         }
-
     }
 }

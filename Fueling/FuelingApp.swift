@@ -9,11 +9,14 @@ import UDF
 
 @main
 struct FuelingApp: App {
+    @State private var store = Store(initialState: FuelingState(),
+                                            reduce: FuelingReducer(),
+                                            name: "Fueling Store")
 
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environment(FuelingState())
+                .environment(store)
         }
     }
 }
