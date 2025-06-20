@@ -47,8 +47,7 @@ struct AddVehicleView: View {
                 }
                 Button("Add") {
                     guard let odometer else { return }
-                    let newVehicle = Vehicle(name: name, odometer: odometer)
-                    store.send(.addVehicleButtonTapped(newVehicle))
+                    store.send(.addVehicleButtonTapped(name, odometer))
                     dismiss()
                 }
                 .padding()

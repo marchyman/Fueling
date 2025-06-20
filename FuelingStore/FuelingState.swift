@@ -4,11 +4,11 @@
 //
 
 import OSLog
+import SwiftData
 import SwiftUI
 import WatchConnectivity
 
-@MainActor
-struct FuelingState: Equatable, Sendable {
+struct FuelingState {
     private(set) var vehicles: [Vehicle] = []
     private let fuelingDB: FuelingDB
     var errorMessage: String?
@@ -21,7 +21,7 @@ struct FuelingState: Equatable, Sendable {
 
 extension FuelingState {
 
-    // return the context shared with the watch component of the app
+    // return the context shared with the watch component
     func appContext() -> [String: Any] {
         var context: [String: Any] = [:]
         for vehicle in vehicles {
@@ -53,22 +53,10 @@ extension FuelingState {
         return plist
     }
 
-    // type used to package data received from the watch or app before sending
-    // to the reducer
-
-    struct FuelData: Equatable, Sendable {
-        let name: String
-        let cost: Double
-        let gallons: Double
-        let odometer: Int
-    }
-
     // create a fueling entry and add it to the named vehicle.
-    mutating func addFuel(data: FuelData) {
-        if let vehicle = vehicles.first(where: { $0.name == data.name }) {
-            let fuel = Fuel(odometer: data.odometer,
-                            amount: data.gallons,
-                            cost: data.cost)
+    mutating func addFuel(name: String, fuelData: FuelData) {
+        if let vehicle = vehicles.first(where: { $0.name == name }) {
+            let fuel = Fuel(from: fuelData)
             do {
                 try fuelingDB.update(name: vehicle.name, fuel: fuel)
             } catch {
@@ -78,7 +66,7 @@ extension FuelingState {
             }
         } else {
             Logger(subsystem: "org.snafu", category: "FuelingState")
-                .error("\(#function): Cannot find vehicle named \(data.name)")
+                .error("\(#function): Cannot find vehicle named \(name)")
         }
     }
 }
@@ -90,7 +78,7 @@ extension FuelingState {
     mutating func create(vehicle: Vehicle) {
         do {
             try fuelingDB.create(vehicle: vehicle)
-//            try getVehicles()
+            refreshVehicles()
         } catch {
             Logger(subsystem: "org.snafu", category: "FuelingState")
                 .error("#function: \(error.localizedDescription, privacy: .public)")
@@ -101,7 +89,7 @@ extension FuelingState {
     mutating func update(fuel: Fuel) {
         do {
             try fuelingDB.update(fuel: fuel)
-//            try getVehicles()
+            refreshVehicles()
         } catch {
             Logger(subsystem: "org.snafu", category: "FuelingState")
                 .error("#function: \(error.localizedDescription, privacy: .public)")
@@ -111,7 +99,7 @@ extension FuelingState {
     mutating func delete(vehicle: Vehicle) {
         do {
             try fuelingDB.delete(vehicle: vehicle)
-//            try getVehicles()
+            refreshVehicles()
         } catch {
             Logger(subsystem: "org.snafu", category: "FuelingState")
                 .error("#function: \(error.localizedDescription, privacy: .public)")

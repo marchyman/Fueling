@@ -5,14 +5,17 @@
 //
 
 import SwiftUI
+import UDF
 
 struct FuelingEditView: View {
-    @Environment(FuelingState.self) var state
+    @Environment(Store<FuelingState, FuelingAction>.self) var store
     @Environment(\.dismiss) var dismiss
 
     @Bindable var fueling: Fuel
 
     var body: some View {
+        Text("compile")
+        /*
         VStack {
             Text("Edit Fuel")
                 .font(.title)
@@ -66,6 +69,7 @@ struct FuelingEditView: View {
                 .buttonStyle(.borderedProminent)
             }
         }
+        */
     }
 }
 

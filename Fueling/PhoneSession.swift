@@ -125,13 +125,12 @@ extension PhoneSession: WCSessionDelegate {
             let gallons = dict[MessageKey.gallons] as? Double
             let odometer = dict[MessageKey.miles] as? Int
             if let cost, let gallons, let odometer {
-                let fuelData = FuelingState.FuelData(name: name,
-                                                     cost: cost,
-                                                     gallons: gallons,
-                                                     odometer: odometer)
+                let fuelData = FuelData(odometer: odometer,
+                                        amount: gallons,
+                                        cost: cost)
                 Task { [store] in
                     await MainActor.run {
-                        store.send(.addFuelReceived(fuelData))
+                        store.send(.addFuelReceived(name, fuelData))
                     }
                 }
                 replyHandler([MessageKey.put: MessageKey.received])

@@ -35,6 +35,12 @@ final class Fuel {
         self.cost = cost
         self.timestamp = timestamp
     }
+
+    convenience init(from fuelData: FuelData) {
+        self.init(odometer: fuelData.odometer,
+                  amount: fuelData.amount,
+                  cost: fuelData.cost)
+    }
 }
 
 extension Fuel {
@@ -62,4 +68,12 @@ extension Fuel {
         }
         return 0
     }
+}
+
+// Fueling data in a sendable form.
+
+struct FuelData: Equatable, Sendable {
+    var odometer: Int
+    var amount: Double
+    var cost: Double
 }

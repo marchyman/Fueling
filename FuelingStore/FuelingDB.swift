@@ -8,6 +8,7 @@ import SwiftData
 
 final class FuelingDB {
     let container: ModelContainer
+    let context: ModelContext
 
     init(inMemory: Bool = false) throws {
         let configuration = ModelConfiguration(
@@ -16,17 +17,11 @@ final class FuelingDB {
         container = try ModelContainer(
             for: Vehicle.self,
             configurations: configuration)
+        context = ModelContext(container)
         if inMemory {
             addTestVehicles()
             addTestFuelings()
         }
-    }
-}
-
-extension FuelingDB: Equatable {
-    nonisolated static func == (lhs: FuelingDB, rhs: FuelingDB) -> Bool {
-        // good enough for this app
-        lhs === rhs
     }
 }
 
@@ -59,7 +54,6 @@ extension FuelingDB {
 extension FuelingDB {
 
     func create(vehicles: [Vehicle]) throws {
-        let context = ModelContext(container)
         for vehicle in vehicles {
             context.insert(vehicle)
         }
@@ -67,13 +61,11 @@ extension FuelingDB {
     }
 
     func create(vehicle: Vehicle) throws {
-        let context = ModelContext(container)
         context.insert(vehicle)
         try context.save()
     }
 
     func read(sortBy sortDescriptors: SortDescriptor<Vehicle>...) throws -> [Vehicle] {
-        let context = ModelContext(container)
         let fetchDescriptor = FetchDescriptor<Vehicle>(
             sortBy: sortDescriptors
         )
@@ -82,7 +74,6 @@ extension FuelingDB {
 
     // update a vehicle by appending a fueling entry
     func update(name: String, fuel: Fuel) throws {
-        let context = ModelContext(container)
         let fetchDescriptor = FetchDescriptor<Vehicle>(
             predicate: #Predicate { $0.name == name }
         )
@@ -93,7 +84,6 @@ extension FuelingDB {
 
     // update a fueling entry
     func update(fuel: Fuel) throws {
-        let context = ModelContext(container)
         let key = fuel.timestamp
         let fetchDescriptor = FetchDescriptor<Fuel>(
             predicate: #Predicate { $0.timestamp == key }
@@ -106,7 +96,6 @@ extension FuelingDB {
     }
 
     func delete(vehicle: Vehicle) throws {
-        let context = ModelContext(container)
         let idToDelete = vehicle.persistentModelID
         try context.delete(
             model: Vehicle.self,

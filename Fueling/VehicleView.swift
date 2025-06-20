@@ -5,6 +5,7 @@
 //
 
 import SwiftUI
+import UDF
 
 struct VehicleView: View {
     var vehicle: Vehicle

@@ -31,7 +31,7 @@ struct ContentView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     EditButton()
-                        .disabled(store.vehicles.isEmpty)
+                        .disabled(store.state.vehicles.isEmpty)
                 }
                 ToolbarItem {
                     Button {
@@ -45,7 +45,7 @@ struct ContentView: View {
                 }
             }
             .overlay {
-                if store.vehicles.isEmpty {
+                if store.state.vehicles.isEmpty {
                     ContentUnavailableView(
                         "Please add a vehicle",
                         systemImage: "car.fill")
@@ -62,7 +62,7 @@ extension ContentView {
     private func deleteVehicle(offsets: IndexSet) {
         withAnimation {
             for index in offsets {
-                store.send(.onDeleteRequested(store.state.vehicles[index]))
+                store.send(.onDeleteRequested(name: store.state.vehicles[index].name))
             }
         }
     }
