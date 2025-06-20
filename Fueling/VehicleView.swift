@@ -7,8 +7,6 @@
 import SwiftUI
 
 struct VehicleView: View {
-    @Environment(FuelingState.self) var state
-
     var vehicle: Vehicle
 
     @State private var addFuelPresented = false
@@ -135,9 +133,11 @@ struct VehicleView: View {
 }
 
 #Preview {
-    let state = FuelingState(forPreview: true)
-    return NavigationStack {
-        VehicleView(vehicle: state.vehicles[0])
-            .environment(state)
+    @Previewable @State var store =
+        Store(initialState: FuelingState(forPreview: true),
+              reduce: FuelingReducer(),
+              name: "Fueling Store Preview")
+    NavigationStack {
+        VehicleView(vehicle: store.state.vehicles[0])
     }
 }

@@ -5,32 +5,42 @@
 
 import OSLog
 import SwiftUI
+import WatchConnectivity
 
+@MainActor
 struct FuelingState: Equatable, Sendable {
     private(set) var vehicles: [Vehicle] = []
     private let fuelingDB: FuelingDB
-    private var ps: PhoneSession!
+    var errorMessage: String?
 
     init(forPreview: Bool = false) {
         fuelingDB = try! FuelingDB(inMemory: forPreview)
-        ps = PhoneSession(state: self)
-        do {
-            try getVehicles()
-            // sendInitialAppContext()
-        } catch {
-            Logger(subsystem: "org.snafu", category: "FuelingState")
-                .error("get vehicles: \(error.localizedDescription, privacy: .public)")
-        }
+        refreshVehicles()
     }
 }
 
 extension FuelingState {
 
+    // return the context shared with the watch component of the app
+    func appContext() -> [String: Any] {
+        var context: [String: Any] = [:]
+        for vehicle in vehicles {
+            context[vehicle.name] = getStats(for: vehicle)
+        }
+        return context
+    }
+
     // populate the vehicles array from database contents.  Private to
     // this class as all outside access to vehicles should be through
     // the class vehicle array.
-    private func getVehicles() throws {
-        vehicles = try fuelingDB.read(sortBy: SortDescriptor<Vehicle>(\.name))
+    mutating func refreshVehicles() {
+        do {
+            vehicles = try fuelingDB.read(sortBy: SortDescriptor<Vehicle>(\.name))
+        } catch {
+            errorMessage = error.localizedDescription
+            Logger(subsystem: "org.snafu", category: "FuelingState")
+                .error("refresh vehicles: \(error.localizedDescription, privacy: .public)")
+        }
     }
 
     // build and return a plist of current stats for a vehicle
@@ -43,71 +53,32 @@ extension FuelingState {
         return plist
     }
 
-    // send the current app state (vehicle name and stats) to the watch
-    // as an application context message.  Lots of checks here as this
-    // is the first communications sent by the phone and I'd like to
-    // see the debug messages if things fail when testing.
-    @discardableResult
-    func sendAppContext() -> Bool {
-        let logger = Logger(subsystem: "org.snafu", category: "FuelingState")
+    // type used to package data received from the watch or app before sending
+    // to the reducer
 
-        guard ps.session.activationState == .activated else {
-            loggger.debug("\(#function) session not activated")
-            return false
-        }
-        guard ps.session.isWatchAppInstalled else {
-            logger.debug("\(#function) companion app not installed")
-            return false
-        }
-        guard ps.session.isReachable else {
-            logger.debug("\(#function) session not reachable")
-            return false
-        }
-        var context: [String: Any] = [:]
-        for vehicle in vehicles {
-            context[vehicle.name] = getStats(for: vehicle)
-        }
-        logger.debug("\(#function) \(context, privacy: .public)")
-        do {
-            try ps.session.updateApplicationContext(context)
-            return true
-        } catch {
-            logger.error("\(#function) \(error.localizedDescription, privacy: .public)")
-        }
-        return false
-    }
-
-    // Wait a second for the phone session to be activated and the watch
-    // to become reachable before sending the initial app context message.
-    // retry every second until the message is sent. Cap the number of
-    // retries -- the watch app may not be installed.
-    func sendInitialAppContext() {
-        Task(priority: .background) {
-            for _ in 0 ... 9 {
-                try? await Task.sleep(for: .seconds(1))
-                if sendAppContext() {
-                    break
-                }
-            }
-        }
+    struct FuelData: Equatable, Sendable {
+        let name: String
+        let cost: Double
+        let gallons: Double
+        let odometer: Int
     }
 
     // create a fueling entry and add it to the named vehicle.
-    func addFuel(name: String, cost: Double, gallons: Double, odometer: Int) {
-        if let vehicle = vehicles.first(where: { $0.name == name }) {
-            let fuel = Fuel(odometer: odometer, amount: gallons, cost: cost)
-            // update the database with the new fuel entry
+    mutating func addFuel(data: FuelData) {
+        if let vehicle = vehicles.first(where: { $0.name == data.name }) {
+            let fuel = Fuel(odometer: data.odometer,
+                            amount: data.gallons,
+                            cost: data.cost)
             do {
                 try fuelingDB.update(name: vehicle.name, fuel: fuel)
-                try getVehicles()
-                sendAppContext()
             } catch {
-                Logger(subsystem: "org.snafu", category: "FuelingState").error(
-                    "\(#function): \(error.localizedDescription, privacy: .public)")
+                errorMessage = error.localizedDescription
+                Logger(subsystem: "org.snafu", category: "FuelingState")
+                    .error("\(#function): \(error.localizedDescription, privacy: .public)")
             }
         } else {
             Logger(subsystem: "org.snafu", category: "FuelingState")
-                .error("\(#function): Cannot find vehicle named \(name)")
+                .error("\(#function): Cannot find vehicle named \(data.name)")
         }
     }
 }
@@ -116,10 +87,10 @@ extension FuelingState {
 // reads are handled by getVehicles, above.
 extension FuelingState {
 
-    func create(vehicle: Vehicle) {
+    mutating func create(vehicle: Vehicle) {
         do {
             try fuelingDB.create(vehicle: vehicle)
-            try getVehicles()
+//            try getVehicles()
         } catch {
             Logger(subsystem: "org.snafu", category: "FuelingState")
                 .error("#function: \(error.localizedDescription, privacy: .public)")
@@ -127,20 +98,20 @@ extension FuelingState {
 
     }
 
-    func update(fuel: Fuel) {
+    mutating func update(fuel: Fuel) {
         do {
             try fuelingDB.update(fuel: fuel)
-            try getVehicles()
+//            try getVehicles()
         } catch {
             Logger(subsystem: "org.snafu", category: "FuelingState")
                 .error("#function: \(error.localizedDescription, privacy: .public)")
         }
     }
 
-    func delete(vehicle: Vehicle) {
+    mutating func delete(vehicle: Vehicle) {
         do {
             try fuelingDB.delete(vehicle: vehicle)
-            try getVehicles()
+//            try getVehicles()
         } catch {
             Logger(subsystem: "org.snafu", category: "FuelingState")
                 .error("#function: \(error.localizedDescription, privacy: .public)")

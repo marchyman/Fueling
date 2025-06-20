@@ -72,6 +72,5 @@ struct FuelingEditView: View {
 #Preview {
     let state = FuelingState(forPreview: true)
     let fueling = state.vehicles.first!.fuelings.first!
-    return FuelingEditView(fueling: fueling)
-        .environment(state)
+    FuelingEditView(fueling: fueling)
 }

@@ -5,9 +5,10 @@
 //
 
 import SwiftUI
+import UDF
 
 struct ContentView: View {
-    @Environment(FuelingState.self) var state
+    @Environment(Store<FuelingState, FuelingAction>.self) var store
 
     @State var path = NavigationPath()
     @State private var addVehiclePresented = false
@@ -17,7 +18,7 @@ struct ContentView: View {
     var body: some View {
         NavigationStack(path: $path) {
             List {
-                ForEach(state.vehicles) { vehicle in
+                ForEach(store.state.vehicles) { vehicle in
                     NavigationLink {
                         VehicleView(vehicle: vehicle)
                     } label: {
@@ -30,7 +31,7 @@ struct ContentView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     EditButton()
-                        .disabled(state.vehicles.isEmpty)
+                        .disabled(store.vehicles.isEmpty)
                 }
                 ToolbarItem {
                     Button {
@@ -44,7 +45,7 @@ struct ContentView: View {
                 }
             }
             .overlay {
-                if state.vehicles.isEmpty {
+                if store.vehicles.isEmpty {
                     ContentUnavailableView(
                         "Please add a vehicle",
                         systemImage: "car.fill")
@@ -61,7 +62,7 @@ extension ContentView {
     private func deleteVehicle(offsets: IndexSet) {
         withAnimation {
             for index in offsets {
-                state.delete(vehicle: state.vehicles[index])
+                store.send(.onDeleteRequested(store.state.vehicles[index]))
             }
         }
     }
@@ -69,6 +70,7 @@ extension ContentView {
 
 #Preview {
     ContentView()
-        .environment(FuelingState(forPreview: true))
+        .environment(Store(initialState: FuelingState(forPreview: true),
+                           reduce: FuelingReducer(),
+                           name: "Fueling Store Preview"))
 }
-//

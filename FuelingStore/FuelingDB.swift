@@ -1,6 +1,5 @@
 //
 // Copyright 2024 Marco S Hyman
-// See LICENSE file for info
 // https://www.snafu.org/
 //
 
@@ -24,6 +23,13 @@ final class FuelingDB {
     }
 }
 
+extension FuelingDB: Equatable {
+    nonisolated static func == (lhs: FuelingDB, rhs: FuelingDB) -> Bool {
+        // good enough for this app
+        lhs === rhs
+    }
+}
+
 // Add test data for previews
 extension FuelingDB {
     func addTestVehicles() {
@@ -42,13 +48,9 @@ extension FuelingDB {
         )
         let vehicle = try! context.fetch(fetchDescriptor)[0]
         vehicle.fuelings.append(
-            Fuel(
-                odometer: 12555,
-                amount: 4.14, cost: 22.13))
+            Fuel(odometer: 12555, amount: 4.14, cost: 22.13))
         vehicle.fuelings.append(
-            Fuel(
-                odometer: 12666,
-                amount: 2.03, cost: 10.17))
+            Fuel(odometer: 12666, amount: 2.03, cost: 10.17))
         try! context.save()
     }
 }

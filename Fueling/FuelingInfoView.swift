@@ -90,6 +90,5 @@ extension FuelingInfoView {
 #Preview {
     let state = FuelingState(forPreview: true)
     let vehicle = state.vehicles.first!
-    return FuelingInfoView(fueling: vehicle.fuelings.first!)
-        .environment(state)
+    FuelingInfoView(fueling: vehicle.fuelings.first!)
 }
