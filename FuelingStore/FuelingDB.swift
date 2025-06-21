@@ -1,6 +1,5 @@
 //
 // Copyright 2024 Marco S Hyman
-// See LICENSE file for info
 // https://www.snafu.org/
 //
 
@@ -9,6 +8,7 @@ import SwiftData
 
 final class FuelingDB {
     let container: ModelContainer
+    let context: ModelContext
 
     init(inMemory: Bool = false) throws {
         let configuration = ModelConfiguration(
@@ -17,6 +17,7 @@ final class FuelingDB {
         container = try ModelContainer(
             for: Vehicle.self,
             configurations: configuration)
+        context = ModelContext(container)
         if inMemory {
             addTestVehicles()
             addTestFuelings()
@@ -42,13 +43,9 @@ extension FuelingDB {
         )
         let vehicle = try! context.fetch(fetchDescriptor)[0]
         vehicle.fuelings.append(
-            Fuel(
-                odometer: 12555,
-                amount: 4.14, cost: 22.13))
+            Fuel(odometer: 12555, amount: 4.14, cost: 22.13))
         vehicle.fuelings.append(
-            Fuel(
-                odometer: 12666,
-                amount: 2.03, cost: 10.17))
+            Fuel(odometer: 12666, amount: 2.03, cost: 10.17))
         try! context.save()
     }
 }
@@ -57,7 +54,6 @@ extension FuelingDB {
 extension FuelingDB {
 
     func create(vehicles: [Vehicle]) throws {
-        let context = ModelContext(container)
         for vehicle in vehicles {
             context.insert(vehicle)
         }
@@ -65,13 +61,11 @@ extension FuelingDB {
     }
 
     func create(vehicle: Vehicle) throws {
-        let context = ModelContext(container)
         context.insert(vehicle)
         try context.save()
     }
 
     func read(sortBy sortDescriptors: SortDescriptor<Vehicle>...) throws -> [Vehicle] {
-        let context = ModelContext(container)
         let fetchDescriptor = FetchDescriptor<Vehicle>(
             sortBy: sortDescriptors
         )
@@ -80,7 +74,6 @@ extension FuelingDB {
 
     // update a vehicle by appending a fueling entry
     func update(name: String, fuel: Fuel) throws {
-        let context = ModelContext(container)
         let fetchDescriptor = FetchDescriptor<Vehicle>(
             predicate: #Predicate { $0.name == name }
         )
@@ -91,7 +84,6 @@ extension FuelingDB {
 
     // update a fueling entry
     func update(fuel: Fuel) throws {
-        let context = ModelContext(container)
         let key = fuel.timestamp
         let fetchDescriptor = FetchDescriptor<Fuel>(
             predicate: #Predicate { $0.timestamp == key }
@@ -104,7 +96,6 @@ extension FuelingDB {
     }
 
     func delete(vehicle: Vehicle) throws {
-        let context = ModelContext(container)
         let idToDelete = vehicle.persistentModelID
         try context.delete(
             model: Vehicle.self,

@@ -6,70 +6,118 @@
 
 import Foundation
 import OSLog
-import WatchConnectivity
+import UDF
+@preconcurrency import WatchConnectivity
 
+@MainActor
 final class PhoneSession: NSObject {
-    unowned let state: FuelingState
     let session: WCSession = .default
+    let store: Store<FuelingState, FuelingAction>
 
-    init(state: FuelingState) {
-        self.state = state
+    init(store: Store<FuelingState, FuelingAction>) {
+        self.store = store
         super.init()
         if WCSession.isSupported() {
             session.delegate = self
             session.activate()
         } else {
-            Self.log.notice("Session not supported")
+            Logger(subsystem: "org.snafu", category: "PhoneSession")
+                .notice("Session not supported")
+        }
+    }
+
+    // send the current app state (vehicle name and stats) to the watch
+    // as an application context message.  Lots of checks here as this
+    // is the first communications sent by the phone and I'd like to
+    // see the debug messages if things fail when testing.
+    @discardableResult
+    func sendAppContext(appContext: [String: Any]) -> Bool {
+        let logger = Logger(subsystem: "org.snafu", category: "FuelingState")
+
+        guard session.activationState == .activated else {
+            logger.debug("\(#function) session not activated")
+            return false
+        }
+        guard session.isWatchAppInstalled else {
+            logger.debug("\(#function) companion app not installed")
+            return false
+        }
+        guard session.isReachable else {
+            logger.debug("\(#function) session not reachable")
+            return false
+        }
+        logger.debug("\(#function) \(appContext, privacy: .public)")
+        do {
+            try session.updateApplicationContext(appContext)
+            return true
+        } catch {
+            logger.error("\(#function) \(error.localizedDescription, privacy: .public)")
+        }
+        return false
+    }
+
+    // Wait a second for the phone session to be activated and the watch
+    // to become reachable before sending the initial app context message.
+    // retry every second until the message is sent. Cap the number of
+    // retries -- the watch app may not be installed.
+    func sendInitialAppContext(appContext: [String: Any]) {
+        Task(priority: .background) {
+            for _ in 0 ... 9 {
+                try? await Task.sleep(for: .seconds(1))
+                if sendAppContext(appContext: appContext) {
+                    break
+                }
+            }
         }
     }
 }
 
-extension PhoneSession {
-    // logging
-    static let log = Logger(
-        subsystem: Bundle.main.bundleIdentifier!,
-        category: "PhoneSession")
-}
-
 extension PhoneSession: WCSessionDelegate {
-    func session(
+    nonisolated func session(
         _ session: WCSession,
         activationDidCompleteWith activationState: WCSessionActivationState,
         error: (any Error)?
     ) {
-        Self.log.notice("activationDidCompleteWith \(activationState.rawValue)")
+        Logger(subsystem: "org.snafu", category: "PhoneSessionDelegate")
+            .notice("activationDidCompleteWith \(activationState.rawValue)")
     }
 
-    func sessionDidBecomeInactive(_ session: WCSession) {
-        Self.log.notice("session inactive")
+    nonisolated func sessionDidBecomeInactive(_ session: WCSession) {
+        Logger(subsystem: "org.snafu", category: "PhoneSessionDelegate")
+            .notice("session inactive")
     }
 
-    func sessionDidDeactivate(_ session: WCSession) {
-        Self.log.notice("session deactivated")
+    nonisolated func sessionDidDeactivate(_ session: WCSession) {
+        Logger(subsystem: "org.snafu", category: "PhoneSessionDelegate")
+            .notice("session deactivated")
     }
 
     // receive a message that does not require a reply
-    func session(
+    nonisolated func session(
         _ session: WCSession,
         didReceiveMessage message: [String: Any]
     ) {
-        Self.log.notice("\(#function) \(message.debugDescription, privacy: .public)")
+        Logger(subsystem: "org.snafu", category: "PhoneSessionDelegate")
+            .notice("\(#function) \(message.debugDescription, privacy: .public)")
         if message[MessageKey.get] as? String == MessageKey.vehicles {
-            Task { [state] in
-                await state.sendAppContext()
+            Task { @MainActor in
+                let context = store.state.appContext()
+                sendAppContext(appContext: context)
             }
         } else {
-            Self.log.error("\(#function) unknown message")
+            Logger(subsystem: "org.snafu", category: "PhoneSessionDelegate")
+                .error("\(#function) unknown message")
         }
     }
 
     // receive a message that requires a reply
-    func session(
+    nonisolated func session(
         _ session: WCSession,
         didReceiveMessage message: [String: Any],
         replyHandler: @escaping ([String: Any]) -> Void
     ) {
-        Self.log.notice("\(#function) \(message.debugDescription, privacy: .public)")
+        Logger(subsystem: "org.snafu", category: "PhoneSessionDelegate")
+            .notice("\(#function) \(message.debugDescription, privacy: .public)")
         if let dict = message[MessageKey.put] as? [String: Any],
             let name = dict[MessageKey.vehicle] as? String
         {
@@ -77,11 +125,12 @@ extension PhoneSession: WCSessionDelegate {
             let gallons = dict[MessageKey.gallons] as? Double
             let odometer = dict[MessageKey.miles] as? Int
             if let cost, let gallons, let odometer {
-                Task { [state] in
+                let fuelData = FuelData(odometer: odometer,
+                                        amount: gallons,
+                                        cost: cost)
+                Task { [store] in
                     await MainActor.run {
-                        state.addFuel(
-                            name: name, cost: cost,
-                            gallons: gallons, odometer: odometer)
+                        store.send(.addFuelReceived(name, fuelData))
                     }
                 }
                 replyHandler([MessageKey.put: MessageKey.received])
@@ -90,7 +139,8 @@ extension PhoneSession: WCSessionDelegate {
             }
 
         } else {
-            Self.log.error("Unknown message: \(message, privacy: .public)")
+            Logger(subsystem: "org.snafu", category: "PhoneSessionDelegate")
+                .error("Unknown message: \(message, privacy: .public)")
             replyHandler(["unknown": "request"])
         }
     }

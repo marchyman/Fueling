@@ -1,6 +1,5 @@
 //
 // Copyright 2024 Marco S Hyman
-// See LICENSE file for info
 // https://www.snafu.org/
 //
 
@@ -23,6 +22,8 @@ final class Vehicle {
         self.fuelings = []
     }
 }
+
+extension Vehicle: Equatable {}
 
 extension Vehicle {
 
@@ -58,12 +59,12 @@ extension Vehicle {
         return 0
     }
 
-    // return total fuel cost as a formatted string
+    // return total fuel cost
     var fuelCost: Double {
         fuelings.reduce(0.0) { $0 + $1.cost }
     }
 
-    // return cost per gallon of fuel as a formatted string
+    // return cost per gallon of fuel
     var costPerGallon: Double {
         let gallons = fuelUsed
         if gallons != 0 {
@@ -72,7 +73,7 @@ extension Vehicle {
         return 0
     }
 
-    // return cost per mile as a formatted string
+    // return cost per mile
     var costPerMile: Double {
         let miles = Double(milesDriven)
         if miles != 0 {

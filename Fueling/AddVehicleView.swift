@@ -5,9 +5,10 @@
 //
 
 import SwiftUI
+import UDF
 
 struct AddVehicleView: View {
-    @Environment(FuelingState.self) var state
+    @Environment(Store<FuelingState, FuelingAction>.self) var store
     @Environment(\.dismiss) var dismiss
 
     @State private var name: String = ""
@@ -45,7 +46,8 @@ struct AddVehicleView: View {
                     dismiss()
                 }
                 Button("Add") {
-                    addVehicle()
+                    guard let odometer else { return }
+                    store.send(.addVehicleButtonTapped(name, odometer))
                     dismiss()
                 }
                 .padding()
@@ -65,17 +67,13 @@ extension AddVehicleView {
     private func validInput() -> Bool {
         guard let odometer else { return false }
         guard !name.isEmpty && odometer > 0 else { return false }
-        return !state.vehicles.contains(where: { $0.name == name })
-    }
-
-    private func addVehicle() {
-        guard let odometer else { return }
-        let newVehicle = Vehicle(name: name, odometer: odometer)
-        state.create(vehicle: newVehicle)
+        return !store.state.vehicles.contains(where: { $0.name == name })
     }
 }
 
 #Preview {
     AddVehicleView()
-        .environment(FuelingState(forPreview: true))
+        .environment(Store(initialState: FuelingState(forPreview: true),
+                           reduce: FuelingReducer(),
+                           name: "Fueling Store Preview"))
 }

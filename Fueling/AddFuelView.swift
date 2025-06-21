@@ -5,9 +5,10 @@
 //
 
 import SwiftUI
+import UDF
 
 struct AddFuelView: View {
-    @Environment(FuelingState.self) var state
+    @Environment(Store<FuelingState, FuelingAction>.self) var store
     @Environment(\.dismiss) var dismiss
 
     var vehicle: Vehicle
@@ -67,9 +68,11 @@ struct AddFuelView: View {
 
                 Button("Add") {
                     if let cost, let gallons, let odometer {
-                        state.addFuel(
-                            name: vehicle.name, cost: cost,
-                            gallons: gallons, odometer: odometer)
+                        let fuelData = FuelData(odometer: odometer,
+                                                amount: gallons,
+                                                cost: cost)
+                        store.send(.addFuelButtonTapped(vehicle.name,
+                                                        fuelData))
                         dismiss()
                     }
                 }
@@ -97,6 +100,8 @@ extension AddFuelView {
 
 #Preview {
     let state = FuelingState(forPreview: true)
-    return AddFuelView(vehicle: state.vehicles[0])
-        .environment(state)
+    AddFuelView(vehicle: state.vehicles[0])
+        .environment(Store(initialState: state,
+                           reduce: FuelingReducer(),
+                           name: "Fueling Store Preview"))
 }
