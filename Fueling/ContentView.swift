@@ -60,7 +60,7 @@ extension ContentView {
     private func deleteVehicle(offsets: IndexSet) {
         withAnimation {
             for index in offsets {
-                store.send(.onDeleteRequested(name: store.vehicles[index].name))
+                store.send(.onDeleteRequested(vehicle: store.vehicles[index]))
             }
         }
     }

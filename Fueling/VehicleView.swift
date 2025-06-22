@@ -109,7 +109,7 @@ struct VehicleView: View {
                         fuelingEditItem = fueling
                     }
                     .sheet(item: $fuelingEditItem) { item in
-                        FuelingEditView(fueling: item)
+                        FuelingEditView(fuelEntry: item)
                             .presentationDetents([.medium])
                     }
                 }

@@ -83,15 +83,14 @@ extension FuelingDB {
     }
 
     // update a fueling entry
-    func update(fuel: Fuel) throws {
-        let key = fuel.timestamp
+    func update(key: Date, fuelData: FuelData) throws {
         let fetchDescriptor = FetchDescriptor<Fuel>(
             predicate: #Predicate { $0.timestamp == key }
         )
         let fueling = try context.fetch(fetchDescriptor)[0]
-        fueling.odometer = fuel.odometer
-        fueling.amount = fuel.amount
-        fueling.cost = fuel.cost
+        fueling.odometer = fuelData.odometer
+        fueling.amount = fuelData.amount
+        fueling.cost = fuelData.cost
         try context.save()
     }
 
