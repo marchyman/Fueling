@@ -54,15 +54,15 @@ struct VehicleDetailView: View {
                 }
             }
         }
-//        .onChange(of: state.vehiclesChanged) {
-//            if let updatedVehicle = state.vehicles.first(where: {
-//                $0.name == vehicle.name
-//            }) {
-//                vehicle = updatedVehicle
-//            } else {
-//                dismiss()
-//            }
-//        }
+        .onChange(of: store.vehicles) {
+            if let updatedVehicle = store.vehicles.first(where: {
+                $0.name == vehicle.name
+            }) {
+                vehicle = updatedVehicle
+            } else {
+                dismiss()
+            }
+        }
         .opacity(store.fetching ? 0.3 : 1.0)
         .overlay {
             ProgressView()
