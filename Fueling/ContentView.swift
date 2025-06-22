@@ -1,6 +1,5 @@
 //
 // Copyright 2024 Marco S Hyman
-// See LICENSE file for info
 // https://www.snafu.org/
 //
 
@@ -18,7 +17,7 @@ struct ContentView: View {
     var body: some View {
         NavigationStack(path: $path) {
             List {
-                ForEach(store.state.vehicles) { vehicle in
+                ForEach(store.vehicles) { vehicle in
                     NavigationLink {
                         VehicleView(vehicle: vehicle)
                     } label: {
@@ -31,7 +30,7 @@ struct ContentView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     EditButton()
-                        .disabled(store.state.vehicles.isEmpty)
+                        .disabled(store.vehicles.isEmpty)
                 }
                 ToolbarItem {
                     Button {
@@ -45,7 +44,7 @@ struct ContentView: View {
                 }
             }
             .overlay {
-                if store.state.vehicles.isEmpty {
+                if store.vehicles.isEmpty {
                     ContentUnavailableView(
                         "Please add a vehicle",
                         systemImage: "car.fill")
@@ -58,11 +57,10 @@ struct ContentView: View {
 }
 
 extension ContentView {
-
     private func deleteVehicle(offsets: IndexSet) {
         withAnimation {
             for index in offsets {
-                store.send(.onDeleteRequested(name: store.state.vehicles[index].name))
+                store.send(.onDeleteRequested(name: store.vehicles[index].name))
             }
         }
     }

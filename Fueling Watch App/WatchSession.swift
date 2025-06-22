@@ -46,17 +46,21 @@ extension WatchSession {
             // request.  Reset the fetch state after a suitable timeout
             // period.
             try? await Task.sleep(for: .seconds(2))
-            if store.state.fetching {
+            if store.fetching {
                 await self.store.send(.watchSendError(fetchRequest: true))
             }
         }
+        Logger(subsystem: "org.snafu", category: "WatchSession")
+            .info("Sending [\(MessageKey.get): \(MessageKey.vehicles)]")
         session.sendMessage([MessageKey.get: MessageKey.vehicles],
-                            replyHandler: nil) { error in
-            // got an error
-            self.store.send(.watchSendError(fetchRequest: true))
-            Logger(subsystem: "org.snafu", category: "WatchSession")
-                .error("\(#function) error: \(error, privacy: .public)")
-        }
+                            replyHandler: nil,
+                            errorHandler: getError)
+    }
+
+    private func getError(error: any Error) {
+        self.store.send(.watchSendError(fetchRequest: true))
+        Logger(subsystem: "org.snafu", category: "WatchSession")
+            .error("\(#function) error: \(error, privacy: .public)")
     }
 
     // send a fueling update to the app
@@ -72,20 +76,26 @@ extension WatchSession {
             plist[MessageKey.cost] = cost
             plist[MessageKey.gallons] = gallons
             plist[MessageKey.miles] = Int(odometer)
-            session.sendMessage([MessageKey.put: plist]) { response in
-                self.store.send(.receivedFuelingResponse)
-                let value = response[MessageKey.put] as? String ?? "Bad response"
-                if value != MessageKey.received {
-                    Logger(subsystem: "org.snafu", category: "WatchSession")
-                        .error("\(#function) \(value, privacy: .public)")
-                }
-            } errorHandler: { error in
-                // got an error
-                self.store.send(.watchSendError(fetchRequest: false))
-                Logger(subsystem: "org.snafu", category: "WatchSession")
-                    .error("\(#function) error: \(error, privacy: .public)")
-            }
+            session.sendMessage([MessageKey.put: plist],
+                                replyHandler: putReply,
+                                errorHandler: putError)
         }
+    }
+
+    // The app WILL crash if this is coded as a closure to sendMessage
+    // instead of a separate function.
+
+    private func putReply(response: [String: Any]) {
+        self.store.send(.receivedFuelingResponse)
+        let value = response[MessageKey.put] as? String ?? "Bad response"
+        Logger(subsystem: "org.snafu", category: "WatchSession")
+            .error("\(#function) \(value, privacy: .public)")
+    }
+
+    private func putError(error: any Error) {
+        self.store.send(.watchSendError(fetchRequest: false))
+        Logger(subsystem: "org.snafu", category: "WatchSession")
+            .error("\(#function) error: \(error, privacy: .public)")
     }
 }
 
@@ -101,8 +111,24 @@ extension WatchSession: WCSessionDelegate {
             .notice("\(#function) \(activationState.rawValue)")
         if activationState == .activated {
             Task { @MainActor in
-                store.send(.watchSessionActivated(self)) {
-                    if store.state.fetchStatus == .fetchRequested {
+                store.send(.watchSessionActivated(self))
+            }
+        }
+    }
+
+    // phone/watch app reachability changed.
+
+    nonisolated func sessionReachabilityDidChange(_ session: WCSession) {
+        Logger(subsystem: "org.snafu", category: "WatchSession")
+            .debug("\(#function) \(session.isReachable, privacy: .public)")
+
+        // if now reachable and the fetchStatus isn't idle re-try
+        // the getVehicles request
+
+        if session.isReachable {
+            Task { @MainActor in
+                store.send(.watchSessionReachable) {
+                    if store.fetchStatus == .fetchRequested {
                         getVehicles()
                     }
                 }

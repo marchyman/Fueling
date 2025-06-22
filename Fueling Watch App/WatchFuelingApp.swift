@@ -3,6 +3,7 @@
 // https://www.snafu.org/
 //
 
+import OSLog
 import SwiftUI
 import UDF
 
@@ -22,6 +23,8 @@ struct WatchFuelingApp: App {
         .onChange(of: scenePhase) {
             if session == nil {
                 session = WatchSession(store: store)
+                Logger(subsystem: "org.snafu", category: "WatchFuelingApp")
+                    .notice("PhoneSession initialized")
             }
         }
     }

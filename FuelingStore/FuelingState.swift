@@ -11,6 +11,7 @@ import WatchConnectivity
 struct FuelingState {
     private(set) var vehicles: [Vehicle] = []
     private let fuelingDB: FuelingDB
+    var phoneSession: PhoneSession?
     var errorMessage: String?
 
     init(forPreview: Bool = false) {
@@ -32,10 +33,16 @@ extension FuelingState {
 
     // populate the vehicles array from database contents.  Private to
     // this class as all outside access to vehicles should be through
-    // the class vehicle array.
+    // the class vehicle array.  Send the current app context to the
+    // watch if a session has been created.
     mutating func refreshVehicles() {
         do {
             vehicles = try fuelingDB.read(sortBy: SortDescriptor<Vehicle>(\.name))
+            if let phoneSession {
+                Task { @MainActor in
+                    phoneSession.sendAppContext()
+                }
+            }
         } catch {
             errorMessage = error.localizedDescription
             Logger(subsystem: "org.snafu", category: "FuelingState")

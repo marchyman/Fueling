@@ -7,12 +7,12 @@
 import Foundation
 import OSLog
 import UDF
-@preconcurrency import WatchConnectivity
+import WatchConnectivity
 
 @MainActor
 final class PhoneSession: NSObject {
     let session: WCSession = .default
-    let store: Store<FuelingState, FuelingAction>
+    unowned let store: Store<FuelingState, FuelingAction>
 
     init(store: Store<FuelingState, FuelingAction>) {
         self.store = store
@@ -25,15 +25,20 @@ final class PhoneSession: NSObject {
                 .notice("Session not supported")
         }
     }
+}
+
+// Messages sent to the watch component
+
+extension PhoneSession {
 
     // send the current app state (vehicle name and stats) to the watch
     // as an application context message.  Lots of checks here as this
     // is the first communications sent by the phone and I'd like to
     // see the debug messages if things fail when testing.
     @discardableResult
-    func sendAppContext(appContext: [String: Any]) -> Bool {
+    func sendAppContext() -> Bool {
         let logger = Logger(subsystem: "org.snafu", category: "FuelingState")
-
+        let context = store.state.appContext()
         guard session.activationState == .activated else {
             logger.debug("\(#function) session not activated")
             return false
@@ -46,31 +51,18 @@ final class PhoneSession: NSObject {
             logger.debug("\(#function) session not reachable")
             return false
         }
-        logger.debug("\(#function) \(appContext, privacy: .public)")
+        logger.debug("\(#function) \(context, privacy: .public)")
         do {
-            try session.updateApplicationContext(appContext)
+            try session.updateApplicationContext(context)
             return true
         } catch {
             logger.error("\(#function) \(error.localizedDescription, privacy: .public)")
         }
         return false
     }
-
-    // Wait a second for the phone session to be activated and the watch
-    // to become reachable before sending the initial app context message.
-    // retry every second until the message is sent. Cap the number of
-    // retries -- the watch app may not be installed.
-    func sendInitialAppContext(appContext: [String: Any]) {
-        Task(priority: .background) {
-            for _ in 0 ... 9 {
-                try? await Task.sleep(for: .seconds(1))
-                if sendAppContext(appContext: appContext) {
-                    break
-                }
-            }
-        }
-    }
 }
+
+// WCSessionDelegate functions
 
 extension PhoneSession: WCSessionDelegate {
     nonisolated func session(
@@ -80,6 +72,11 @@ extension PhoneSession: WCSessionDelegate {
     ) {
         Logger(subsystem: "org.snafu", category: "PhoneSessionDelegate")
             .notice("activationDidCompleteWith \(activationState.rawValue)")
+        if activationState == .activated {
+            Task { @MainActor in
+                store.send(.phoneSessionActivated(self))
+            }
+        }
     }
 
     nonisolated func sessionDidBecomeInactive(_ session: WCSession) {
@@ -92,6 +89,19 @@ extension PhoneSession: WCSessionDelegate {
             .notice("session deactivated")
     }
 
+    // phone/watch app reachability changed.
+
+    nonisolated func sessionReachabilityDidChange(_ session: WCSession) {
+        Logger(subsystem: "org.snafu", category: "PhoneSessionDelegate")
+            .debug("\(#function) \(session.isReachable, privacy: .public)")
+
+        if session.isReachable {
+            Task { @MainActor in
+                sendAppContext()
+            }
+        }
+    }
+
     // receive a message that does not require a reply
     nonisolated func session(
         _ session: WCSession,
@@ -101,8 +111,7 @@ extension PhoneSession: WCSessionDelegate {
             .notice("\(#function) \(message.debugDescription, privacy: .public)")
         if message[MessageKey.get] as? String == MessageKey.vehicles {
             Task { @MainActor in
-                let context = store.state.appContext()
-                sendAppContext(appContext: context)
+                sendAppContext()
             }
         } else {
             Logger(subsystem: "org.snafu", category: "PhoneSessionDelegate")

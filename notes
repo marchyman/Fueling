@@ -1,0 +1,45 @@
+Given the WCSession API function
+
+```swift
+func sendMessage(
+    _ message: [String : Any],
+    replyHandler: (([String : Any]) -> Void)?,
+    errorHandler: ((any Error) -> Void)? = nil
+)
+```
+
+I'd have expected this to work where session is WCSession.default
+
+```swift
+@MainActor
+final class Something: NSObject, WCSessionDelegate {
+    // ...
+    // delegate functions are marked as nonisolated
+
+    func sendSomeData(someValue: SomeType) {
+        // build a plist using someValue
+        session.sendMessage(["Key": someValuePlist]) { response in
+            // process the response here
+        } errorHandler: { error in
+            // process any error here
+        }
+    }
+}
+```
+
+A watch app that does this crashes in _dispatch_assert_queue_fail
+with comments about a block being run on the wrong queue. Swift 6
+mode.
+
+However, if I take the code in the closure and move it to a function
+
+```swift
+    func responseHandler(response: [String: Any]) {
+        // process the response here
+    }
+```
+
+The app works as expected. I assume the app would also crash if the
+error handling closure was invoked so made it a separate function, too.
+
+Should I have expected this?

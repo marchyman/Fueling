@@ -36,7 +36,11 @@ struct ContentView: View {
                 ToolbarItemGroup(placement: .bottomBar) {
                     Spacer()
                     Button {
-                        store.send(.downloadButtonTapped)
+                        store.send(.downloadButtonTapped) {
+                            if store.fetchStatus == .fetchRequested {
+                                store.watchSession?.getVehicles()
+                            }
+                        }
                     } label: {
                         Label("Download", systemImage: "square.and.arrow.down")
                     }

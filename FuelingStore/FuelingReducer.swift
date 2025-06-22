@@ -14,6 +14,7 @@ enum FuelingAction: Equatable {
     case addFuelButtonTapped(String, FuelData)
     case addFuelReceived(String, FuelData)
     case onDeleteRequested(name: String)
+    case phoneSessionActivated(PhoneSession)
 }
 
 // Reducer function to process actions, returning a new state
@@ -41,6 +42,8 @@ struct FuelingReducer: Reducer {
             } else {
                 newState.errorMessage = "Could not find vehicle '\(name)'"
             }
+        case .phoneSessionActivated(let ps):
+            newState.phoneSession = ps
         }
 
         return newState

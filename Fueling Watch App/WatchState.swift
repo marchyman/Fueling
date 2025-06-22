@@ -20,7 +20,7 @@ struct WatchState {
     var watchSession: WatchSession?
     var fetchStatus: WatchFetchStatus = .idle
     var fetching: Bool {
-        fetchStatus == .idle
+        fetchStatus != .idle
     }
     var sendStatus: WatchSendStatus = .idle
 }
@@ -31,6 +31,7 @@ enum WatchAction {
     case receivedAppContext([Vehicle])
     case receivedFuelingResponse
     case watchSessionActivated(WatchSession)
+    case watchSessionReachable
     case watchSendError(fetchRequest: Bool)
 }
 
@@ -54,8 +55,10 @@ struct WatchReducer: Reducer {
             newState.vehicles = vehicles
         case .receivedFuelingResponse:
             newState.sendStatus = .idle
+            // newState.
         case .watchSessionActivated(let ws):
             newState.watchSession = ws
+        case .watchSessionReachable:
             if newState.fetchStatus == .idle {
                 newState.fetchStatus = .fetchRequested
             }

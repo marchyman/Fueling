@@ -1,6 +1,5 @@
 //
 // Copyright 2024 Marco S Hyman
-// See LICENSE file for info
 // https://www.snafu.org/
 //
 
@@ -67,7 +66,7 @@ extension AddVehicleView {
     private func validInput() -> Bool {
         guard let odometer else { return false }
         guard !name.isEmpty && odometer > 0 else { return false }
-        return !store.state.vehicles.contains(where: { $0.name == name })
+        return !store.vehicles.contains(where: { $0.name == name })
     }
 }
 
