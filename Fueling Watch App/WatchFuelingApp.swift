@@ -1,18 +1,28 @@
 //
 // Copyright 2024 Marco S Hyman
-// See LICENSE file for info
 // https://www.snafu.org/
 //
 
 import SwiftUI
+import UDF
 
 @main
 struct WatchFuelingApp: App {
+    @Environment(\.scenePhase) private var scenePhase
+    @State private var session: WatchSession?
+    @State private var store = Store(initialState: WatchState(),
+                                     reduce: WatchReducer(),
+                                     name: "Watch Store")
 
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environment(WatchState())
+                .environment(store)
+        }
+        .onChange(of: scenePhase) {
+            if session == nil {
+                session = WatchSession(store: store)
+            }
         }
     }
 }

@@ -1,13 +1,13 @@
 //
 // Copyright 2024 Marco S Hyman
-// See LICENSE file for info
 // https://www.snafu.org/
 //
 
 import SwiftUI
+import UDF
 
 struct VehicleDetailView: View {
-    @Environment(WatchState.self) private var state
+    @Environment(Store<WatchState, WatchAction>.self) private var store
     @Environment(\.dismiss) var dismiss
 
     @State var vehicle: Vehicle
@@ -54,27 +54,29 @@ struct VehicleDetailView: View {
                 }
             }
         }
-        .onChange(of: state.vehiclesChanged) {
-            if let updatedVehicle = state.vehicles.first(where: {
-                $0.name == vehicle.name
-            }) {
-                vehicle = updatedVehicle
-            } else {
-                dismiss()
-            }
-        }
-        .opacity(state.fetching ? 0.3 : 1.0)
+//        .onChange(of: state.vehiclesChanged) {
+//            if let updatedVehicle = state.vehicles.first(where: {
+//                $0.name == vehicle.name
+//            }) {
+//                vehicle = updatedVehicle
+//            } else {
+//                dismiss()
+//            }
+//        }
+        .opacity(store.fetching ? 0.3 : 1.0)
         .overlay {
             ProgressView()
-                .opacity(state.fetching ? 1.0 : 0)
+                .opacity(store.fetching ? 1.0 : 0)
         }
-        .animation(.easeInOut, value: state.fetching)
+        .animation(.easeInOut, value: store.fetching)
     }
 }
 
 #Preview {
     NavigationStack {
         VehicleDetailView(vehicle: Vehicle.previewVehicle)
-            .environment(WatchState())
+            .environment(Store(initialState: WatchState(),
+                               reduce: WatchReducer(),
+                               name: "Watch Store"))
     }
 }

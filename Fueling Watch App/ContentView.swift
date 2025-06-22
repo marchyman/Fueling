@@ -1,20 +1,20 @@
 //
 // Copyright 2024 Marco S Hyman
-// See LICENSE file for info
 // https://www.snafu.org/
 //
 
 import SwiftUI
+import UDF
 
 struct ContentView: View {
-    @Environment(WatchState.self) private var state
+    @Environment(Store<WatchState, WatchAction>.self) private var store
     @State private var selectedVehicle: Vehicle?
     @State private var path = NavigationPath()
 
     var body: some View {
         NavigationSplitView {
             Group {
-                if state.vehicles.isEmpty {
+                if store.vehicles.isEmpty {
                     ContentUnavailableView {
                         Label("No Vehicles", systemImage: "iphone.slash")
                     } description: {
@@ -23,7 +23,7 @@ struct ContentView: View {
                         )
                     }
                 } else {
-                    List(state.vehicles, selection: $selectedVehicle) { vehicle in
+                    List(store.vehicles, selection: $selectedVehicle) { vehicle in
                         NavigationLink(value: vehicle) {
                             Text(vehicle.name)
                         }
@@ -36,7 +36,7 @@ struct ContentView: View {
                 ToolbarItemGroup(placement: .bottomBar) {
                     Spacer()
                     Button {
-                        state.getVehicles()
+                        store.send(.downloadButtonTapped)
                     } label: {
                         Label("Download", systemImage: "square.and.arrow.down")
                     }
@@ -51,30 +51,18 @@ struct ContentView: View {
                 }
             }
         }
-        .opacity(state.fetching ? 0.3 : 1.0)
+        .opacity(store.fetching ? 0.3 : 1.0)
         .overlay {
             ProgressView()
-                .opacity(state.fetching ? 1.0 : 0)
+                .opacity(store.fetching ? 1.0 : 0.0)
         }
-        .animation(.easeInOut, value: state.fetching)
+        .animation(.easeInOut, value: store.fetching)
         .task {
-            // when the list of known vehicles is empty send a message
-            // to the companion app requesting that it send an
-            // application context update.  The context contains known
-            // vehicles along with their current stats. Try to send
-            // the getVehicles message up to 5 times with a
-            // pause between tries in case the communications channel is
-            // not yet set up. However, sending the message is no guarantee
-            // that the companion app will respond.
-            if state.vehicles.isEmpty {
-                state.fetching = true
-                for _ in 1 ... 5 {
-                    if state.getVehicles() {
-                        break
-                    }
-                    try? await Task.sleep(for: .seconds(1))
+            // this will fetch known vehicles if needed
+            store.send(.contentViewAppeared) {
+                if store.fetchStatus == .fetchRequested {
+                    store.watchSession?.getVehicles()
                 }
-                state.fetching = false
             }
         }
     }
@@ -82,5 +70,7 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-        .environment(WatchState())
+        .environment(Store(initialState: WatchState(),
+                           reduce: WatchReducer(),
+                           name: "Watch Store"))
 }

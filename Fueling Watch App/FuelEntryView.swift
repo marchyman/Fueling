@@ -1,13 +1,13 @@
 //
 // Copyright 2024 Marco S Hyman
-// See LICENSE file for info
 // https://www.snafu.org/
 //
 
 import SwiftUI
+import UDF
 
 struct FuelEntryView: View {
-    @Environment(WatchState.self) private var state
+    @Environment(Store<WatchState, WatchAction>.self) private var store
     @Environment(\.dismiss) var dismiss
 
     var vehicle: Vehicle
@@ -54,14 +54,13 @@ struct FuelEntryView: View {
             ToolbarItemGroup(placement: .bottomBar) {
                 Spacer()
                 Button {
-                    state.putFueling(
-                        vehicle: vehicle,
-                        cost: cost,
-                        gallons: gallons,
-                        odometer: odometer)
+                    store.watchSession?.putFueling(vehicle: vehicle,
+                                                  cost: cost,
+                                                  gallons: gallons,
+                                                  odometer: odometer)
                     dismiss()
                 } label: {
-                    Label("Refresh", systemImage: "square.and.arrow.up")
+                    Label("Upload", systemImage: "square.and.arrow.up")
                 }
             }
         }
@@ -81,6 +80,8 @@ struct FuelEntryView: View {
 #Preview {
     NavigationStack {
         FuelEntryView(vehicle: Vehicle.previewVehicle)
-            .environment(WatchState())
+            .environment(Store(initialState: WatchState(),
+                               reduce: WatchReducer(),
+                               name: "Watch Store"))
     }
 }
