@@ -24,7 +24,7 @@ struct WatchFuelingApp: App {
             if session == nil {
                 session = WatchSession(store: store)
                 Logger(subsystem: "org.snafu", category: "WatchFuelingApp")
-                    .notice("PhoneSession initialized")
+                    .notice("WatchSession initialized")
             }
         }
     }

@@ -55,7 +55,6 @@ struct WatchReducer: Reducer {
             newState.vehicles = vehicles
         case .receivedFuelingResponse:
             newState.sendStatus = .idle
-            // newState.
         case .watchSessionActivated(let ws):
             newState.watchSession = ws
         case .watchSessionReachable:
