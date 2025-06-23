@@ -62,9 +62,7 @@ struct FuelingReducer: Reducer {
         newState.vehicles = newState.sortedVehicles()
         // share the new state with the watch app
         if let ps = newState.phoneSession {
-            Task { @MainActor in
-                ps.sendAppContext()
-            }
+            ps.sendAppContext()
         }
         return newState
     }
