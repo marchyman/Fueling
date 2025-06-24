@@ -70,6 +70,20 @@ targets:
         showEnvVars: NO
         basedOnDependencyAnalysis: NO
 
+  FuelingTests:
+    type: bundle.unit-test
+    platform: iOS
+    deploymentTarget: 17.0
+    dependencies:
+      - target: Fueling
+    sources:
+      - FuelingTests
+    settings:
+      GENERATE_INFOPLIST_FILE: YES
+      PRODUCT_NAME: $(TARGET_NAME)
+      PRODUCT_BUNDLE_IDENTIFIER: org.snafu.FuelingTests
+    schemes: none
+ 
   Fueling Watch App:
     type: application
     platform: watchOS
@@ -112,6 +126,8 @@ schemes:
     test:
       config: Debug
       gatherCoverageData: YES
+      targets:
+        - name: FuelingTests
       # targets:
       #   - name: Fueling
     profile:

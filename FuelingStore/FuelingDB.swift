@@ -53,6 +53,10 @@ extension FuelingDB {
 // DB CRUD functions
 extension FuelingDB {
 
+    enum FuelingDBError: Error {
+        case vehicleNotFound
+        case fuelNotFound
+    }
     func create(vehicles: [Vehicle]) throws {
         for vehicle in vehicles {
             context.insert(vehicle)
@@ -77,9 +81,12 @@ extension FuelingDB {
         let fetchDescriptor = FetchDescriptor<Vehicle>(
             predicate: #Predicate { $0.name == name }
         )
-        let vehicle = try context.fetch(fetchDescriptor)[0]
-        vehicle.fuelings.append(fuel)
-        try context.save()
+        if let vehicle = try context.fetch(fetchDescriptor).first {
+            vehicle.fuelings.append(fuel)
+            try context.save()
+        } else {
+            throw FuelingDBError.vehicleNotFound
+        }
     }
 
     // update a fueling entry
@@ -87,11 +94,14 @@ extension FuelingDB {
         let fetchDescriptor = FetchDescriptor<Fuel>(
             predicate: #Predicate { $0.timestamp == key }
         )
-        let fueling = try context.fetch(fetchDescriptor)[0]
-        fueling.odometer = fuelData.odometer
-        fueling.amount = fuelData.amount
-        fueling.cost = fuelData.cost
-        try context.save()
+        if let fueling = try context.fetch(fetchDescriptor).first {
+            fueling.odometer = fuelData.odometer
+            fueling.amount = fuelData.amount
+            fueling.cost = fuelData.cost
+            try context.save()
+        } else {
+            throw FuelingDBError.fuelNotFound
+        }
     }
 
     func delete(vehicle: Vehicle) throws {
