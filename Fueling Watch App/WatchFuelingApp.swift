@@ -22,9 +22,14 @@ struct WatchFuelingApp: App {
         }
         .onChange(of: scenePhase) {
             if session == nil {
-                session = WatchSession(store: store)
-                Logger(subsystem: "org.snafu", category: "WatchFuelingApp")
-                    .notice("WatchSession initialized")
+                if CommandLine.arguments.contains("-TESTING") {
+                    Logger(subsystem: "org.snafu", category: "WatchFuelingApp")
+                        .notice("Skipped WatchSession initialization")
+                } else {
+                    session = WatchSession(store: store)
+                    Logger(subsystem: "org.snafu", category: "WatchFuelingApp")
+                        .notice("WatchSession initialized")
+                }
             }
         }
     }

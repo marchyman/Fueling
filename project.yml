@@ -110,6 +110,21 @@ targets:
         showEnvVars: NO
         basedOnDependencyAnalysis: NO
 
+  FuelingWatchTests:
+    type: bundle.unit-test
+    platform: watchOS
+    deploymentTarget: 10.0
+    dependencies:
+      - target: Fueling Watch App
+      - package: UDF
+    sources:
+      - FuelingWatchTests
+    settings:
+      GENERATE_INFOPLIST_FILE: YES
+      PRODUCT_NAME: $(TARGET_NAME)
+      PRODUCT_BUNDLE_IDENTIFIER: org.snafu.FuelingWatchTests
+    schemes: none
+
 packages:
   UDF:
     path: UDF
@@ -137,3 +152,19 @@ schemes:
     archive:
       config: Release
       revealArchiveInOrganizer: YES
+
+  Fueling Watch App:
+    build:
+      targets:
+        Fueling Watch App: all
+    run:
+      config: Debug
+      # environmentVariables:
+      #   VARIABLE: VALUE
+    test:
+      config: Debug
+      commandLineArguments:
+        "-TESTING": true
+      gatherCoverageData: YES
+      targets:
+        - name: FuelingWatchTests

@@ -22,8 +22,10 @@ extension Vehicle {
         cost: 123.76,
         gallons: 22.583,
         miles: 1185)
+
     enum VehicleModelError: Error {
         case badPlist
+        case badEntry
     }
 
     // build a vehicle model from a property list entry in this format:
@@ -35,6 +37,9 @@ extension Vehicle {
             self.cost = dict[MessageKey.cost] as? Double ?? 0.0
             self.gallons = dict[MessageKey.gallons] as? Double ?? 0.0
             self.miles = dict[MessageKey.miles] as? Int ?? 0
+            if self.cost == 0 && self.gallons == 0 && self.miles == 0 {
+                throw VehicleModelError.badEntry
+            }
         } else {
             throw VehicleModelError.badPlist
         }

@@ -30,6 +30,7 @@ enum WatchAction {
     case downloadButtonTapped
     case receivedAppContext([Vehicle])
     case receivedFuelingResponse
+    case sendFuelButtonTapped
     case watchSessionActivated(WatchSession)
     case watchSessionReachable
     case watchSendError(fetchRequest: Bool)
@@ -47,14 +48,26 @@ struct WatchReducer: Reducer {
                 newState.fetchStatus = .fetchRequested
             }
         case .downloadButtonTapped:
-            if newState.watchSession != nil && newState.fetchStatus == .idle {
-                newState.fetchStatus = .fetchRequested
+            if newState.watchSession != nil {
+                if newState.fetchStatus == .idle {
+                    newState.fetchStatus = .fetchRequested
+                } else {
+                    newState.fetchStatus = .dupRequest
+                }
             }
         case .receivedAppContext(let vehicles):
             newState.fetchStatus = .idle
             newState.vehicles = vehicles
         case .receivedFuelingResponse:
             newState.sendStatus = .idle
+        case .sendFuelButtonTapped:
+            if newState.watchSession != nil {
+                if newState.sendStatus == .idle {
+                    newState.sendStatus = .sendRequested
+                } else {
+                    newState.sendStatus = .dupRequest
+                }
+            }
         case .watchSessionActivated(let ws):
             newState.watchSession = ws
         case .watchSessionReachable:

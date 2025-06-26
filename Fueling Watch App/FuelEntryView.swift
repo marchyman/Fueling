@@ -54,10 +54,14 @@ struct FuelEntryView: View {
             ToolbarItemGroup(placement: .bottomBar) {
                 Spacer()
                 Button {
-                    store.watchSession?.putFueling(vehicle: vehicle,
-                                                  cost: cost,
-                                                  gallons: gallons,
-                                                  odometer: odometer)
+                    store.send(.sendFuelButtonTapped) {
+                        if store.sendStatus == .sendRequested {
+                            store.watchSession?.putFueling(vehicle: vehicle,
+                                                           cost: cost,
+                                                           gallons: gallons,
+                                                           odometer: odometer)
+                        }
+                    }
                     dismiss()
                 } label: {
                     Label("Upload", systemImage: "square.and.arrow.up")
