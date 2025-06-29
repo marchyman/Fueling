@@ -21,6 +21,15 @@ final class FuelingDB {
         if inMemory {
             addTestVehicles()
             addTestFuelings()
+        } else {
+            // Check if the DB needs to be emptied for testing
+            if CommandLine.arguments.contains("-EMPTY") {
+                let fetchDescriptor = FetchDescriptor<Vehicle>()
+                var vehicles = (try? context.fetch(fetchDescriptor)) ?? []
+                for vehicle in vehicles {
+                    try? delete(vehicle: vehicle)
+                }
+            }
         }
     }
 }

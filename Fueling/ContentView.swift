@@ -14,6 +14,8 @@ struct ContentView: View {
 
     let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
 
+    private let testIDs = TestIDs.ContentView.self
+
     var body: some View {
         NavigationStack(path: $path) {
             List {
@@ -23,6 +25,7 @@ struct ContentView: View {
                     } label: {
                         Text(vehicle.name)
                     }
+                    .accessibilityIdentifier(testIDs.vehicleButtonID(vehicle.name))
                 }
                 .onDelete(perform: deleteVehicle)
             }
@@ -31,6 +34,7 @@ struct ContentView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     EditButton()
                         .disabled(store.vehicles.isEmpty)
+                        .accessibilityIdentifier(testIDs.editButtonID)
                 }
                 ToolbarItem {
                     Button {
@@ -38,6 +42,7 @@ struct ContentView: View {
                     } label: {
                         Label("Add Item", systemImage: "plus")
                     }
+                    .accessibilityIdentifier(testIDs.addButtonID)
                     .sheet(isPresented: $addVehiclePresented) {
                         AddVehicleView()
                     }
@@ -48,10 +53,13 @@ struct ContentView: View {
                     ContentUnavailableView(
                         "Please add a vehicle",
                         systemImage: "car.fill")
+                        .accessibilityIdentifier(testIDs.noContentID)
                 }
             }
         }
+
         Text("Version \(appVersion != nil ? appVersion! : "Unknown")")
+            .accessibilityIdentifier(testIDs.versionStringID)
             .padding()
     }
 }

@@ -2,7 +2,9 @@ name: Fueling
 
 options:
   groupOrdering:
-    - order: [FuelingStore, Fueling, Fueling Watch App, Packages, Products]
+    - order: [Shared, FuelingStore, Fueling, FuelingTests, FuelingUITests,
+      Fueling Watch App, FuelingWatchTests,
+      Packages, Products]
 
 settings:
   base:
@@ -83,6 +85,21 @@ targets:
       PRODUCT_NAME: $(TARGET_NAME)
       PRODUCT_BUNDLE_IDENTIFIER: org.snafu.FuelingTests
     schemes: none
+
+  FuelingUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    deploymentTarget: 17.0
+    dependencies:
+      - target: Fueling
+    sources:
+      - FuelingUITests
+      - Fueling/TestIDs.swift
+    settings:
+      GENERATE_INFOPLIST_FILE: YES
+      PRODUCT_NAME: $(TARGET_NAME)
+      PRODUCT_BUNDLE_IDENTIFIER: org.snafu.FuelingUITests
+    schemes: none
  
   Fueling Watch App:
     type: application
@@ -143,8 +160,7 @@ schemes:
       gatherCoverageData: YES
       targets:
         - name: FuelingTests
-      # targets:
-      #   - name: Fueling
+        - name: FuelingUITests
     profile:
       config: Release
     analyze:

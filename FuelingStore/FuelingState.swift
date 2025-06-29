@@ -15,7 +15,12 @@ struct FuelingState {
     var errorMessage: String?
 
     init(forPreview: Bool = false) {
-        fuelingDB = try! FuelingDB(inMemory: forPreview)
+        var inMemory = forPreview
+        // always use in memory test date when testing
+        if CommandLine.arguments.contains("-TESTING") {
+            inMemory = true
+        }
+        fuelingDB = try! FuelingDB(inMemory: inMemory)
         vehicles = sortedVehicles()
     }
 }

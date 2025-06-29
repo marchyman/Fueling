@@ -1,4 +1,25 @@
-Given the WCSession API function
+## Testing Identifiers
+
+enum TestingIDs {
+    enum ModuleName {
+        static let name = "string"
+
+        static func item(for: someItem) -> String {
+            "string \(someItem.someProperty)"
+        }
+    }
+}
+
+In a source file
+
+    let testID = TestingIDs.ModuleName.self
+
+    and use the above like
+
+        .accessibilityIdentifier(testID.name)
+
+
+## Given the WCSession API function
 
 ```swift
 func sendMessage(
