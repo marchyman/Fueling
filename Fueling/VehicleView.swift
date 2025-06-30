@@ -13,22 +13,27 @@ struct VehicleView: View {
     @State private var fuelingInfoItem: Fuel?
     @State private var fuelingEditItem: Fuel?
 
+    private let testIDs = TestIDs.VehicleView.self
+
     var body: some View {
         ScrollView {
             GroupBox {
                 Grid(alignment: .leading, horizontalSpacing: 30) {
                     GridRow {
                         Text("Total cost:")
+                            .accessibilityIdentifier(testIDs.totalCostID)
                         Text("\(vehicle.fuelCost, format: .currency(code: "usd"))")
                             .monospacedDigit()
                     }
                     GridRow {
                         Text("Fuel used:")
+                            .accessibilityIdentifier(testIDs.fuelUsedID)
                         Text("\(vehicle.fuelUsed, specifier: "%.3f")")
                             .monospacedDigit()
                     }
                     GridRow {
                         Text("Miles driven:")
+                            .accessibilityIdentifier(testIDs.milesDrivenID)
                         Text("\(vehicle.milesDriven, format: .number)")
                             .monospacedDigit()
                     }
@@ -36,16 +41,19 @@ struct VehicleView: View {
                         .gridCellUnsizedAxes(.horizontal)
                     GridRow {
                         Text("Miles/gallon:")
+                            .accessibilityIdentifier(testIDs.mpgID)
                         Text("\(vehicle.mpg, specifier: "%0.1f")")
                             .monospacedDigit()
                     }
                     GridRow {
                         Text("Cost/gallon")
+                            .accessibilityIdentifier(testIDs.cpgID)
                         Text("\(vehicle.costPerGallon, format: .currency(code: "usd"))")
                             .monospacedDigit()
                     }
                     GridRow {
                         Text("Cost/mile")
+                            .accessibilityIdentifier(testIDs.cpmID)
                         Text("\(vehicle.costPerMile, format: .currency(code: "usd"))")
                             .monospacedDigit()
                     }
@@ -57,10 +65,12 @@ struct VehicleView: View {
                     VStack {
                         Text("\(vehicle.odometer) start")
                             .monospacedDigit()
+                            .accessibilityIdentifier(testIDs.startMilesID)
                         Text(
                             "\(vehicle.fuelingsByTimestamp().first?.odometer ?? vehicle.odometer) miles"
                         )
                         .monospacedDigit()
+                        .accessibilityIdentifier(testIDs.initialMilesID)
                     }
                 }
                 .padding()
@@ -69,6 +79,7 @@ struct VehicleView: View {
             .padding(.horizontal)
 
             Text("Recent refuelings")
+                .accessibilityIdentifier(testIDs.recentRefuelingsID)
                 .font(.title)
                 .padding()
 
@@ -91,6 +102,7 @@ struct VehicleView: View {
                     GridRow {
                         Group {
                             Text("\(fueling.dateTime)")
+                                .accessibilityIdentifier(testIDs.fuelingDateTimeID)
                             Text("\(fueling.odometer, format: .number)")
                             Text("\(fueling.amount, specifier: "%.3f")")
                             Text("\(fueling.cost, format: .currency(code: "usd"))")
@@ -103,6 +115,7 @@ struct VehicleView: View {
                     }
                     .sheet(item: $fuelingInfoItem) { item in
                         FuelingInfoView(fueling: item)
+                            .accessibilityIdentifier(testIDs.fuelingInfoViewID)
                             .presentationDetents([.medium])
                     }
                     .onLongPressGesture {
@@ -110,6 +123,7 @@ struct VehicleView: View {
                     }
                     .sheet(item: $fuelingEditItem) { item in
                         FuelingEditView(fuelEntry: item)
+                            .accessibilityIdentifier(testIDs.fuelingEditViewID)
                             .presentationDetents([.medium])
                     }
                 }
@@ -124,8 +138,10 @@ struct VehicleView: View {
                 } label: {
                     Label("Add fuel", systemImage: "plus")
                 }
+                .accessibilityIdentifier(testIDs.addFuelButtonID)
                 .sheet(isPresented: $addFuelPresented) {
                     AddFuelView(vehicle: vehicle)
+                        .accessibilityIdentifier(testIDs.addFuelViewID)
                 }
             }
         }

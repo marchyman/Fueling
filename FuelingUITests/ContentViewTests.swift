@@ -28,6 +28,9 @@ final class ContentViewTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
+    // first time launch. DANGER: will delete all vehicles from any existing
+    // database.  Intended for simulator use only.
+
     func testLaunch() {
         app = XCUIApplication()
         app.launchArguments.append("-EMPTY")
@@ -41,6 +44,8 @@ final class ContentViewTests: XCTestCase {
         XCTAssert(!app.buttons[testIDs.editButtonID].isEnabled)
         XCTAssert(app.staticTexts[testIDs.versionStringID].exists)
     }
+
+    // Check initial screen when using in memory test database.
 
     func testLaunchWithData() {
         app = XCUIApplication()
@@ -59,5 +64,25 @@ final class ContentViewTests: XCTestCase {
         XCTAssert(app.images.matching(identifier: "minus.circle.fill").count == 2)
         editButton.tap()
         XCTAssert(editButton.label == "Edit")
+    }
+
+    func testDeleteVehicle() {
+        app = XCUIApplication()
+        app.launchArguments.append("-TESTING")
+        app.launch()
+
+        app.buttons[testIDs.vehicleButtonID("KTM790")].swipeLeft()
+        XCTAssert(app.buttons["Delete"].exists)
+        app.buttons["Delete"].tap()
+        XCTAssert(!app.buttons[testIDs.vehicleButtonID("KTM790")].exists)
+    }
+
+    func testSelectVehicle() {
+        app = XCUIApplication()
+        app.launchArguments.append("-TESTING")
+        app.launch()
+
+        app.buttons[testIDs.vehicleButtonID("Honda Accord")].tap()
+        XCTAssert(app.navigationBars["Vehicle Fuel Use"].exists)
     }
 }
