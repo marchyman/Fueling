@@ -16,6 +16,8 @@ struct AddFuelView: View {
     @State private var cost: Double?
     @State private var odometer: Int?
 
+    private let testIDs = TestIDs.AddFuelView.self
+
     var body: some View {
         VStack {
             Text("Add Fuel")
@@ -24,6 +26,7 @@ struct AddFuelView: View {
 
             Form {
                 Text(vehicle.name).font(.headline)
+                    .accessibilityIdentifier(testIDs.nameID)
 
                 LabeledContent("Cost") {
                     TextField(
@@ -34,6 +37,7 @@ struct AddFuelView: View {
                     .textFieldStyle(.roundedBorder)
                     .keyboardType(.decimalPad)
                     .multilineTextAlignment(.trailing)
+                    .accessibilityIdentifier(testIDs.costID)
                 }
 
                 LabeledContent("Number of gallons") {
@@ -45,6 +49,7 @@ struct AddFuelView: View {
                     .textFieldStyle(.roundedBorder)
                     .keyboardType(.decimalPad)
                     .multilineTextAlignment(.trailing)
+                    .accessibilityIdentifier(testIDs.gallonsID)
                 }
 
                 LabeledContent("Current odometer") {
@@ -56,6 +61,7 @@ struct AddFuelView: View {
                     .textFieldStyle(.roundedBorder)
                     .keyboardType(.decimalPad)
                     .multilineTextAlignment(.trailing)
+                    .accessibilityIdentifier(testIDs.odometerID)
                 }
             }
             .frame(height: 250)
@@ -64,6 +70,7 @@ struct AddFuelView: View {
                 Button("Cancel", role: .cancel) {
                     dismiss()
                 }
+                .accessibilityIdentifier(testIDs.cancelButtonID)
 
                 Button("Add") {
                     if let cost, let gallons, let odometer {
@@ -78,6 +85,7 @@ struct AddFuelView: View {
                 .padding()
                 .buttonStyle(.borderedProminent)
                 .disabled(!validInput())
+                .accessibilityIdentifier(testIDs.addButtonID)
             }
         }
     }

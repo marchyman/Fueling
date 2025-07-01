@@ -141,6 +141,7 @@ struct VehicleView: View {
                 .accessibilityIdentifier(testIDs.addFuelButtonID)
                 .sheet(isPresented: $addFuelPresented) {
                     AddFuelView(vehicle: vehicle)
+                        .accessibilityElement(children: .contain)
                         .accessibilityIdentifier(testIDs.addFuelViewID)
                 }
             }

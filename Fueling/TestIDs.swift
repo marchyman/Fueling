@@ -47,4 +47,12 @@ enum TestIDs {
         static let cancelButtonID = "AddVehicleView.button.cancel"
         static let addButtonID = "AddVehicleView.button.add"
     }
+    enum AddFuelView {
+        static let nameID = "AddFuelView.staticText.name"
+        static let costID = "AddFuelView.textField.cost"
+        static let gallonsID = "AddFuelView.textField.gallons"
+        static let odometerID = "AddFuelView.textField.odometer"
+        static let cancelButtonID = "AddFuelView.button.cancel"
+        static let addButtonID = "AddFuelView.button.add"
+    }
 }
