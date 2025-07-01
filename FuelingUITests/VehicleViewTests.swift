@@ -65,7 +65,7 @@ final class BxVehicleViewTests: XCTestCase {
 
         app.buttons[TestIDs.ContentView.vehicleButtonID("Honda Accord")].tap()
         app.buttons[testIDs.addFuelButtonID].tap()
-        XCTAssert(app.staticTexts[testIDs.addFuelViewID].exists)
+        XCTAssert(app.buttons[TestIDs.AddFuelView.addButtonID].exists)
     }
 
     func testInfoTap() {
@@ -89,6 +89,6 @@ final class BxVehicleViewTests: XCTestCase {
         let entry = app.staticTexts.matching(identifier: testIDs.fuelingDateTimeID).firstMatch
         XCTAssert(entry.exists)
         entry.press(forDuration: 1.0)
-        XCTAssert(app.collectionViews[testIDs.fuelingEditViewID].exists)
+        XCTAssert(app.buttons[TestIDs.FuelingEditView.updateButtonID].exists)
     }
 }
