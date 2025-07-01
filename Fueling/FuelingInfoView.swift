@@ -10,6 +10,8 @@ struct FuelingInfoView: View {
 
     var fueling: Fuel
 
+    private let testIDs = TestIDs.FuelingInfoView.self
+
     var body: some View {
         VStack {
             let miles = fueling.miles()
@@ -17,16 +19,19 @@ struct FuelingInfoView: View {
                 Grid(alignment: .leading, horizontalSpacing: 50) {
                     GridRow {
                         Text("Fuel used:")
+                            .accessibilityIdentifier(testIDs.fuelUsedID)
                         Text("\(fueling.amount, specifier: "%.3f")")
                             .monospacedDigit()
                     }
                     GridRow {
                         Text("Miles driven:")
+                            .accessibilityIdentifier(testIDs.milesDrivenID)
                         Text("\(miles, format: .number)")
                             .monospacedDigit()
                     }
                     GridRow {
                         Text("Miles/gallon:")
+                            .accessibilityIdentifier(testIDs.mpgID)
                         Text(
                             "\(mpg(miles: miles, gallons: fueling.amount), specifier: "%0.1f")"
                         )
@@ -34,6 +39,7 @@ struct FuelingInfoView: View {
                     }
                     GridRow {
                         Text("Cost/gallon:")
+                            .accessibilityIdentifier(testIDs.cpgID)
                         Text(
                             "\(cpg(cost: fueling.cost, gallons: fueling.amount), format: .currency(code: "usd"))"
                         )
@@ -41,6 +47,7 @@ struct FuelingInfoView: View {
                     }
                     GridRow {
                         Text("Cost/mile:")
+                            .accessibilityIdentifier(testIDs.cpmID)
                         Text(
                             "\(cpm(cost: fueling.cost, miles: miles), format: .currency(code: "usd"))"
                         )
@@ -49,6 +56,7 @@ struct FuelingInfoView: View {
                 }
             } label: {
                 Text("Fueling on \(fueling.dateTime)")
+                    .accessibilityIdentifier(testIDs.dateTimeID)
             }
             HStack {
                 Spacer()

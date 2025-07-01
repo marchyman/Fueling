@@ -32,4 +32,13 @@ enum TestIDs {
         static let fuelingInfoViewID = "VehicleView.otherElement.fuelingInfoView"
         static let fuelingEditViewID = "VehicleView.collectionView.fuelingEditView"
     }
+    enum FuelingInfoView {
+        static let fuelUsedID = "FuelingInfoView.staticText.fuelUsed"
+        static let milesDrivenID = "FuelingInfoView.staticText.milesDriven"
+        static let mpgID = "FuelingInfoView.staticText.mpg"
+        static let cpgID = "FuelingInfoView.staticText.cpg"
+        static let cpmID = "FuelingInfoView.staticText.cpm"
+        static let dateTimeID = "FuelingInfoView.staticText.dataTime"
+        static let dismissID = "FuelingInfoView.buttons.dismiss"
+    }
 }
