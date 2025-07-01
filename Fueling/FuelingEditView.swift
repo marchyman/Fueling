@@ -14,6 +14,8 @@ struct FuelingEditView: View {
 
     @State private var fuelData: FuelData
 
+    private let testIDs = TestIDs.FuelingEditView.self
+
     init(fuelEntry: Fuel) {
         self.fuelEntry = fuelEntry
         _fuelData = State(initialValue: FuelData(odometer: fuelEntry.odometer,
@@ -26,9 +28,11 @@ struct FuelingEditView: View {
             Text("Edit Fuel")
                 .font(.title)
                 .padding(.bottom)
+                .accessibilityIdentifier(testIDs.titleID)
 
             Form {
                 Text(fuelEntry.vehicle?.name ?? "unknown").font(.headline)
+                    .accessibilityIdentifier(testIDs.nameID)
 
                 LabeledContent("Cost") {
                     TextField(
@@ -39,6 +43,7 @@ struct FuelingEditView: View {
                     .textFieldStyle(.roundedBorder)
                     .keyboardType(.decimalPad)
                     .multilineTextAlignment(.trailing)
+                    .accessibilityIdentifier(testIDs.costID)
                 }
 
                 LabeledContent("Number of gallons") {
@@ -50,6 +55,7 @@ struct FuelingEditView: View {
                     .textFieldStyle(.roundedBorder)
                     .keyboardType(.decimalPad)
                     .multilineTextAlignment(.trailing)
+                    .accessibilityIdentifier(testIDs.gallonsID)
                 }
 
                 LabeledContent("Current odometer") {
@@ -61,6 +67,7 @@ struct FuelingEditView: View {
                     .textFieldStyle(.roundedBorder)
                     .keyboardType(.decimalPad)
                     .multilineTextAlignment(.trailing)
+                    .accessibilityIdentifier(testIDs.odometerID)
                 }
             }
             .frame(height: 250)
@@ -70,6 +77,7 @@ struct FuelingEditView: View {
                     dismiss()
                 }
                 .padding()
+                .accessibilityIdentifier(testIDs.cancelButtonID)
 
                 Button("Update") {
                     store.send(.editFuelUpdateButtonTapped(fuelEntry.timestamp,
@@ -78,6 +86,7 @@ struct FuelingEditView: View {
                 }
                 .padding()
                 .buttonStyle(.borderedProminent)
+                .accessibilityIdentifier(testIDs.updateButtonID)
             }
         }
     }

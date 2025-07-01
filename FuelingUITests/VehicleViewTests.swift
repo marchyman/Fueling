@@ -6,7 +6,7 @@
 import XCTest
 
 @MainActor
-final class VehicleViewTests: XCTestCase {
+final class BxVehicleViewTests: XCTestCase {
 
     private var app: XCUIApplication!
     private let testIDs = TestIDs.VehicleView.self

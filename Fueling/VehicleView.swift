@@ -105,6 +105,7 @@ struct VehicleView: View {
                                 .accessibilityIdentifier(testIDs.fuelingDateTimeID)
                             Text("\(fueling.odometer, format: .number)")
                             Text("\(fueling.amount, specifier: "%.3f")")
+                                .accessibilityIdentifier(testIDs.fuelingGallonsID)
                             Text("\(fueling.cost, format: .currency(code: "usd"))")
                                 .frame(maxWidth: 70, alignment: .trailing)
                         }
@@ -123,6 +124,7 @@ struct VehicleView: View {
                     }
                     .sheet(item: $fuelingEditItem) { item in
                         FuelingEditView(fuelEntry: item)
+                            .accessibilityElement(children: .contain)
                             .accessibilityIdentifier(testIDs.fuelingEditViewID)
                             .presentationDetents([.medium])
                     }

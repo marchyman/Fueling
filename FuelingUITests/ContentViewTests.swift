@@ -6,7 +6,7 @@
 import XCTest
 
 @MainActor
-final class ContentViewTests: XCTestCase {
+final class AxContentViewTests: XCTestCase {
 
     private var app: XCUIApplication!
     private let testIDs = TestIDs.ContentView.self

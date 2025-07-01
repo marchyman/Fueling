@@ -28,6 +28,7 @@ enum TestIDs {
         static let cpmID = "VehicleView.staticText.costPerMile"
         static let recentRefuelingsID = "VehicleView.staticText.recentRefuelings"
         static let fuelingDateTimeID = "VehicleView.staticText.dateTime"
+        static let fuelingGallonsID = "VehicleView.staticText.gallons"
         static let addFuelViewID = "VehicleView.staticText.addFuelView"
         static let fuelingInfoViewID = "VehicleView.otherElement.fuelingInfoView"
         static let fuelingEditViewID = "VehicleView.collectionView.fuelingEditView"
@@ -40,6 +41,15 @@ enum TestIDs {
         static let cpmID = "FuelingInfoView.staticText.cpm"
         static let dateTimeID = "FuelingInfoView.staticText.dataTime"
         static let dismissID = "FuelingInfoView.buttons.dismiss"
+    }
+    enum FuelingEditView {
+        static let titleID = "FuelingEditView.staticText.edit"
+        static let nameID = "FuelingEditView.staticText.name"
+        static let costID = "FuelingEditView.textField.cost"
+        static let gallonsID = "FuelingEditView.textField.gallons"
+        static let odometerID = "FuelingEditView.textField.odometer"
+        static let cancelButtonID = "FuelingEditView.button.cancel"
+        static let updateButtonID = "FuelingEditView.button.update"
     }
     enum AddVehicleView {
         static let vehicleNameID = "AddVehicleView.textField.vehicleName"

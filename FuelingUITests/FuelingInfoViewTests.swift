@@ -6,7 +6,7 @@
 import XCTest
 
 @MainActor
-final class FuelingInfoViewTests: XCTestCase {
+final class CxFuelingInfoViewTests: XCTestCase {
 
     private var app: XCUIApplication!
     private let testIDs = TestIDs.FuelingInfoView.self
