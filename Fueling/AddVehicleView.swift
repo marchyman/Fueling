@@ -13,6 +13,8 @@ struct AddVehicleView: View {
     @State private var name: String = ""
     @State private var odometer: Int?
 
+    private let testIDs = TestIDs.AddVehicleView.self
+
     var body: some View {
         VStack {
             Text("Add Vehicle")
@@ -26,6 +28,7 @@ struct AddVehicleView: View {
                         .keyboardType(.default)
                         .textInputAutocapitalization(.never)
                         .disableAutocorrection(true)
+                        .accessibilityIdentifier(testIDs.vehicleNameID)
                 }
                 LabeledContent("Current odometer:") {
                     TextField(
@@ -36,6 +39,7 @@ struct AddVehicleView: View {
                     .textFieldStyle(.roundedBorder)
                     .keyboardType(.decimalPad)
                     .multilineTextAlignment(.trailing)
+                    .accessibilityIdentifier(testIDs.odometerID)
                 }
             }
             .frame(height: 160)
@@ -44,6 +48,7 @@ struct AddVehicleView: View {
                 Button("Cancel", role: .cancel) {
                     dismiss()
                 }
+                .accessibilityIdentifier(testIDs.cancelButtonID)
                 Button("Add") {
                     guard let odometer else { return }
                     store.send(.addVehicleButtonTapped(name, odometer))
@@ -52,6 +57,7 @@ struct AddVehicleView: View {
                 .padding()
                 .buttonStyle(.borderedProminent)
                 .disabled(!validInput())
+                .accessibilityIdentifier(testIDs.addButtonID)
             }
             Spacer()
         }

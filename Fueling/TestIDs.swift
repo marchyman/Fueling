@@ -41,4 +41,10 @@ enum TestIDs {
         static let dateTimeID = "FuelingInfoView.staticText.dataTime"
         static let dismissID = "FuelingInfoView.buttons.dismiss"
     }
+    enum AddVehicleView {
+        static let vehicleNameID = "AddVehicleView.textField.vehicleName"
+        static let odometerID = "AddVehicleView.textField.odometer"
+        static let cancelButtonID = "AddVehicleView.button.cancel"
+        static let addButtonID = "AddVehicleView.button.add"
+    }
 }
