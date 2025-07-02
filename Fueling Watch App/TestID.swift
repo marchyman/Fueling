@@ -20,4 +20,11 @@ enum TestID {
     static let entryGallons = "FuelEntryView.button.gallons"
     static let entryOdometer = "FuelEntryView.button.odometer"
     static let entryUploadButton = "FuelEntryView.button.upload"
+
+    static let keycapButtonCancel = "KeypadView.button.x"
+    static let keycapButtonDone = "KeypadView.button.done"
+
+    static func keycapButton(_ keyCap: String) -> String {
+        "KeypadView.button.\(keyCap)"
+    }
 }

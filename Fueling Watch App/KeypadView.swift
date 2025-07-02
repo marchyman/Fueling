@@ -13,6 +13,8 @@ struct KeypadView: View {
 
     @State private var stringValue: String = "0"
 
+    private let testID = TestID.self
+
     var body: some View {
         VStack(alignment: .trailing) {
             Text(stringValue)
@@ -55,6 +57,7 @@ struct KeypadView: View {
                     Image(systemName: "xmark")
                         .font(.footnote)
                 }
+                .accessibilityIdentifier(testID.keycapButtonCancel)
             }
             ToolbarItem(placement: .confirmationAction) {
                 Button("Done") {
@@ -63,6 +66,7 @@ struct KeypadView: View {
                 }
                 .font(.caption2)
                 .buttonStyle(.plain)
+                .accessibilityIdentifier(testID.keycapButtonDone)
             }
         }
         .onAppear {
@@ -73,10 +77,12 @@ struct KeypadView: View {
 
 extension KeypadView {
 
-    private func addChar(_ key: Character) {
-        if key == "." && stringValue.contains(".") { return }
+    private func addChar(_ key: String) {
         if Double(stringValue) == 0.0 {
             stringValue = String(key)
+        } else if key == "." && stringValue.contains(".") {
+            // only one decimal point allowed, ignore all others
+            return
         } else {
             stringValue.append(key)
         }
@@ -93,22 +99,27 @@ extension KeypadView {
 }
 
 struct KeyCap: View {
-    let keyCap: Character
-    let keyHit: (Character) -> Void
+    let keyCap: String
+    let keyHit: (String) -> Void
 
-    init(_ keyCap: Character, keyHit: @escaping (Character) -> Void) {
+    private let testID = TestID.self
+
+    init(_ keyCap: String, keyHit: @escaping (String) -> Void) {
         self.keyCap = keyCap
         self.keyHit = keyHit
     }
 
     var body: some View {
-        Text(String(keyCap))
-            .frame(width: 50, height: 32)
-            .background(.gray)
-            .cornerRadius(7)
-            .onTapGesture {
-                keyHit(keyCap)
-            }
+        Button {
+            keyHit(keyCap)
+        } label: {
+            Text(String(keyCap))
+                .frame(width: 50, height: 32)
+                .background(.gray)
+                .cornerRadius(7)
+        }
+        .buttonStyle(.plain)
+        .accessibilityIdentifier(testID.keycapButton(keyCap))
     }
 }
 
