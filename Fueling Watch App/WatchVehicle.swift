@@ -34,12 +34,14 @@ extension Vehicle {
     init(from key: String, value: Any) throws {
         if let dict = value as? [String: Any] {
             self.name = key
+            guard dict[MessageKey.cost] != nil &&
+                dict[MessageKey.gallons] != nil &&
+                dict[MessageKey.miles] != nil else {
+                throw VehicleModelError.badEntry
+            }
             self.cost = dict[MessageKey.cost] as? Double ?? 0.0
             self.gallons = dict[MessageKey.gallons] as? Double ?? 0.0
             self.miles = dict[MessageKey.miles] as? Int ?? 0
-            if self.cost == 0 && self.gallons == 0 && self.miles == 0 {
-                throw VehicleModelError.badEntry
-            }
         } else {
             throw VehicleModelError.badPlist
         }

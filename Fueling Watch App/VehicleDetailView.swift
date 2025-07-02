@@ -12,22 +12,27 @@ struct VehicleDetailView: View {
 
     @State var vehicle: Vehicle
 
+    private let testID = TestID.self
+
     var body: some View {
         Grid(alignment: .leading, horizontalSpacing: 20) {
             GridRow {
                 Text("Cost")
                 Text("\(vehicle.cost, format: .currency(code: "usd"))")
                     .monospacedDigit()
+                    .accessibilityIdentifier(testID.totalCost)
             }
             GridRow {
                 Text("Gallons")
                 Text("\(vehicle.gallons, specifier: "%.3f")")
                     .monospacedDigit()
+                    .accessibilityIdentifier(testID.totalGallons)
             }
             GridRow {
                 Text("Miles")
                 Text("\(vehicle.miles, format: .number)")
                     .monospacedDigit()
+                    .accessibilityIdentifier(testID.totalMiles)
             }
             Divider()
                 .gridCellUnsizedAxes(.horizontal)
@@ -35,11 +40,13 @@ struct VehicleDetailView: View {
                 Text("MPG")
                 Text("\(vehicle.mpg, specifier: "%0.1f")")
                     .monospacedDigit()
+                    .accessibilityIdentifier(testID.totalMPG)
             }
             GridRow {
                 Text("$PG")
                 Text("\(vehicle.cpg, format: .currency(code: "usd"))")
                     .monospacedDigit()
+                    .accessibilityIdentifier(testID.totalCPG)
             }
         }
         .padding(.horizontal)
@@ -52,6 +59,7 @@ struct VehicleDetailView: View {
                 } label: {
                     Label("Add", systemImage: "gauge.medium.badge.plus")
                 }
+                .accessibilityIdentifier(testID.fuelEntryButton)
             }
         }
         .onChange(of: store.vehicles) {

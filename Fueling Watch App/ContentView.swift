@@ -11,6 +11,8 @@ struct ContentView: View {
     @State private var selectedVehicle: Vehicle?
     @State private var path = NavigationPath()
 
+    private let testID = TestID.self
+
     var body: some View {
         NavigationSplitView {
             Group {
@@ -26,6 +28,7 @@ struct ContentView: View {
                     List(store.vehicles, selection: $selectedVehicle) { vehicle in
                         NavigationLink(value: vehicle) {
                             Text(vehicle.name)
+                                .accessibilityIdentifier(testID.vehicleButton)
                         }
                     }
                     .listStyle(.carousel)
@@ -44,6 +47,7 @@ struct ContentView: View {
                     } label: {
                         Label("Download", systemImage: "square.and.arrow.down")
                     }
+                    .accessibilityIdentifier(testID.downloadButton)
                 }
             }
         } detail: {

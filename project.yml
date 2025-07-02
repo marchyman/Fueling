@@ -3,7 +3,7 @@ name: Fueling
 options:
   groupOrdering:
     - order: [Shared, FuelingStore, Fueling, FuelingTests, FuelingUITests,
-      Fueling Watch App, FuelingWatchTests,
+      Fueling Watch App, FuelingWatchTests, FuelingWatchUITests,
       Packages, Products]
 
 settings:
@@ -142,6 +142,22 @@ targets:
       PRODUCT_BUNDLE_IDENTIFIER: org.snafu.FuelingWatchTests
     schemes: none
 
+  FuelingWatchUITests:
+    type: bundle.ui-testing
+    platform: watchOS
+    deploymentTarget: 10.0
+    dependencies:
+      - target: Fueling Watch App
+      - package: UDF
+    sources:
+      - FuelingWatchUITests
+      - Fueling Watch App/TestID.swift
+    settings:
+      GENERATE_INFOPLIST_FILE: YES
+      PRODUCT_NAME: $(TARGET_NAME)
+      PRODUCT_BUNDLE_IDENTIFIER: org.snafu.FuelingWatchTests
+    schemes: none
+
 packages:
   UDF:
     path: UDF
@@ -184,3 +200,4 @@ schemes:
       gatherCoverageData: YES
       targets:
         - name: FuelingWatchTests
+        - name: FuelingWatchUITests
