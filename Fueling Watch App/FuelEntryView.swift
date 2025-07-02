@@ -17,6 +17,8 @@ struct FuelEntryView: View {
     @State private var odometer: Double = 0
     @State private var present: KeypadSelect?
 
+    private let testID = TestID.self
+
     enum KeypadSelect: Identifiable, CaseIterable {
         case cost
         case gallons
@@ -32,21 +34,36 @@ struct FuelEntryView: View {
         ) {
             GridRow {
                 Text("Cost")
-                Text("\(cost, format: .currency(code: "usd"))")
-                    .monospacedDigit()
-                    .onTapGesture { present = .cost }
+                Button {
+                    present = .cost
+                } label: {
+                    Text("\(cost, format: .currency(code: "usd"))")
+                        .monospacedDigit()
+                }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier(testID.entryCost)
             }
             GridRow {
                 Text("Gallons")
-                Text("\(gallons, specifier: "%.3f")")
-                    .monospacedDigit()
-                    .onTapGesture { present = .gallons }
+                Button {
+                    present = .gallons
+                } label: {
+                    Text("\(gallons, specifier: "%.3f")")
+                        .monospacedDigit()
+                }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier(testID.entryGallons)
             }
             GridRow {
                 Text("Odometer")
-                Text("\(odometer, format: .number)")
-                    .monospacedDigit()
-                    .onTapGesture { present = .odometer }
+                Button {
+                    present = .odometer
+                } label: {
+                    Text("\(odometer, format: .number)")
+                        .monospacedDigit()
+                }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier(testID.entryOdometer)
             }
         }
         .navigationTitle(vehicle.name)
@@ -66,6 +83,7 @@ struct FuelEntryView: View {
                 } label: {
                     Label("Upload", systemImage: "square.and.arrow.up")
                 }
+                .accessibilityIdentifier(testID.entryUploadButton)
             }
         }
         .sheet(item: $present) { select in

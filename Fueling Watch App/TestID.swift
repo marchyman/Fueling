@@ -14,5 +14,10 @@ enum TestID {
     static let totalMiles = "VehicleDetailView.staticText.miles"
     static let totalMPG = "VehicleDetailView.staticText.mpg"
     static let totalCPG = "VehicleDetailView.staticText.cpg"
-    static let fuelEntryButton = "VehicleDetailView.buttin.fuelEntry"
+    static let fuelEntryButton = "VehicleDetailView.button.fuelEntry"
+
+    static let entryCost = "FuelEntryView.button.cost"
+    static let entryGallons = "FuelEntryView.button.gallons"
+    static let entryOdometer = "FuelEntryView.button.odometer"
+    static let entryUploadButton = "FuelEntryView.button.upload"
 }

@@ -53,6 +53,23 @@ final class WatchUITests: XCTestCase {
         XCTAssert(app.buttons[testID.fuelEntryButton].exists)
         app.buttons[testID.fuelEntryButton].tap()
 
-        print(app.debugDescription)
+        // check the fuel entry view
+
+        XCTAssert(app.buttons[testID.entryCost].exists)
+        XCTAssert(app.buttons[testID.entryCost].label == "$0.00")
+        XCTAssert(app.buttons[testID.entryGallons].exists)
+        XCTAssert(app.buttons[testID.entryGallons].label == "0.000")
+        XCTAssert(app.buttons[testID.entryOdometer].exists)
+        XCTAssert(app.buttons[testID.entryOdometer].label == "0")
+        XCTAssert(app.buttons[testID.entryUploadButton].exists)
+
+        // cost data entry
+
+        // this fails testing because even though the button is visible the
+        // test framework tries to scroll to it and fails. Manual testing
+        // has no issues. Until I figure out a workaround I'll not write
+        // more tests.
+
+        // app.buttons[testID.entryCost].tap()
     }
 }
