@@ -10,6 +10,16 @@ Build:	$(PROJECT).xcodeproj/project.pbxproj
 $(PROJECT).xcodeproj/project.pbxproj:	project.yml
 	xcodegen -c
 
+# Unit tests
+test:
+	xcodebuild -scheme $(PROJECT) test | tee .test.out | xcbeautify
+
+# UI tests fail.
+watchtest:
+	xcodebuild -scheme 'Fueling Watch App' \
+		-destination id=D428AA79-89F5-42CC-A19C-F02E757AFD07 \
+		test | tee .test.out | xcbeautify
+
 # force project file rebuild
 proj:
 	xcodegen
@@ -18,4 +28,4 @@ proj:
 # do **not** use the -d option to git clean without excluding .jj
 clean:
 	jj status
-	git clean -dfx -e .jj
+	git clean -dfx -e .jj -e notes

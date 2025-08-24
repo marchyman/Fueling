@@ -1,6 +1,8 @@
 *~
 .DS_Store
+.test.out
 
+notes
 buildServer.json
 
 Build/
