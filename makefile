@@ -16,6 +16,10 @@ test:
 
 # UI tests fail.
 watchtest:
+	xcrun simctl shutdown 983670CF-B633-47E1-81E5-5B42688D0F5B
+	xcrun simctl boot 983670CF-B633-47E1-81E5-5B42688D0F5B
+	xcrun simctl launch 983670CF-B633-47E1-81E5-5B42688D0F5B org.snafu.Fueling -TESTING -UITEST
+
 	xcodebuild -scheme 'Fueling Watch App' \
 		-destination id=D428AA79-89F5-42CC-A19C-F02E757AFD07 \
 		test | tee .test.out | xcbeautify

@@ -19,8 +19,12 @@ final class FuelingDB {
             configurations: configuration)
         context = ModelContext(container)
         if inMemory {
-            addTestVehicles()
-            addTestFuelings()
+            if CommandLine.arguments.contains("-UITEST") {
+                addOneVehicle()
+            } else {
+                addTestVehicles()
+                addTestFuelings()
+            }
         } else {
             // Check if the DB needs to be emptied for testing
             if CommandLine.arguments.contains("-EMPTY") {
@@ -36,6 +40,11 @@ final class FuelingDB {
 
 // Add test data for previews
 extension FuelingDB {
+    func addOneVehicle() {
+        let vehicle = Vehicle(name: "Test Vehicle", odometer: 7)
+        try! create(vehicle: vehicle)
+    }
+
     func addTestVehicles() {
         let vehicles: [Vehicle] = [
             Vehicle(name: "Honda Accord", odometer: 12345),

@@ -83,7 +83,7 @@ final class WatchUITests: XCTestCase {
 
         // check the vehicle detail view
 
-        app.buttons[testID.vehicleButton].tap()
+        app.buttons[testID.vehicleButton].forceTapElement()
         detailViewElements()
 
         // check the fuel entry view
@@ -123,6 +123,7 @@ final class WatchUITests: XCTestCase {
         while app.staticTexts[testID.totalCost].label == "$0.00" {
             sleep(1)
         }
+        print(app.debugDescription)
         XCTAssert(app.staticTexts[testID.totalCost].label == "$4.56")
         XCTAssert(app.staticTexts[testID.totalGallons].label == "1.030")
         XCTAssert(app.staticTexts[testID.totalMiles].label == "35")
