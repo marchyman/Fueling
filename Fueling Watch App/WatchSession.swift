@@ -47,7 +47,7 @@ extension WatchSession {
             // period.
             try? await Task.sleep(for: .seconds(2))
             if store.fetching {
-                await self.store.send(.watchSendError(fetchRequest: true))
+                self.store.send(.watchSendError(fetchRequest: true))
             }
         }
         Logger(subsystem: "org.snafu", category: "WatchSession")

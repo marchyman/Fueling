@@ -166,7 +166,8 @@ targets:
 
 packages:
   UDF:
-    path: UDF
+    url: git://snafu.org/udf
+    branch: main
 
 schemes:
   Fueling:
