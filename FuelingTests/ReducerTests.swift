@@ -14,7 +14,7 @@ import UDF
 struct ReducerTests {
 
     // forPreview uses an in memory database
-    func createStore() -> Store<FuelingState, FuelingAction> {
+    func createStore() -> Store<FuelingState, FuelingEvent> {
         return Store(initialState: FuelingState(forPreview: true),
                      reduce: FuelingReducer(),
                      name: "Test Fueling Store")
@@ -49,7 +49,7 @@ struct ReducerTests {
         let fuel = createFuelData()
         await store.send(.addFuelReceived(testName, fuel))
 
-        // again, using a different action
+        // again, using a different event
         await store.send(.addFuelButtonTapped(testName, fuel))
 
         // should be two more entries

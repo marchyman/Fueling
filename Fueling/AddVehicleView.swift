@@ -7,7 +7,7 @@ import SwiftUI
 import UDF
 
 struct AddVehicleView: View {
-    @Environment(Store<FuelingState, FuelingAction>.self) var store
+    @Environment(Store<FuelingState, FuelingEvent>.self) var store
     @Environment(\.dismiss) var dismiss
 
     @State private var name: String = ""

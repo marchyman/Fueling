@@ -25,7 +25,7 @@ struct WatchState {
     var sendStatus: WatchSendStatus = .idle
 }
 
-enum WatchAction {
+enum WatchEvent {
     case contentViewAppeared
     case downloadButtonTapped
     case receivedAppContext([Vehicle])
@@ -37,10 +37,10 @@ enum WatchAction {
 }
 
 struct WatchReducer: Reducer {
-    func reduce(_ state: WatchState, _ action: WatchAction) -> WatchState {
+    func reduce(_ state: WatchState, _ event: WatchEvent) -> WatchState {
         var newState = state
 
-        switch action {
+        switch event {
         case .contentViewAppeared:
             if newState.vehicles.isEmpty
                 && newState.watchSession != nil

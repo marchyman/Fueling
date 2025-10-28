@@ -12,9 +12,9 @@ import WatchConnectivity
 @MainActor
 final class PhoneSession: NSObject {
     let session: WCSession = .default
-    unowned let store: Store<FuelingState, FuelingAction>
+    unowned let store: Store<FuelingState, FuelingEvent>
 
-    init(store: Store<FuelingState, FuelingAction>) {
+    init(store: Store<FuelingState, FuelingEvent>) {
         self.store = store
         super.init()
         if WCSession.isSupported() {

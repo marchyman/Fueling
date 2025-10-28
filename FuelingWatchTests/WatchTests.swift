@@ -12,7 +12,7 @@ import UDF
 
 @MainActor
 struct WatchTests {
-    func createStore() -> Store<WatchState, WatchAction> {
+    func createStore() -> Store<WatchState, WatchEvent> {
         return Store(initialState: WatchState(),
                      reduce: WatchReducer())
     }

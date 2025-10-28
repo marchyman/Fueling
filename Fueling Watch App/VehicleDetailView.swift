@@ -7,7 +7,7 @@ import SwiftUI
 import UDF
 
 struct VehicleDetailView: View {
-    @Environment(Store<WatchState, WatchAction>.self) private var store
+    @Environment(Store<WatchState, WatchEvent>.self) private var store
     @Environment(\.dismiss) var dismiss
 
     @State var vehicle: Vehicle

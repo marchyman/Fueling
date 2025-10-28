@@ -7,9 +7,9 @@ import OSLog
 import SwiftUI
 import UDF
 
-// Actions that cause state changes
+// Events that cause state changes
 
-enum FuelingAction: Equatable {
+enum FuelingEvent: Equatable {
     case addVehicleButtonTapped(String, Int)
     case addFuelButtonTapped(String, FuelData)
     case addFuelReceived(String, FuelData)
@@ -18,14 +18,14 @@ enum FuelingAction: Equatable {
     case editFuelUpdateButtonTapped(Date, FuelData)
 }
 
-// Reducer function to process actions, returning a new state
+// Reducer function to process event, returning a new state
 
 struct FuelingReducer: Reducer {
     func reduce(_ state: FuelingState,
-                _ action: FuelingAction) -> FuelingState {
+                _ event: FuelingEvent) -> FuelingState {
         var newState = state
 
-        switch action {
+        switch event {
         case .addVehicleButtonTapped(let name, let odometer):
             let newVehicle = Vehicle(name: name, odometer: odometer)
             newState.errorMessage = create(state: newState,

@@ -11,10 +11,10 @@ import WatchConnectivity
 @MainActor
 final class WatchSession: NSObject {
     let session: WCSession = .default
-    unowned let store: Store<WatchState, WatchAction>
+    unowned let store: Store<WatchState, WatchEvent>
     var timer: Task<(), Never>?
 
-    init(store: Store<WatchState, WatchAction>) {
+    init(store: Store<WatchState, WatchEvent>) {
         self.store = store
         super.init()
         if WCSession.isSupported() {

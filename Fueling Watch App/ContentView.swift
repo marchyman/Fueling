@@ -7,7 +7,7 @@ import SwiftUI
 import UDF
 
 struct ContentView: View {
-    @Environment(Store<WatchState, WatchAction>.self) private var store
+    @Environment(Store<WatchState, WatchEvent>.self) private var store
     @State private var selectedVehicle: Vehicle?
     @State private var path = NavigationPath()
 

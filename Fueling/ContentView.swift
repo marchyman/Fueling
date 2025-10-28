@@ -7,7 +7,7 @@ import SwiftUI
 import UDF
 
 struct ContentView: View {
-    @Environment(Store<FuelingState, FuelingAction>.self) var store
+    @Environment(Store<FuelingState, FuelingEvent>.self) var store
 
     @State var path = NavigationPath()
     @State private var addVehiclePresented = false

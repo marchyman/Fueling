@@ -13,7 +13,7 @@ import UDF
 struct VehicleTests {
 
     // forPreview uses an in memory database
-    func createStore() -> Store<FuelingState, FuelingAction> {
+    func createStore() -> Store<FuelingState, FuelingEvent> {
         return Store(initialState: FuelingState(forPreview: true),
                      reduce: FuelingReducer(),
                      name: "Test Fueling Store")

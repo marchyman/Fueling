@@ -7,7 +7,7 @@ import SwiftUI
 import UDF
 
 struct FuelingEditView: View {
-    @Environment(Store<FuelingState, FuelingAction>.self) var store
+    @Environment(Store<FuelingState, FuelingEvent>.self) var store
     @Environment(\.dismiss) var dismiss
 
     let fuelEntry: Fuel
