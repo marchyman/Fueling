@@ -59,7 +59,7 @@ struct ReducerTests {
         let testVehicle = try #require(store.vehicles.first(where: {
             $0.name == testName
         }))
-        await store.send(.onDeleteRequested(vehicle: testVehicle))
+        store.send(.onDeleteRequested(vehicle: testVehicle))
         #expect(store.vehicles.count == count)
 
         // The added fueling entries should be gone, too
@@ -71,7 +71,7 @@ struct ReducerTests {
         let store = createStore()
         #expect(store.phoneSession == nil)
         let phoneSession = PhoneSession(store: store)
-        await store.send(.phoneSessionActivated(phoneSession))
+        store.send(.phoneSessionActivated(phoneSession))
         #expect(store.phoneSession == phoneSession)
     }
 
