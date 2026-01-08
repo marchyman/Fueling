@@ -1,13 +1,16 @@
 name: Fueling
 
 options:
-  fileTypes:
-    "icon":
-      file: true 
+  deploymentTargets:
+    iOS: 17.0
+    watchOS: 10.0
   groupOrdering:
     - order: [Shared, FuelingStore, Fueling, FuelingTests, FuelingUITests,
       Fueling Watch App, FuelingWatchTests, FuelingWatchUITests,
       Packages, Products]
+  fileTypes:
+    "icon":
+      file: true 
 
 settings:
   base:
@@ -41,7 +44,6 @@ targets:
   Fueling:
     type: application
     platform: iOS
-    deploymentTarget: 17.0
     sources:
       - Shared
       - Fueling
@@ -81,7 +83,6 @@ targets:
   FuelingTests:
     type: bundle.unit-test
     platform: iOS
-    deploymentTarget: 17.0
     dependencies:
       - target: Fueling
     sources:
@@ -95,7 +96,6 @@ targets:
   FuelingUITests:
     type: bundle.ui-testing
     platform: iOS
-    deploymentTarget: 17.0
     dependencies:
       - target: Fueling
     sources:
@@ -110,7 +110,6 @@ targets:
   Fueling Watch App:
     type: application
     platform: watchOS
-    deploymentTarget: 10.0
     dependencies:
       - package: UDF
     sources:
@@ -136,7 +135,6 @@ targets:
   FuelingWatchTests:
     type: bundle.unit-test
     platform: watchOS
-    deploymentTarget: 10.0
     dependencies:
       - target: Fueling Watch App
       - package: UDF
@@ -151,7 +149,6 @@ targets:
   FuelingWatchUITests:
     type: bundle.ui-testing
     platform: watchOS
-    deploymentTarget: 10.0
     dependencies:
       - target: Fueling Watch App
       - package: UDF

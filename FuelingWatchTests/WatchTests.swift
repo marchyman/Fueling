@@ -68,13 +68,13 @@ struct WatchTests {
     @Test func watchReducerTests() async throws {
         let store = createStore()
         // send with no active session
-        await store.send(.contentViewAppeared)
+        store.send(.contentViewAppeared)
         #expect(store.fetchStatus == .idle)
 
-        await store.send(.downloadButtonTapped)
+        store.send(.downloadButtonTapped)
         #expect(store.fetchStatus == .idle)
 
-        await store.send(.sendFuelButtonTapped)
+        store.send(.sendFuelButtonTapped)
         #expect(store.sendStatus == .idle)
 
         // create a testing watch session.  Ignore the "unused" warning.
@@ -83,45 +83,45 @@ struct WatchTests {
         try await Task.sleep(for: .milliseconds(200))
         #expect(store.watchSession != nil)
 
-        await store.send(.watchSessionReachable)
+        store.send(.watchSessionReachable)
         #expect(store.fetchStatus == .fetchRequested)
-        await store.send(.watchSendError(fetchRequest: true))
+        store.send(.watchSendError(fetchRequest: true))
         #expect(store.fetchStatus == .idle)
 
-        await store.send(.contentViewAppeared)
+        store.send(.contentViewAppeared)
         #expect(store.fetchStatus == .fetchRequested)
 
         // should not change status as a fetch is already pending
-        await store.send(.watchSessionReachable)
+        store.send(.watchSessionReachable)
         #expect(store.fetchStatus == .fetchRequested)
 
-        await store.send(.downloadButtonTapped)
+        store.send(.downloadButtonTapped)
         #expect(store.fetchStatus == .dupRequest)
 
-        await store.send(.watchSendError(fetchRequest: true))
+        store.send(.watchSendError(fetchRequest: true))
         #expect(store.fetchStatus == .idle)
 
-        await store.send(.downloadButtonTapped)
+        store.send(.downloadButtonTapped)
         #expect(store.fetchStatus == .fetchRequested)
 
-        await store.send(.receivedAppContext([Vehicle.previewVehicle]))
+        store.send(.receivedAppContext([Vehicle.previewVehicle]))
         #expect(!store.fetching)
         let vehicle = try #require(store.vehicles.first)
         #expect(vehicle.name == Vehicle.previewVehicle.name)
 
-        await store.send(.sendFuelButtonTapped)
+        store.send(.sendFuelButtonTapped)
         #expect(store.sendStatus == .sendRequested)
 
-        await store.send(.sendFuelButtonTapped)
+        store.send(.sendFuelButtonTapped)
         #expect(store.sendStatus == .dupRequest)
 
-        await store.send(.watchSendError(fetchRequest: false))
+        store.send(.watchSendError(fetchRequest: false))
         #expect(store.sendStatus == .idle)
 
-        await store.send(.sendFuelButtonTapped)
+        store.send(.sendFuelButtonTapped)
         #expect(store.sendStatus == .sendRequested)
 
-        await store.send(.receivedFuelingResponse)
+        store.send(.receivedFuelingResponse)
         #expect(store.sendStatus == .idle)
     }
 }
