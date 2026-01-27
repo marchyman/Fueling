@@ -11,7 +11,7 @@ $(PROJECT).xcodeproj/project.pbxproj:	project.yml
 
 # Unit tests
 test:
-	xcodebuild -scheme $(PROJECT) test | tee .test.out | xcbeautify
+	xcodebuild -scheme $(PROJECT) test | xcbeautify | tee .test.out
 
 # UI tests fail. Probably because of improper phone app setup. The
 # xcrun ... lines are an attempt to fix that.
@@ -21,7 +21,7 @@ watchtest:
 	xcrun simctl launch 983670CF-B633-47E1-81E5-5B42688D0F5B org.snafu.Fueling -TESTING -UITEST
 	xcodebuild -scheme 'Fueling Watch App' \
 		-destination id=D428AA79-89F5-42CC-A19C-F02E757AFD07 \
-		test | tee .test.out | xcbeautify
+		test | xcbeautify | tee .test.out
 
 # force project file rebuild
 proj:
