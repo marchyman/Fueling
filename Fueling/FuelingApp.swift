@@ -20,7 +20,7 @@ struct FuelingApp: App {
             ContentView()
                 .environment(store)
         }
-        .onChange(of: scenePhase) {
+        .onChange(of: scenePhase, initial: true) {
             // initialize phone/watch communications once
             if session == nil {
                 session = PhoneSession(store: store)
